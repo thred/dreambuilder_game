@@ -22,10 +22,9 @@ infinite (and they shouldn't be).
 
 * The default bones mod has been removed, with extreme prejudice.
 
-* The default leaf decay code has been disabled in favor of that 
-provided by my Moretrees mod.
-
 * Stu's split-limb player model replaces the default one.
+
+* sfan5's desert cobble has been added.
 
 * The default lavacooling code has been supplanted by better, safer code 
 from my Gloopblocks mod. That mod also provides stone/cobble --> mossy 
@@ -37,7 +36,10 @@ The snow and rain paramaters have been tweaked a bit to my taste :-) .
 
 * An extensive selection of administration tools for single-player and 
 server use are included, such as areas, maptools, worldedit, xban, and 
-more.
+others.
+
+* And lots, LOTS more.  You'll just have to play and discover what this 
+game has!
 
 License of source code
 ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ 
