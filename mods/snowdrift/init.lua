@@ -6,7 +6,7 @@
 -- Parameters
 
 local SCALP = 3 -- Time scale for precipitation in minutes
-local PRET = 0 -- -1 to 1. Precipitation threshold: 1 none, -1 continuous, 0 half the time, 0.3 one third the time
+local PRET = -0.5 -- -1 to 1. Precipitation threshold: 1 none, -1 continuous, 0 half the time, 0.3 one third the time
 local PPPCHA = 0.1 -- 0 to 1. Per player processing chance. Controls and randomizes processing load
 local SETCHA = 0.2 -- 0 to 1. Snow settling chance
 local DROPS = 16 -- Rainfall heaviness
