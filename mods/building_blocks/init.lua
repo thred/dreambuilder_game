@@ -410,16 +410,6 @@ minetest.register_tool("building_blocks:knife", {
 		}
 	},
 })
-minetest.register_tool("building_blocks:spleef_stick", {
-	description = "Spleef Stick",
-	inventory_image = "building_blocks_spleef_stick.png",
-	tool_capabilities = {
-		max_drop_level=0,
-		groupcaps={
-			spleef={times={[0]=0, [0]=0}, maxwear=0, maxlevel=1}
-		}
-	},
-})
 minetest.add_to_creative_inventory('building_blocks:Tar 0')
 minetest.add_to_creative_inventory('building_blocks:hardwood 0')
 minetest.register_craft({
