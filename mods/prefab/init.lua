@@ -333,7 +333,7 @@ minetest.register_node("prefab:electric_fence", {
 	sunlight_propagates = true,
 	paramtype = "light",
 	paramtype2 = "facedir",
-	damage_per_second = 30,
+	
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -358,7 +358,7 @@ minetest.register_node("prefab:electric_fence_corner", {
 	sunlight_propagates = true,
 	paramtype = "light",
 	paramtype2 = "facedir",
-	damage_per_second = 30,
+	
 	node_box = {
 		type = "fixed",
 		fixed = {
