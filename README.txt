@@ -1,28 +1,46 @@
-The main game for the Minetest game engine [minetest_game]
-==========================================================
+"If you can imagine it, you can build it."
 
-To build the wholeness of the Minetest project, insert this repository as
-  /games/minetest_game
-in the Minetest Engine.
+Dreambuilder is my attempt to give the player pretty much everything 
+they'll ever want to build with, and all the tools they should ever need 
+to actually get the job done. This game, at its base, consists of the 
+standard minetest_game, minus a couple of mods that I don't like, with a 
+number of minor things changed, and a whole boatload of extra mods added 
+on, many of which have themselves been tweaked from their default 
+states.
 
-The Minetest Engine can be found in:
-  https://github.com/minetest/minetest/
+What's changed?
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ 
 
-Compatibility
---------------
-The minetest_game github master HEAD is generally compatible with the github
-master HEAD of minetest.
+* The Undergrowth modpack along with the Moretrees mod and their main 
+dependency, the Plantlife Modpack, add a very large dynamic to your 
+landscape (as a result, they will add mapgen lag).
 
-Additionally, when the minetest engine is tagged to be a certain version (eg.
-0.4.dev-20120326), minetest_game is tagged with the version too.
+* The standard inventory that comes with minetest_game has been 
+overridden in favor of RealBadAngel's Unified Inventory mod. That means 
+that if you're playing this in creative mode, your stacks are NOT 
+infinite (and they shouldn't be).
 
-When stable releases are made, minetest_game is packaged and made available in
-  http://minetest.net/download.php
-and in case the repository has grown too much, it may be reset. In that sense,
-this is not a "real" git repository. (Package maintainers please note!)
+* The default bones mod has been removed, with extreme prejudice.
+
+* The default leaf decay code has been disabled in favor of that 
+provided by my Moretrees mod.
+
+* Stu's split-limb player model replaces the default one.
+
+* The default lavacooling code has been supplanted by better, safer code 
+from my Gloopblocks mod. That mod also provides stone/cobble --> mossy 
+stone/cobble transformation in the presence of water.
+
+* Paramat's Snowdrift mod is included to give the world some weather! 
+Rain and snow will fall, and snow will accumulate on suitable surfaces. 
+The snow and rain paramaters have been tweaked a bit to my taste :-) .
+
+* An extensive selection of administration tools for single-player and 
+server use are included, such as areas, maptools, worldedit, xban, and 
+more.
 
 License of source code
-----------------------
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ 
 Copyright (C) 2010-2012 celeron55, Perttu Ahola <celeron55@gmail.com>
 See README.txt in each mod directory for information about other authors.
 
@@ -41,7 +59,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 License of media (textures and sounds)
---------------------------------------
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ 
 Copyright (C) 2010-2012 celeron55, Perttu Ahola <celeron55@gmail.com>
 See README.txt in each mod directory for information about other authors.
 
@@ -51,3 +69,9 @@ http://creativecommons.org/licenses/by-sa/3.0/
 License of menu/header.png
 Copyright (C) 2013 BlockMen CC BY-3.0
 
+Other license info
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+This is Dreambuilder, any differences between it and minetest_game and between
+it and the various orginal mods that it started with are by Vanessa Ezekowitz
+and are WTFPL.  I claim no authoriship of anyone else's code in this project,
+only over my own changes.
