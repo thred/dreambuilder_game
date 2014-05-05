@@ -12,7 +12,7 @@ local default_nodes = {
 	"bronzeblock",
 	"diamondblock",
 	"desert_stone",
-	"desert_cobble",
+	-- "desert_cobble", Does not work in minetest_game.
 	"glass",
 	"tree",
 	"wood",
@@ -40,7 +40,7 @@ for _, name in pairs(default_nodes) do
 		groups = groups,
 		sounds = ndef.sounds,
 		tiles = ndef.tiles,
-		sunlight_propagates = ndef.sunlight_propagates,
+		sunlight_propagates = true,
 	})
 end
 
