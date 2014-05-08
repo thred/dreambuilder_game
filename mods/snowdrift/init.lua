@@ -164,7 +164,19 @@ minetest.register_globalstep(function(dtime)
 		end
 		if rain then
 			for drop = 1, DROPS do
-				minetest.add_particle(
+				minetest.add_particle({
+					pos = { x=pposx-24+math.random(0,48), y=pposy+16, z=pposz-24+math.random(0,48) },
+					vel = {x=0, y=-16, z=-1},
+					acc = {x=0, y=0, z=0},
+					expirationtime = 4,
+					size = 2.8,
+					collisiondetection = false,
+					vertical = true,
+					texture = "snowdrift_raindrop.png",
+					playername = player:get_player_name()
+				})
+--[[
+					minetest.add_particle(
 					{x=pposx-24+math.random(0,48), y=pposy+16, z=pposz-24+math.random(0,48)}, -- posi
 					{x=0, y=-8, z=-1}, -- velo
 					{x=0, y=0, z=0}, -- acce
@@ -174,6 +186,7 @@ minetest.register_globalstep(function(dtime)
 					"snowdrift_raindrop.png",
 					player:get_player_name()
 				)
+]]--
 			end
 		end			
 	end
