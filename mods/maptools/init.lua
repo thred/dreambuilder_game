@@ -318,7 +318,6 @@ minetest.register_node("maptools:lightbulb", {
 	pointable = false,
 	light_source = 15,
 	paramtype = "light",
-	buildable_to = true,
 	sunlight_propagates = true,
 	drop = "",
 	groups = {unbreakable=1, not_in_creative_inventory = maptools_creative},
@@ -360,7 +359,6 @@ minetest.register_node("maptools:climb", {
 	walkable = false,
 	climbable = true,
 	pointable = false,
-	buildable_to = true,
 	paramtype = "light",
 	sunlight_propagates = true,
 	drop = "",
@@ -409,7 +407,7 @@ minetest.register_node("maptools:smoke", {
 	paramtype = "light",
 	drop = "",
 	groups = {unbreakable=1, not_in_creative_inventory = maptools_creative},
-	post_effect_color = {a=127, r=127, g=127, b=127},
+	post_effect_color = {a=192, r=96, g=96, b=96},
 })
 
 minetest.register_node("maptools:ladder", {
@@ -576,9 +574,9 @@ minetest.register_tool("maptools:pick_admin_with_drops", {
 
 minetest.register_on_punchnode(function(pos, node, puncher)
 	if puncher:get_wielded_item():get_name() == "maptools:pick_admin"
-	and minetest.env:get_node(pos).name ~= "air" then
-		minetest.log("action", minetest.env:get_node(pos).name .. " was removed using an Admin Pickaxe at " .. minetest.pos_to_string(pos) .. ".")
-		minetest.env:remove_node(pos) -- The node is removed directly, which means it even works on non-empty containers and group-less nodes.
+	and minetest.get_node(pos).name ~= "air" then
+		minetest.log("action", minetest.get_node(pos).name .. " was removed using an Admin Pickaxe at " .. minetest.pos_to_string(pos) .. ".")
+		minetest.remove_node(pos) -- The node is removed directly, which means it even works on non-empty containers and group-less nodes.
 	end
 end)
 
