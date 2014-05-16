@@ -130,6 +130,10 @@ minetest.register_node("plasticbox:plasticbox_yellow", {
 	groups = {choppy=1, snappy=1, oddly_breakable_by_hand=1, level=1},
 	sounds = default.node_sound_stone_defaults(),
 })
+minetest.register_craftitem("plasticbox:plastic_powder", {
+	image = "plastic_powder.png",
+    	description="Plastic Powder",
+})
 
 
 --Register craft for plain box
@@ -140,6 +144,47 @@ minetest.register_craft( {
                 { "homedecor:plastic_sheeting", "", "homedecor:plastic_sheeting" },
                 { "homedecor:plastic_sheeting", "homedecor:plastic_sheeting", "homedecor:plastic_sheeting" }
         },
+})
+
+--Register crafts for plastic powder
+
+if minetest.get_modpath("technic") then
+	local grinder_recipes = {
+		{"plasticbox:plasticbox",    "plasticbox:plastic_powder 2"},
+		{"plasticbox:plasticbox_black",    "plasticbox:plastic_powder 2"},
+		{"plasticbox:plasticbox_blue",    "plasticbox:plastic_powder 2"},
+		{"plasticbox:plasticbox_brown",    "plasticbox:plastic_powder 2"},
+		{"plasticbox:plasticbox_cyan",    "plasticbox:plastic_powder 2"},
+		{"plasticbox:plasticbox_darkgreen",    "plasticbox:plastic_powder 2"},
+		{"plasticbox:plasticbox_darkgrey",    "plasticbox:plastic_powder 2"},
+		{"plasticbox:plasticbox_green",    "plasticbox:plastic_powder 2"},
+		{"plasticbox:plasticbox_grey",    "plasticbox:plastic_powder 2"},
+		{"plasticbox:plasticbox_magenta",    "plasticbox:plastic_powder 2"},
+		{"plasticbox:plasticbox_orange",    "plasticbox:plastic_powder 2"},
+		{"plasticbox:plasticbox_pink",    "plasticbox:plastic_powder 2"},
+		{"plasticbox:plasticbox_red",    "plasticbox:plastic_powder 2"},
+		{"plasticbox:plasticbox_violet",    "plasticbox:plastic_powder 2"},
+		{"plasticbox:plasticbox_white",    "plasticbox:plastic_powder 2"},
+		{"plasticbox:plasticbox_yellow",    "plasticbox:plastic_powder 2"},
+		{"homedecor:plastic_sheeting",       "plasticbox:plastic_powder 1"}
+	}
+	for _, data in pairs(grinder_recipes) do
+		technic.register_grinder_recipe({input=data[1], output=data[2]})
+	end
+else
+minetest.register_craft( {
+        output = "homedecor:plastic_sheeting 7",
+        recipe = {
+                { "plasticbox:plasticbox", "plasticbox:plasticbox" },
+                { "plasticbox:plasticbox", "plasticbox:plasticbox" },
+        },
+})
+end
+
+minetest.register_craft({
+     type = "cooking",
+     output = "homedecor:plastic_sheeting",
+     recipe = "plasticbox:plastic_powder",
 })
 
 --Register crafts for colored boxes
