@@ -21,6 +21,8 @@ X is Plastic Sheets (from homedecor/pipeworks), - is nothing
 
 Plain plastic box and a dye. (shapeless)
 
+Buckets can also be crafted from plastic sheets in place of steel ingots.
+
 Recycling:
 
 There are two ways to recycle plastic boxes. If you have Technic installed, plastic boxes of any color can be ground to 2 "plastic powder" and sheets to one powder. Without Technic, craft 4 plastic boxes (plain only) in a square to get 7 powder. In either case, the powder can be cooked in a furnace to make plastic sheets, from which more boxes (or other plastic items) can be made.
