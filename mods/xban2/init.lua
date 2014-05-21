@@ -1,9 +1,7 @@
 
-xban = { }
+xban = { MP = minetest.get_modpath(minetest.get_current_modname()) }
 
-local MP = minetest.get_modpath(minetest.get_current_modname())
-
-dofile(MP.."/serialize.lua")
+dofile(xban.MP.."/serialize.lua")
 
 local db = { }
 local tempbans = { }
@@ -222,12 +220,11 @@ end
 
 local function save_db()
 	minetest.after(SAVE_INTERVAL, save_db)
-	local ok
 	local f, e = io.open(DB_FILENAME, "wt")
 	db.timestamp = os.time()
 	if f then
-		ok, e = f:write(xban.serialize(db))
-		WARNING("Unable to save database: %s", e)
+		local ok = f:write(xban.serialize(db))
+		WARNING("Unable to save database: %s", "Write failed")
 	end
 	if f then f:close() end
 	return
@@ -239,10 +236,9 @@ local function load_db()
 		WARNING("Unable to load database: %s", e)
 		return
 	end
-	local cont
-	cont, e = f:read("*a")
+	local cont = f:read("*a")
 	if not cont then
-		WARNING("Unable to load database: %s", e)
+		WARNING("Unable to load database: %s", "Read failed")
 		return
 	end
 	local t = minetest.deserialize(cont)
@@ -264,3 +260,5 @@ minetest.register_on_shutdown(save_db)
 minetest.after(SAVE_INTERVAL, save_db)
 load_db()
 xban.db = db
+
+dofile(xban.MP.."/dbimport.lua")
