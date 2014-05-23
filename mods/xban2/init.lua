@@ -86,6 +86,7 @@ function xban.ban_player(player, source, expires, reason) --> bool, err
 		if ip then
 			e.names[ip] = true
 		end
+		e.last_pos = pl:getpos()
 	end
 	e.reason = reason
 	e.time = rec.time
@@ -197,6 +198,46 @@ minetest.register_chatcommand("xunban", {
 		local ok, e = xban.unban_player(plname, name)
 		minetest.chat_send_player(name,
 		  ("Unbanned %s."):format(plname))
+	end,
+})
+
+minetest.register_chatcommand("xban_record", {
+	description = "Show the ban records of a player",
+	params = "<player_or_ip>",
+	privs = { ban=true },
+	func = function(name, params)
+		local plname = params:match("%S+")
+		if not plname then
+			minetest.chat_send_player(name,
+			  "Usage: /xban_record <player_or_ip>")
+			return
+		end
+		local e = xban.find_entry(params)
+		if not e then
+			minetest.chat_send_player(name,
+			  ("[xban_record] No entry for `%s'"):format(params))
+			return
+		elseif (not e.record) or (#e.record == 0) then
+			minetest.chat_send_player(name,
+			  ("[xban_record] `%s' has no ban records"):format(params))
+			return
+		end
+		for _, rec in ipairs(e.record) do
+			local msg
+			if rec.expires then
+				msg = ("%s, Expires: %s"):format(
+				  rec.reason, os.date("%c", e.expires))
+			else
+				msg = rec.reason
+			end
+			minetest.chat_send_player(name,
+			  ("[%s]: %s"):format(os.date("%c", e.time), msg))
+		end
+		if e.last_pos then
+			minetest.chat_send_player(name,
+			  ("[%s]: User was last seen at %s"):format(
+			  minetest.pos_to_string(e.last_pos)))
+		end
 	end,
 })
 
