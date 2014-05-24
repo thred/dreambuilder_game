@@ -92,12 +92,15 @@ local function deployer_on(pos, node)
 				set_detach = delay(),
 				set_bone_position = delay(),
 			}
-			local stack2 = minetest.item_place(stack, placer, {type="node", under=pos_under, above=pos_above})
-			if minetest.setting_getbool("creative_mode") and not minetest.get_modpath("unified_inventory") then --infinite stacks ahoy!
-				stack2:take_item()
+			local pointed_thing = {type="node", under=pos_under, above=pos_above}
+			local stack2
+			if minetest.registered_items[stack:get_name()] and minetest.registered_items[stack:get_name()] then
+				stack2 = minetest.registered_items[stack:get_name()].on_place(stack, placer, pointed_thing)
 			end
-			invlist[i] = stack2
-			inv:set_list("main", invlist)
+			--if minetest.setting_getbool("creative_mode") and not minetest.get_modpath("unified_inventory") then --infinite stacks ahoy!
+			--	stack2:take_item()
+			--end
+			inv:set_stack("main", i, stack2)
 			return
 		end
 	end
@@ -126,7 +129,10 @@ minetest.register_node("pipeworks:deployer_off", {
 			return inv:room_for_item("main",stack)
 		end,
 		input_inventory="main",
-		connect_sides={back=1}},
+		connect_sides={back=1},
+		can_remove = function(pos, node, stack, dir)
+			return stack:get_count()
+		end},
 	is_ground_content = true,
 	paramtype2 = "facedir",
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2, mesecon = 2,tubedevice=1, tubedevice_receiver=1},
@@ -170,6 +176,27 @@ minetest.register_node("pipeworks:deployer_off", {
 		minetest.get_meta(pos):set_string("owner", placer:get_player_name())
 	end,
 	after_dig_node = pipeworks.scan_for_tube_objects,
+	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+		local meta = minetest.get_meta(pos)
+		if player:get_player_name() ~= meta:get_string("owner") and meta:get_string("owner") ~= "" then
+			return 0
+		end
+		return count
+	end,
+	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+		local meta = minetest.get_meta(pos)
+		if player:get_player_name() ~= meta:get_string("owner") and meta:get_string("owner") ~= "" then
+			return 0
+		end
+		return stack:get_count()
+	end,
+	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
+		local meta = minetest.get_meta(pos)
+		if player:get_player_name() ~= meta:get_string("owner") and meta:get_string("owner") ~= "" then
+			return 0
+		end
+		return stack:get_count()
+	end
 })
 
 minetest.register_node("pipeworks:deployer_on", {
@@ -188,7 +215,10 @@ minetest.register_node("pipeworks:deployer_on", {
 			return inv:room_for_item("main",stack)
 		end,
 		input_inventory="main",
-		connect_sides={back=1}},
+		connect_sides={back=1},
+		can_remove = function(pos, node, stack, dir)
+			return stack:get_count()
+		end},
 	is_ground_content = true,
 	paramtype2 = "facedir",
 	tubelike=1,
@@ -234,4 +264,25 @@ minetest.register_node("pipeworks:deployer_on", {
 		minetest.get_meta(pos):set_string("owner", placer:get_player_name())
 	end,
 	after_dig_node = pipeworks.scan_for_tube_objects,
+	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+		local meta = minetest.get_meta(pos)
+		if player:get_player_name() ~= meta:get_string("owner") and meta:get_string("owner") ~= "" then
+			return 0
+		end
+		return count
+	end,
+	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+		local meta = minetest.get_meta(pos)
+		if player:get_player_name() ~= meta:get_string("owner") and meta:get_string("owner") ~= "" then
+			return 0
+		end
+		return stack:get_count()
+	end,
+	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
+		local meta = minetest.get_meta(pos)
+		if player:get_player_name() ~= meta:get_string("owner") and meta:get_string("owner") ~= "" then
+			return 0
+		end
+		return stack:get_count()
+	end
 })
