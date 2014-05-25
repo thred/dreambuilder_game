@@ -35,6 +35,7 @@ Machine cannot be removed because it is not empty = La maquina no puede removers
 Inventory move disallowed due to protection =
 # $1: Machine name (Includes tier)
 %s Active = %s Activo
+%s Enabled =
 %s Idle = %s Quieto
 %s Unpowered = %s Sin Energia
 %s Out Of Fuel = %s Sin Combustible
@@ -121,7 +122,6 @@ Slope Edge = Borde de Rampa
 Slope = Rampa
 Element T = Elemento T
 Cylinder = Cilindro
-Steel = Acero
 Cobble = Adoquines
 Stone = Piedra
 Brick = Ladrillo
@@ -138,16 +138,18 @@ Alatro = Alatro
 Arol = Arol
 Brass = Laton
 Bronze = Bronce
+Carbon Steel = Acero al Carbono
+Cast Iron = Hierro Fundido
 Chromium = Cromo
 Coal = Carbon
 Copper = Cobre
 Gold = Oro
-Iron = Hierro
 Mithril = Mitrilo
 Silver = Plata
 Stainless Steel = Acero Inoxidable
 Talinite = Talinita
 Tin = Estanio
+Wrought Iron = Hierro Forjado
 Zinc = Zinc
 
 ## Tools

@@ -1,8 +1,12 @@
 More Blocks
-==========
+==========================================================
 
 More Blocks for Minetest (http://minetest.net), a free and open source infinite
 world block sandbox game.
+
+**Moved to Gitorious:** https://gitorious.com/calinou/moreblocks/
+
+----------------------
 
 To install, just clone this repository into your "mods" directory.
 

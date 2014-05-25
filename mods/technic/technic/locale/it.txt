@@ -33,6 +33,7 @@ Inventory move disallowed due to protection = Impossibile muovere l'inventario a
 # $1: Machine name (Includes tier)
 %s Active = %s Attivo
 %s Disabled = %s Disabilitato
+%s Enabled =
 %s Idle = %s Inattivo
 %s Improperly Placed = %s Piazzato impropiamente
 %s Unpowered = %s Non alimentato
@@ -132,7 +133,6 @@ Cobble = Ciottolato
 Dirt = Terra
 Leaves = Foglie
 Sandstone = Arenaria
-Steel = Acciaio
 Stone = Pietra
 Tree = Albero
 Wooden = Legno
@@ -145,16 +145,18 @@ Alatro = Alatro
 Arol = Arol
 Brass = Ottone
 Bronze = Bronzo
+Carbon Steel = Acciaio al Carbonio
+Cast Iron = Ghisa
 Chromium = Cromo
 Coal = Carbone
 Copper = Rame
 Gold = Oro
-Iron = Ferro
 Mithril = Mithril
 Silver = Argento
 Stainless Steel = Acciaio Inossidabile
 Talinite = Talinite
 Tin = Stagno
+Wrought Iron = Ferro Battuto
 Zinc = Zinco
 
 ## Tools
