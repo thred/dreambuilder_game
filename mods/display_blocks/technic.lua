@@ -7,7 +7,7 @@ end
 if technic_uranium_new_ore_gen == true then
 	minetest.register_ore({
 		ore_type = "scatter",
-		ore = "technic:uranium_mineral",
+		ore = "technic:mineral_uranium",
 		wherein = "default:stone",
 		clust_scarcity = 20*20*20,
 		clust_num_ores = 18,
@@ -18,7 +18,7 @@ if technic_uranium_new_ore_gen == true then
 
 	minetest.register_ore({
 		ore_type = "scatter",
-		ore = "technic:uranium_mineral",
+		ore = "technic:mineral_uranium",
 		wherein = "default:stone",
 		clust_scarcity =30*30*30,
 		clust_num_ores = 40,
