@@ -142,7 +142,9 @@ minetest.register_node("gloopblocks:pavement", {
 })
 
 minetest.register_node("gloopblocks:oerkki_block", {
+	drawtype = "nodebox",
 	description = S("Oerkki Block"),
+	paramtype = "light",
 	paramtype2 = "facedir",
 	tiles = {
 		"gloopblocks_oerkkiblock_tb.png",
@@ -154,6 +156,21 @@ minetest.register_node("gloopblocks:oerkki_block", {
 	},
 	groups = {cracky=3, oddly_breakable_by_hand=3},
 	sounds = default.node_sound_stone_defaults(),
+	selection_box = {
+		type = "fixed",
+		fixed = { -0.5, -0.5, -0.5, 0.5, 0.5, 0.5 }
+	},
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5, -0.5, -0.1875, 0.5, 0.5, 0.1875}, -- NodeBox1
+			{-0.5, -0.5, -0.5, -0.4375, 0.5, 0.5}, -- NodeBox2
+			{0.4375, -0.5, -0.5, 0.5, 0.5, 0.5}, -- NodeBox3
+			{-0.5, 0.4375, -0.5, 0.5, 0.5, 0.5}, -- NodeBox4
+			{-0.5, -0.5, -0.5, 0.5, -0.4375, 0.5}, -- NodeBox5
+			{-0.5, -0.0625, -0.5, 0.5, 0.0625, 0.5}, -- NodeBox6
+		}
+	}
 })
 
 minetest.register_node("gloopblocks:stone_brick_mossy", {
