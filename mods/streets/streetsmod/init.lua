@@ -1,32 +1,54 @@
 --[[
-	StreetsMod 1.1 by webdesigner97:
+	StreetsMod 1.5 by webdesigner97:
 		License : CC-BY-SA 3.0 Unported (see license.txt)
 		Readme	: see readme.txt
 		Forum	: http://bit.ly/12cPMeo
 		Depends	: default
 ]]
--- kaeza: intllib
+streets	= {}
+
+-- Kaeza intllib
 	-- Boilerplate to support localized strings if intllib mod is installed.
-	-- local S
-	if (minetest.get_modpath("intllib")) then
-	  dofile(minetest.get_modpath("intllib").."/intllib.lua")
-	  S = intllib.Getter(minetest.get_current_modname())
+	if minetest.get_modpath("intllib") then
+		streets.S = intllib.Getter()
 	else
-	  S = function ( s ) return s end
+		streets.S = function(s) return s end
 	end
--- Create variables and tables
-	print("Streets: " .. S("Creating variables and tables..."))
-	streets	= {}
-	streets.version	= "1.4.4dev"
-	streets.modpath = minetest.get_modpath("streets")
+	
+-- Create variable and tables
+	print("Streets: " .. streets.S("Creating variables and tables..."))
+	streets.version	= "1.5"
+	streets.modpath = minetest.get_modpath("streetsmod")
 	streets.extendedBy	= {}
 	streets.load = {
 		start = os.clock(),
 		fin = 0
 	}
+	streets.forms = {}
+
+
+	
+-- Support for mimnetest_next's fancy inventories
+	if gui_bg and gui_bg_img and gui_slots and type(default.get_hotbar_bg) == "function" then
+		-- Everything fine :)
+		-- minetest_next rules! :P
+	else
+		gui_bg = ""
+		gui_bg_img = ""
+		gui_slots = ""
+		default.get_hotbar_bg = function() return "" end
+	end
+	
+-- rubenwardy: smartfs
+	if not minetest.get_modpath("smartfs") then
+		dofile(streets.modpath .. "/libs/smartfs/smartfs.lua")
+	end
+	
+-- Load forms
+	dofile(streets.modpath .. "/forms.lua")
 	
 -- Check for mods which change this mod's beahaviour
-	print("Streets: " .. S("Checking installed mods..."))
+	print("Streets: " .. streets.S("Checking installed mods..."))
 	if minetest.get_modpath("wool")	 then
 		streets.extendedBy.wool = true
 	else
@@ -57,6 +79,11 @@
 	else
 		streets.extendedBy.prefab = false
 	end
+	if minetest.get_modpath("awards") then
+		streets.extendedBy.awards = true
+	else
+		streets.extendedBy.awards = false
+	end
 	
 -- Streets chatcommand
 	local function round(num, idp)
@@ -64,22 +91,12 @@
 		return math.floor(num * mult + 0.5) / mult
 	end
 	minetest.register_chatcommand("streets",{
-		description = S("Check version of your installed StreetsMod and find information"),
+		description = streets.S("Check version of your installed StreetsMod and find information"),
 		func = function(name,param)
-			minetest.show_formspec(name, "streets:streetsform", table.concat({
-				"size[10,6]",
-				"label[0,1;Wool installed: " .. tostring(streets.extendedBy.wool) .. "]",
-				"label[0,1.5;Technic installed: " .. tostring(streets.extendedBy.technic) .. "]",
-				"label[0,2;Moreblocks installed: " .. tostring(streets.extendedBy.moreblocks) .. "]",
-				"label[0,2.5;Mesecons installed: " .. tostring(streets.extendedBy.mesecons) .. "]",
-				"label[0,3;Digilines installed: " .. tostring(streets.extendedBy.digilines) .. "]",
-				"label[0,3.5;Prefab installed: " .. tostring(streets.extendedBy.prefab) .. "]",
-				"label[0,4.5;Running version: " .. streets.version .. "]",
-				"label[0,5;Load time: " .. round(streets.load.fin - streets.load.start,4) .. "s]"
-			}))
+			streets.forms.chatcmd:show(name);
 		end
 	})
 	
 -- Done	
-	print("Streets: " .. S("Setup completed, have fun with StreetsMod") .. " " .. streets.version .. "!")
+	print("Streets: " .. streets.S("Setup completed, have fun with StreetsMod") .. " " .. streets.version .. "!")
 	streets.load.fin = os.clock()

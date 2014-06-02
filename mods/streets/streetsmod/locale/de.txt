@@ -47,6 +47,7 @@ Street lamp=Strassenlampe
 Concrete wall=Betonwand
 Concrete=Beton
 Trafficlight=Ampel
+Running version=Version
 Cheater=Schummler
 Cheater!=Schummler!
 Off=Aus
