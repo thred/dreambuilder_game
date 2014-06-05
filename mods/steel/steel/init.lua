@@ -146,6 +146,11 @@ minetest.register_node("steel:grate_hard", {
 	sounds = default.node_sound_wood_defaults(),
 })
 
+minetest.register_craftitem("steel:sheet_metal", {
+	description = "Sheet metal",
+	inventory_image = "steel_sheet_metal.png",
+})
+
 minetest.register_node("steel:roofing", {
 	description = "Corrugated steel roofing",
 	drawtype = "raillike",
@@ -207,14 +212,31 @@ if homedecor_register_slope and homedecor_register_roof then
 	)
 end
 
-	--steel scrap are only used to recover ingots
+--steel scrap are only used to recover ingots
 
 minetest.register_craftitem("steel:scrap", {
 	description = "Steel scraps",
 	inventory_image = "scrap.png",
 })
 
-	--recipes
+--recipes
+
+minetest.register_craft({
+	output = 'steel:roofing 3',
+	recipe = {
+		{ 'steel:sheet_metal', '', 'steel:sheet_metal' },
+		{ '', 'steel:sheet_metal', '' },
+	}
+})
+
+minetest.register_craft({
+	output = 'steel:sheet_metal 3',
+	recipe = {
+		{ '', 'steel:roofing', '' },
+		{ 'steel:roofing', '', 'steel:roofing' },
+
+	}
+})
 
 minetest.register_craft({
 	output = 'steel:plate_soft 2',
@@ -224,14 +246,11 @@ minetest.register_craft({
 	}
 })
 
-
-
 minetest.register_craft({
 	type = "cooking",
 	output = "steel:plate_hard",
 	recipe = "steel:plate_soft",
 })
-
 
 minetest.register_craft({
 	output = 'steel:grate_soft 3',
@@ -240,7 +259,6 @@ minetest.register_craft({
 		{'default:steel_ingot', '', 'default:steel_ingot'},
 	}
 })
-
 
 minetest.register_craft({
 	type = "cooking",
@@ -261,12 +279,13 @@ if not minetest.registered_nodes["streets:steel_support"] then
 end
 
 minetest.register_craft({
-	output = 'steel:roofing 6',
+	output = 'steel:sheet_metal 6',
 	recipe = {
 		{'default:steel_ingot', 'default:steel_ingot', 'default:steel_ingot'},
 	}
 })
-	--remelting recipes
+
+--recycling recipes
 
 minetest.register_craft({
 	output = 'steel:scrap 2',
@@ -293,6 +312,13 @@ minetest.register_craft({
 	output = 'steel:scrap',
 	recipe = {
 		{'steel:roofing'},
+	}
+})
+
+minetest.register_craft({
+	output = 'steel:scrap',
+	recipe = {
+		{'steel:sheet_metal'},
 	}
 })
 
@@ -327,6 +353,4 @@ else
 	})
 
 end
-
-
 
