@@ -222,27 +222,27 @@ minetest.register_craftitem("steel:scrap", {
 --recipes
 
 minetest.register_craft({
-	output = 'steel:roofing 3',
+	output = "steel:roofing 3",
 	recipe = {
-		{ 'steel:sheet_metal', '', 'steel:sheet_metal' },
-		{ '', 'steel:sheet_metal', '' },
+		{ "steel:sheet_metal", "", "steel:sheet_metal" },
+		{ "", "steel:sheet_metal", "" },
 	}
 })
 
 minetest.register_craft({
-	output = 'steel:sheet_metal 3',
+	output = "steel:sheet_metal 3",
 	recipe = {
-		{ '', 'steel:roofing', '' },
-		{ 'steel:roofing', '', 'steel:roofing' },
+		{ "", "steel:roofing", "" },
+		{ "steel:roofing", "", "steel:roofing" },
 
 	}
 })
 
 minetest.register_craft({
-	output = 'steel:plate_soft 2',
+	output = "steel:plate_soft 2",
 	recipe = {
-		{'default:steel_ingot', 'default:steel_ingot'},
-		{'default:steel_ingot', 'default:steel_ingot'},
+		{"default:steel_ingot", "default:steel_ingot"},
+		{"default:steel_ingot", "default:steel_ingot"},
 	}
 })
 
@@ -253,10 +253,10 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = 'steel:grate_soft 3',
+	output = "steel:grate_soft 3",
 	recipe = {
-		{'default:steel_ingot', '', 'default:steel_ingot'},
-		{'default:steel_ingot', '', 'default:steel_ingot'},
+		{"default:steel_ingot", "", "default:steel_ingot"},
+		{"default:steel_ingot", "", "default:steel_ingot"},
 	}
 })
 
@@ -269,86 +269,86 @@ minetest.register_craft({
 -- only register this craft if streets is not loaded
 if not minetest.registered_nodes["streets:steel_support"] then
 	minetest.register_craft({
-		output = 'steel:strut 5',
+		output = "steel:strut 5",
 		recipe = {
-			{'default:steel_ingot', '', 'default:steel_ingot'},
-			{'', 'default:steel_ingot', ''},
-			{'default:steel_ingot', '', 'default:steel_ingot'},
+			{"default:steel_ingot", "", "default:steel_ingot"},
+			{"", "default:steel_ingot", ""},
+			{"default:steel_ingot", "", "default:steel_ingot"},
 		}
 	})
 end
 
 minetest.register_craft({
-	output = 'steel:sheet_metal 6',
+	output = "steel:sheet_metal 6",
 	recipe = {
-		{'default:steel_ingot', 'default:steel_ingot', 'default:steel_ingot'},
+		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
 	}
 })
 
 --recycling recipes
 
 minetest.register_craft({
-	output = 'steel:scrap 2',
+	output = "steel:scrap 2",
 	recipe = {
-		{'steel:strut'},
+		{"steel:strut"},
 	}
 })
 
 minetest.register_craft({
-	output = 'steel:scrap 2',
+	output = "steel:scrap 2",
 	recipe = {
-		{'steel:grate_soft'},
+		{"steel:grate_soft"},
 	}
 })
 
 minetest.register_craft({
-	output = 'steel:scrap 2',
+	output = "steel:scrap 2",
 	recipe = {
-		{'steel:grate_hard'},
+		{"steel:grate_hard"},
 	}
 })
 
 minetest.register_craft({
-	output = 'steel:scrap',
+	output = "steel:scrap",
 	recipe = {
-		{'steel:roofing'},
+		{"steel:roofing"},
 	}
 })
 
 minetest.register_craft({
-	output = 'steel:scrap',
+	output = "steel:scrap",
 	recipe = {
-		{'steel:sheet_metal'},
+		{"steel:sheet_metal"},
 	}
 })
 
 minetest.register_craft({
-	output = 'steel:scrap 4',
+	output = "steel:scrap 4",
 	recipe = {
-		{'steel:plate_soft'},
+		{"steel:plate_soft"},
 	}
 })
 
 minetest.register_craft({
-	output = 'steel:scrap 4',
+	output = "steel:scrap 4",
 	recipe = {
-		{'steel:plate_hard'},
+		{"steel:plate_hard"},
 	}
 })
 
 if minetest.get_modpath("technic") then
 	minetest.register_craft({
-		output = 'default:iron_lump',
+		output = "default:iron_lump",
 		recipe = {
-			{'steel:scrap', 'steel:scrap'},
-			{'steel:scrap', 'steel:scrap'},
+			{"steel:scrap", "steel:scrap"},
+			{"steel:scrap", "steel:scrap"},
 		}
 	})
 else
 	minetest.register_craft({
-		output = 'default:iron_lump',
+		output = "default:iron_lump",
 		recipe = {
-			{'steel:scrap', 'steel:scrap'},
+			{"steel:scrap", "steel:scrap"},
 		}
 	})
 
