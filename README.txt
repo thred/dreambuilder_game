@@ -77,7 +77,6 @@ This is Dreambuilder, any differences between it and minetest_game and between
 it and the various orginal mods that it started with are by Vanessa Ezekowitz
 and are WTFPL.  I claim no authoriship of anyone else's code in this project,
 only over my own changes.
- 
+
 License of mods/default/textures/default_desert_cobble.png
 Copyright (C) 2014 brunob.santos CC-BY-SA 4.0
-

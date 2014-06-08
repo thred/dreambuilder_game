@@ -72,6 +72,7 @@ local function deployer_on(pos, node)
 				get_player_control_bits = delay(0),
 				get_player_name = delay(meta:get_string("owner")),
 				is_player = delay(true),
+				is_fake_player = true,
 				set_inventory_formspec = delay(),
 				getpos = delay({x = pos.x, y = pos.y - 1.5, z = pos.z}), -- Player height
 				get_hp = delay(20),
@@ -95,7 +96,7 @@ local function deployer_on(pos, node)
 			local pointed_thing = {type="node", under=pos_under, above=pos_above}
 			local stack2
 			if minetest.registered_items[stack:get_name()] then
-				stack2 = minetest.registered_items[stack:get_name()].on_place(stack, placer, pointed_thing)
+				stack2 = minetest.registered_items[stack:get_name()].on_place(stack, placer, pointed_thing) or stack
 			end
 			--if minetest.setting_getbool("creative_mode") and not minetest.get_modpath("unified_inventory") then --infinite stacks ahoy!
 			--	stack2:take_item()
