@@ -1,3 +1,17 @@
+-- This pair of encoding functions is used where variable text must go in
+-- button names, where the text might contain formspec metacharacters.
+-- We can escape button names for the formspec, to avoid screwing up
+-- form structure overall, but they then don't get de-escaped, and so
+-- the input we get back from the button contains the formspec escaping.
+-- This is a game engine bug, and in the anticipation that it might be
+-- fixed some day we don't want to rely on it.  So for safety we apply
+-- an encoding that avoids all formspec metacharacters.
+function unified_inventory.mangle_for_formspec(str)
+	return string.gsub(str, "([^A-Za-z0-9])", function (c) return string.format("_%d_", string.byte(c)) end)
+end
+function unified_inventory.demangle_for_formspec(str)
+	return string.gsub(str, "_([0-9]+)_", function (v) return string.char(v) end)
+end
 
 function unified_inventory.get_formspec(player, page)
 	if not player then
@@ -57,6 +71,7 @@ function unified_inventory.get_formspec(player, page)
 	if #unified_inventory.filtered_items_list[player_name] == 0 then
 		formspec = formspec.."label[8.2,0;No matching items]"
 	else
+		local dir = unified_inventory.active_search_direction[player_name]
 		local list_index = unified_inventory.current_index[player_name]
 		local page = math.floor(list_index / (80) + 1)
 		local pagemax = math.floor(
@@ -70,8 +85,8 @@ function unified_inventory.get_formspec(player, page)
 				formspec = formspec.."item_image_button["
 						..(8.2 + x * 0.7)..","
 						..(1   + y * 0.7)..";.81,.81;"
-						..name..";item_button_"
-						..name..";]"
+						..name..";item_button_"..dir.."_"
+						..unified_inventory.mangle_for_formspec(name)..";]"
 				list_index = list_index + 1
 			end
 		end
@@ -94,13 +109,9 @@ function unified_inventory.set_inventory_formspec(player, page)
 end
 
 --apply filter to the inventory list (create filtered copy of full one)
-function unified_inventory.apply_filter(player, filter)
+function unified_inventory.apply_filter(player, filter, search_dir)
 	local player_name = player:get_player_name()
 	local lfilter = string.lower(filter)
-	if not pcall(function() ("technic:test"):find(lfilter) end) then
-		-- Filter is invalid
-		lfilter = ""
-	end
 	local ffilter
 	if lfilter:sub(1, 6) == "group:" then
 		local groups = lfilter:sub(7):split(",")
@@ -116,7 +127,7 @@ function unified_inventory.apply_filter(player, filter)
 		ffilter = function(name, def)
 			local lname = string.lower(name)
 			local ldesc = string.lower(def.description)
-			return string.find(lname, lfilter) or string.find(ldesc, lfilter)
+			return string.find(lname, lfilter, 1, true) or string.find(ldesc, lfilter, 1, true)
 		end
 	end
 	unified_inventory.filtered_items_list[player_name]={}
@@ -129,6 +140,7 @@ function unified_inventory.apply_filter(player, filter)
 	unified_inventory.filtered_items_list_size[player_name] = #unified_inventory.filtered_items_list[player_name]
 	unified_inventory.current_index[player_name] = 1
 	unified_inventory.activefilter[player_name] = filter
+	unified_inventory.active_search_direction[player_name] = search_dir
 	unified_inventory.set_inventory_formspec(player,
 			unified_inventory.current_page[player_name])
 end

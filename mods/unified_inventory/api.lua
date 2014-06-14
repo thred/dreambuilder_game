@@ -42,6 +42,25 @@ minetest.after(0.01, function()
 			end
 		end
 	end
+	for _, recipes in pairs(unified_inventory.crafts_for.recipe) do
+		for _, recipe in ipairs(recipes) do
+			local ingredient_items = {}
+			for _, spec in ipairs(recipe.items) do
+				local matches_spec = unified_inventory.canonical_item_spec_matcher(spec)
+				for _, name in ipairs(unified_inventory.items_list) do
+					if matches_spec(name) then
+						ingredient_items[name] = true
+					end
+				end
+			end
+			for name, _ in pairs(ingredient_items) do
+				if unified_inventory.crafts_for.usage[name] == nil then
+					unified_inventory.crafts_for.usage[name] = {}
+				end
+				table.insert(unified_inventory.crafts_for.usage[name], recipe)
+			end
+		end
+	end
 end)
 
 
@@ -101,10 +120,10 @@ function unified_inventory.register_craft(options)
 	if options.type == "normal" and options.width == 0 then
 		options = { type = "shapeless", items = options.items, output = options.output, width = 0 }
 	end
-	if unified_inventory.crafts_table[itemstack:get_name()] == nil then
-		unified_inventory.crafts_table[itemstack:get_name()] = {}
+	if unified_inventory.crafts_for.recipe[itemstack:get_name()] == nil then
+		unified_inventory.crafts_for.recipe[itemstack:get_name()] = {}
 	end
-	table.insert(unified_inventory.crafts_table[itemstack:get_name()],options)
+	table.insert(unified_inventory.crafts_for.recipe[itemstack:get_name()],options)
 end
 
 
@@ -134,6 +153,13 @@ unified_inventory.register_craft_type("normal", {
 	description = "Crafting",
 	width = 3,
 	height = 3,
+	get_shaped_craft_width = function (craft) return craft.width end,
+	dynamic_display_size = function (craft)
+		local w = craft.width
+		local h = math.ceil(table.maxn(craft.items) / craft.width)
+		local g = w < h and h or w
+		return { width = g, height = g }
+	end,
 	uses_crafting_grid = true,
 })
 
@@ -142,6 +168,12 @@ unified_inventory.register_craft_type("shapeless", {
 	description = "Mixing",
 	width = 3,
 	height = 3,
+	dynamic_display_size = function (craft)
+		local maxn = table.maxn(craft.items)
+		local g = 1
+		while g*g < maxn do g = g + 1 end
+		return { width = g, height = g }
+	end,
 	uses_crafting_grid = true,
 })
 
