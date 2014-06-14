@@ -17,7 +17,7 @@ minetest.register_globalstep(function(dtime)
 end)
 
 earn_income = function(player)
-    if not player then return end
+    if not player or player.is_fake_player then return end
     local name = player:get_player_name()
     if players_income[name] == nil then
         players_income[name] = 0
