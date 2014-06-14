@@ -46,3 +46,26 @@ minetest.register_craft({
 	output = "currency:minegeld 5",
 	recipe = {"currency:minegeld_5"},
 })
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "currency:minegeld_bundle",
+	recipe = {
+		"group:minegeld",
+		"group:minegeld",
+		"group:minegeld",
+		"group:minegeld",
+		"group:minegeld",
+		"group:minegeld",
+		"group:minegeld",
+		"group:minegeld",
+		"group:minegeld"
+	},
+})
+
+minetest.register_craft({
+	type = "fuel",
+	recipe = "currency:minegeld_bundle",
+	burntime = 1,
+})
+
