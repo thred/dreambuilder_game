@@ -1,25 +1,45 @@
-BEES MOD
---------
+BEES MOD V2.2
+-------------
+
+DEPENDS
+-------
+https://github.com/VanessaE/minetest-steel
 
 FEATURES
 --------
-- spawn wild bee hives on tree leaves
+2.2.1
+- removed steel dependency temporarily
+- fixed the craft for the extractor (and added alias for)
+
+2.2
+- craft for extractor
+- extractor texture update
+- a craft for the smoker
+
+2.1
+- bees polinate flowers nearby, causing them to multiply
+- add formspec to wild and artificial hive when using grafting tool
+- smoke, flying wax and bee particles
+- smokers to calm down the bees before opening the hive
+- a centrifuge to extract the honey and from the filled frames
 - grab eatable honeycomb from wild hives
 - craft a grafting tool to extract queen bees from wild hives
 - craft artificial hives and frames
+
+1.0
+- spawn wild bee hives on tree leaves
 - use the queen bee to populate artificial hives
 - plant flowers near hives to increase their productivity
+- spawning bee colonies
 
 FUTURE
 ------
-- a centrifuge to extract the honey from the frames
 - more realistic spawning of wild bee hives
-- improved textures
 - pipeworks compatibility (Industrial beehive) 
 
 CONTRIBUTORS
 ------------
-- bas080 (coding)
+- bas080
 - VanessaE (wild bee hive nodebox)
 - Neuromancer (textures for wild bee hive and inspiration for other textures)
 
@@ -29,5 +49,5 @@ https://forum.minetest.net/viewtopic.php?pid=102905
 
 LICENSE
 -------
-- code are WTFPL
-- text are WTFPL
+- codes is WTFPL
+- textures are CC BY-SA
