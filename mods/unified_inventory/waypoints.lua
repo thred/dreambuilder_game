@@ -1,9 +1,16 @@
+local S
+if intllib then
+	S = intllib.Getter()
+else
+	S = function(s) return s end
+end
+
 unified_inventory.hud_colors = {
-			{"#FFFFFF", 0xFFFFFF, "White"},
-			{"#DBBB00", 0xf1d32c, "Yellow"},
-			{"#DD0000", 0xDD0000, "Red"},
-			{"#2cf136", 0x2cf136, "Green"},
-			{"#2c4df1", 0x2c4df1, "Blue"},		
+			{"#FFFFFF", 0xFFFFFF, S("White")},
+			{"#DBBB00", 0xf1d32c, S("Yellow")},
+			{"#DD0000", 0xDD0000, S("Red")},
+			{"#2cf136", 0x2cf136, S("Green")},
+			{"#2c4df1", 0x2c4df1, S("Blue")},		
 			}
 unified_inventory.hud_colors_max = #unified_inventory.hud_colors
 			
@@ -12,65 +19,71 @@ unified_inventory.register_page("waypoints", {
 		local waypoints = datastorage.get_container (player, "waypoints")
 		local formspec = "background[0,4.5;8,4;ui_main_inventory.png]"..
 			"image[0,0;1,1;ui_waypoints_icon.png]"..
-			"label[1,0;Waypoints]" 
+			"label[1,0;"..S("Waypoints").."]" 
 
 		-- Tabs buttons:
 		local i
 		for i = 1, 5, 1 do
-			if i == waypoints.selected then
-				formspec = formspec ..
-					"image_button[0.0,".. 0.2 + i*0.7 ..";.8,.8;ui_blue_icon_background.png^ui_"..
-						i .."_icon.png;select_waypoint".. i .. ";]"
-			else
-				formspec = formspec ..
-					"image_button[0.0,".. 0.2 + i*0.7 ..";.8,.8;ui_"..
-					i .."_icon.png;select_waypoint".. i .. ";]"
-			end
+			formspec = formspec ..
+				"image_button[0.0,".. 0.2 + i*0.7 ..";.8,.8;"..
+				(i == waypoints.selected and "ui_blue_icon_background.png^" or "")..
+				"ui_"..i.."_icon.png;"..
+				"select_waypoint"..i..";;;;;"..
+				minetest.formspec_escape(S("Select Waypoint #%d"):format(i)).."]"
 		end
 		
 		i = waypoints.selected
 		
 		-- Main buttons:
 		formspec = formspec .. 
-				"image_button[4.5,3.7;.8,.8;ui_waypoint_set_icon.png;set_waypoint".. i .. ";]"
+			"image_button[4.5,3.7;.8,.8;"..
+			"ui_waypoint_set_icon.png;"..
+			"set_waypoint"..i..";;;;;"..
+			minetest.formspec_escape(S("Set waypoint to current location")).."]"
 
-		if waypoints[i].active then  
-			formspec = formspec ..
-				"image_button[5.2,3.7;.8,.8;ui_on_icon.png;toggle_waypoint".. i .. ";]"
-		else 
-			formspec = formspec ..
-				"image_button[5.2,3.7;.8,.8;ui_off_icon.png;toggle_waypoint".. i .. ";]"
-		end	
-
-		if waypoints[i].display_pos then
-			formspec = formspec .. 
-				"image_button[5.9,3.7;.8,.8;ui_green_icon_background.png^ui_xyz_icon.png;toggle_display_pos".. i .. ";]"
-		else
-			formspec = formspec .. 
-				"image_button[5.9,3.7;.8,.8;ui_red_icon_background.png^ui_xyz_icon.png;toggle_display_pos".. i .. ";]"
-		end
+		formspec = formspec ..
+			"image_button[5.2,3.7;.8,.8;"..
+			(waypoints[i].active and "ui_on_icon.png" or "ui_off_icon.png")..";"..
+			"toggle_waypoint"..i..";;;;;"..
+			minetest.formspec_escape(S("Make waypoint "..(waypoints[i].active and "invisible" or "visible"))).."]"
 
 		formspec = formspec .. 
-				"image_button[6.6,3.7;.8,.8;ui_circular_arrows_icon.png;toggle_color".. i .. ";]"..
-				"image_button[7.3,3.7;.8,.8;ui_pencil_icon.png;rename_waypoint".. i .. ";]"
+			"image_button[5.9,3.7;.8,.8;"..
+			(waypoints[i].display_pos and "ui_green_icon_background.png" or "ui_red_icon_background.png").."^ui_xyz_icon.png;"..
+			"toggle_display_pos"..i..";;;;;"..
+			minetest.formspec_escape(S((waypoints[i].display_pos and "Disable" or "Enable").." display of waypoint coordinates")).."]"
+
+		formspec = formspec ..
+			"image_button[6.6,3.7;.8,.8;"..
+			"ui_circular_arrows_icon.png;"..
+			"toggle_color"..i..";;;;;"..
+			minetest.formspec_escape(S("Change color of waypoint display")).."]"
+		formspec = formspec ..
+			"image_button[7.3,3.7;.8,.8;"..
+			"ui_pencil_icon.png;"..
+			"rename_waypoint"..i..";;;;;"..
+			minetest.formspec_escape(S("Edit waypoint name")).."]"
 		
 		-- Waypoint's info:	
 		if waypoints[i].active then
-			formspec = formspec .. 	"label[1,0.8;Waypoint active]"
+			formspec = formspec .. 	"label[1,0.8;"..S("Waypoint active").."]"
 		else 
-			formspec = formspec .. 	"label[1,0.8;Waypoint inactive]"
+			formspec = formspec .. 	"label[1,0.8;"..S("Waypoint inactive").."]"
 		end
 
 		if waypoints[i].edit then
 			formspec = formspec ..
 				"field[1.3,3.2;6,.8;rename_box" .. i .. ";;"..waypoints[i].name.."]" ..
-				"image_button[7.3,2.9;.8,.8;ui_ok_icon.png;confirm_rename".. i .. ";]"
+				"image_button[7.3,2.9;.8,.8;"..
+				"ui_ok_icon.png;"..
+				"confirm_rename"..i.. ";;;;;"..
+				minetest.formspec_escape(S("Finish editing")).."]"
 		end
 		
-		formspec = formspec .. "label[1,1.3;World position: " .. 
+		formspec = formspec .. "label[1,1.3;"..S("World position")..": " .. 
 			minetest.pos_to_string(waypoints[i].world_pos) .. "]" ..
-			"label[1,1.8;Name: ".. waypoints[i].name .. "]" ..
-			"label[1,2.3;Hud text color: " ..
+			"label[1,1.8;"..S("Name")..": ".. waypoints[i].name .. "]" ..
+			"label[1,2.3;"..S("HUD text color")..": " ..
 			unified_inventory.hud_colors[waypoints[i].color][3] .. "]"
 			
 		return {formspec=formspec}
@@ -80,6 +93,7 @@ unified_inventory.register_page("waypoints", {
 unified_inventory.register_button("waypoints", {
 	type = "image",
 	image = "ui_waypoints_icon.png",
+	tooltip = S("Waypoints"),
 })
 
 unified_inventory.update_hud = function (player, waypoint)	
