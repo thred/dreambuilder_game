@@ -277,3 +277,115 @@ minetest.register_node('homedecor:air_conditioner', {
 	},
 	selection_box = { -0.5, -0.5, -0.5, 0.5, 0.5, 0.5 }
 })
+
+minetest.register_node("homedecor:tiles_1", {
+	description = "Bathroom/kitchen tiles (shade #1)",
+	tiles = {
+		"homedecor_tiles1.png",
+		"homedecor_tiles1.png",
+		"homedecor_tiles1.png",
+		"homedecor_tiles1.png",
+		"homedecor_tiles1.png^[transformR90",
+		"homedecor_tiles1.png^[transformR90"
+	},
+	is_ground_content = true,
+	groups = {cracky=3},
+	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node("homedecor:tiles_2", {
+	description = "Bathroom/kitchen tiles (shade #2)",
+	tiles = {
+		"homedecor_tiles2.png",
+		"homedecor_tiles2.png",
+		"homedecor_tiles2.png",
+		"homedecor_tiles2.png",
+		"homedecor_tiles2.png^[transformR90",
+		"homedecor_tiles2.png^[transformR90"
+	},
+	is_ground_content = true,
+	groups = {cracky=3},
+	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node("homedecor:tiles_3", {
+	description = "Bathroom/kitchen tiles (shade #3)",
+	tiles = {
+		"homedecor_tiles3.png",
+		"homedecor_tiles3.png",
+		"homedecor_tiles3.png",
+		"homedecor_tiles3.png",
+		"homedecor_tiles3.png^[transformR90",
+		"homedecor_tiles3.png^[transformR90"
+	},
+	is_ground_content = true,
+	groups = {cracky=3},
+	sounds = default.node_sound_stone_defaults(),
+})
+
+minetest.register_node("homedecor:tiles_4", {
+	description = "Bathroom/kitchen tiles (shade #4)",
+	tiles = {
+		"homedecor_tiles4.png",
+		"homedecor_tiles4.png",
+		"homedecor_tiles4.png",
+		"homedecor_tiles4.png",
+		"homedecor_tiles4.png^[transformR90",
+		"homedecor_tiles4.png^[transformR90"
+	},
+	is_ground_content = true,
+	groups = {cracky=3},
+	sounds = default.node_sound_stone_defaults(),
+})
+
+local welcome_mat_colors = { "green", "brown", "grey" }
+
+for _, color in ipairs(welcome_mat_colors) do
+	minetest.register_node("homedecor:welcome_mat_"..color, {
+		description = "Welcome Mat ("..color..")",
+		paramtype = "light",
+		paramtype2 = "facedir",
+		drawtype = "nodebox",
+		tiles = {
+			"homedecor_welcome_mat_"..color..".png",
+			"homedecor_welcome_mat_bottom.png",
+			"homedecor_welcome_mat_"..color..".png",
+		},
+		groups = {crumbly=3},
+		sounds = default.node_sound_dirt_defaults({
+			footstep = {name="default_grass_footstep", gain=0.25},
+		}),
+		node_box = {
+			type = "fixed",
+			fixed = { -0.5, -0.5, -0.375, 0.5, -0.46875, 0.375 }
+		}
+	})
+end
+
+minetest.register_node("homedecor:chimney", {
+	drawtype = "nodebox",
+	paramtype = "light",
+	description = "Chimney",
+	tiles = {
+		"homedecor_chimney_top.png",
+		"homedecor_chimney_bottom.png",
+		"homedecor_chimney_sides.png",
+	},
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.25, -0.5, -0.25, 0.25, 0.5, -0.1875},
+			{-0.25, -0.5, 0.1875, 0.25, 0.5, 0.25},
+			{-0.25, -0.5, -0.25, -0.1875, 0.5, 0.25},
+			{0.1875, -0.5, -0.25, 0.25, 0.5, 0.25},
+		}
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = { -0.25, -0.5, -0.25, 0.25, 0.5, 0.25 }
+	},
+	groups = {cracky=3},
+	sounds = default.node_sound_stone_defaults()
+})
+
+
