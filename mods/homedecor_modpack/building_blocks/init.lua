@@ -1,12 +1,12 @@
 minetest.register_node("building_blocks:Adobe", {
-	tile_images = {"building_blocks_Adobe.png"},
+	tiles = {"building_blocks_Adobe.png"},
 	description = "Adobe",
 	is_ground_content = true,
 	groups = {crumbly=3},
 	sounds = default.node_sound_stone_defaults(),
 })
 minetest.register_node("building_blocks:Roofing", {
-	tile_images = {"building_blocks_Roofing.png"},
+	tiles = {"building_blocks_Roofing.png"},
 	is_ground_content = true,
 	description = "Roof block",
 	groups = {snappy=3},
@@ -38,7 +38,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'building_blocks:Fireplace 1',
 	recipe = {
-		{"default:steel_ingot", "building_blocks:faggot", "default:steel_ingot"},
+		{"default:steel_ingot", "building_blocks:sticks", "default:steel_ingot"},
 	}
 })
 minetest.register_craft({
@@ -49,14 +49,7 @@ minetest.register_craft({
 		{"default:stick"},
 	}
 })
-minetest.register_craft({
-	output = 'building_blocks:spleef_stick',
-	recipe = {
-		{"default:leaves"},
-		{"default:stick"},
-		{"default:stick"},
-	}
-})
+
 minetest.register_craft({
 	output = 'building_blocks:Roofing 10',
 	recipe = {
@@ -86,19 +79,29 @@ minetest.register_craft({
 	}
 })
 minetest.register_craft({
-	output = 'building_blocks:hardwood 1',
+	output = 'building_blocks:hardwood 2',
 	recipe = {
-		{"default:wood", "default:wood"},
-		{"default:wood", "default:wood"},
+		{"default:wood", "default:junglewood"},
+		{"default:junglewood", "default:wood"},
 	}
 })
+
 minetest.register_craft({
-	output = 'building_blocks:faggot 1',
+	output = 'building_blocks:hardwood 2',
 	recipe = {
-		{'craft "default:stick"', 'craft "default:stick"'},
-		{'craft "default:stick"', 'craft "default:stick"'},
+		{"default:junglewood", "default:wood"},
+		{"default:wood", "default:junglewood"},
 	}
 })
+
+minetest.register_craft({
+	output = 'building_blocks:sticks',
+	recipe = {
+		{'default:stick', 'default:stick'},
+		{'default:stick', 'default:stick'},
+	}
+})
+
 minetest.register_craft({
 	output = 'building_blocks:fakegrass 2',
 	recipe = {
@@ -115,7 +118,8 @@ minetest.register_craft({
 minetest.register_node("building_blocks:smoothglass", {
 	drawtype = "glasslike",
 	description = "Streak Free Glass",
-	tile_images = {"building_blocks_sglass.png"},
+	tiles = {"building_blocks_sglass.png"},
+	inventory_image = minetest.inventorycube("building_blocks_sglass.png"),
 	paramtype = "light",
 	sunlight_propagates = true,
 	is_ground_content = true,
@@ -125,26 +129,35 @@ minetest.register_node("building_blocks:smoothglass", {
 minetest.register_node("building_blocks:grate", {
 	drawtype = "glasslike",
 	description = "Grate",
-	tile_images = {"building_blocks_grate.png"},
+	tiles = {"building_blocks_grate.png"},
+	inventory_image = minetest.inventorycube("building_blocks_grate.png"),
 	paramtype = "light",
 	sunlight_propagates = true,
 	is_ground_content = true,
 	groups = {cracky=1},
 })
+
 minetest.register_node("building_blocks:Fireplace", {
-	drawtype = "stonelike",
-	description = "fireplace",
-	tile_images = {"building_blocks_cast_iron.png","building_blocks_cast_iron.png","building_blocks_cast_iron.png","building_blocks_cast_iron_fireplace.png"},
-	paramtype = "facedir_simple",
+	description = "Fireplace",
+	tiles = {
+		"building_blocks_cast_iron.png",
+		"building_blocks_cast_iron.png",
+		"building_blocks_cast_iron.png",
+		"building_blocks_cast_iron_fireplace.png"
+	},
+	paramtype = "light",
+	paramtype2 = "facedir",
 	light_source = LIGHT_MAX,
 	sunlight_propagates = true,
 	is_ground_content = true,
 	groups = {cracky=2},
 })
+
 minetest.register_node("building_blocks:woodglass", {
 	drawtype = "glasslike",
 	description = "Wood Framed Glass",
-	tile_images = {"building_blocks_wglass.png"},
+	tiles = {"building_blocks_wglass.png"},
+	inventory_image = minetest.inventorycube("building_blocks_wglass.png"),
 	paramtype = "light",
 	sunlight_propagates = true,
 	is_ground_content = true,
@@ -154,7 +167,8 @@ minetest.register_node("building_blocks:woodglass", {
 minetest.register_node("building_blocks:terrycloth_towel", {
 	drawtype = "raillike",
 	description = "Terrycloth towel",
-	tile_images = {"building_blocks_towel.png"},
+	tiles = {"building_blocks_towel.png"},
+	inventory_image = "building_blocks_towel_inv.png",
 	paramtype = "light",
 	walkable = false,
 	selection_box = {
@@ -169,7 +183,8 @@ minetest.register_node("building_blocks:terrycloth_towel", {
 minetest.register_node("building_blocks:Tarmac_spread", {
 	drawtype = "raillike",
 	description = "Tarmac Spread",
-	tile_images = {"building_blocks_tar.png"},
+	tiles = {"building_blocks_tar.png"},
+	inventory_image = "building_blocks_tar_spread_inv.png",
 	paramtype = "light",
 	walkable = false,
 	selection_box = {
@@ -184,7 +199,8 @@ minetest.register_node("building_blocks:Tarmac_spread", {
 minetest.register_node("building_blocks:BWtile", {
 	drawtype = "raillike",
 	description = "Chess board tiling",
-	tile_images = {"building_blocks_BWtile.png"},
+	tiles = {"building_blocks_BWtile.png"},
+	inventory_image = "building_blocks_bwtile_inv.png",
 	paramtype = "light",
 	walkable = false,
 	selection_box = {
@@ -199,7 +215,8 @@ minetest.register_node("building_blocks:BWtile", {
 minetest.register_node("building_blocks:brobble_spread", {
 	drawtype = "raillike",
 	description = "Brobble Spread",
-	tile_images = {"building_blocks_brobble.png"},
+	tiles = {"building_blocks_brobble.png"},
+	inventory_image = "building_blocks_brobble_spread_inv.png",
 	paramtype = "light",
 	walkable = false,
 	selection_box = {
@@ -214,7 +231,8 @@ minetest.register_node("building_blocks:brobble_spread", {
 minetest.register_node("building_blocks:gravel_spread", {
 	drawtype = "raillike",
 	description = "Gravel Spread",
-	tile_images = {"default_gravel.png"},
+	tiles = {"default_gravel.png"},
+	inventory_image = "building_blocks_gravel_spread_inv.png",
 	paramtype = "light",
 	walkable = false,
 	selection_box = {
@@ -227,7 +245,7 @@ minetest.register_node("building_blocks:gravel_spread", {
 	groups = {crumbly=2},
 })
 minetest.register_node("building_blocks:hardwood", {
-	tile_images = {"building_blocks_hardwood.png"},
+	tiles = {"building_blocks_hardwood.png"},
 	is_ground_content = true,
 	description = "Hardwood",
 	groups = {choppy=1,flammable=1},
@@ -339,16 +357,18 @@ minetest.register_craft({
 })
 
 minetest.register_node("building_blocks:fakegrass", {
-	tile_images = {"default_grass.png", "default_dirt.png", "default_dirt.png^default_grass_side.png"},
+	tiles = {"default_grass.png", "default_dirt.png", "default_dirt.png^default_grass_side.png"},
 	description = "Fake Grass",
 	is_ground_content = true,
-	groups = {crumbly=3,spleef=1},
+	groups = {crumbly=3},
 		sounds = default.node_sound_dirt_defaults({
 		footstep = {name="default_grass_footstep", gain=0.4},
 	}),
 })
-minetest.register_craftitem("building_blocks:faggot", {
-	image = "building_blocks_faggot.png",
+
+minetest.register_craftitem("building_blocks:sticks", {
+	description = "Small bundle of sticks",
+	image = "building_blocks_sticks.png",
 	on_place_on_ground = minetest.craftitem_place_item,
 })
 
@@ -367,7 +387,8 @@ minetest.register_alias("tar_knife", "building_blocks:knife")
 minetest.register_alias("adobe", "building_blocks:Adobe")
 minetest.register_alias("building_blocks_roofing", "building_blocks:Roofing")
 minetest.register_alias("hardwood", "building_blocks:hardwood")
-minetest.register_alias("faggot", "building_blocks:faggot")
+minetest.register_alias("sticks", "building_blocks:sticks")
+minetest.register_alias("building_blocks:faggot", "building_blocks:sticks")
 minetest.register_alias("marble", "building_blocks:Marble")
 
 minetest.register_node("building_blocks:Tar", {
@@ -386,7 +407,7 @@ minetest.register_node("building_blocks:Marble", {
 })
 minetest.register_craft({
 	type = "fuel",
-	recipe = "building_blocks:faggot",
+	recipe = "building_blocks:sticks",
 	burntime = 5,
 })
 minetest.register_craft({
@@ -410,6 +431,7 @@ minetest.register_tool("building_blocks:knife", {
 		}
 	},
 })
+
 minetest.add_to_creative_inventory('building_blocks:Tar 0')
 minetest.add_to_creative_inventory('building_blocks:hardwood 0')
 minetest.register_craft({

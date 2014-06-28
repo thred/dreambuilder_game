@@ -903,11 +903,21 @@ minetest.register_craft({
 -- Kitchen stuff
 
 minetest.register_craft({
-        output = "homedecor:oven",
+        output = "homedecor:oven_steel",
         recipe = {
 		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot", },
 		{"default:steel_ingot", "moreblocks:iron_glass", "default:steel_ingot", },
 		{"default:steel_ingot", "default:copper_ingot", "default:steel_ingot", },
+	}
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "homedecor:oven",
+	recipe = {
+		"homedecor:oven_steel",
+		"dye:white",
+		"dye:white",
 	}
 })
 
@@ -921,11 +931,22 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "homedecor:refrigerator",
+	output = "homedecor:refrigerator_steel",
 	recipe = {
 		{"default:steel_ingot", "homedecor:glowlight_small_cube_yellow", "default:steel_ingot", },
 		{"default:steel_ingot", "moreores:tin_ingot", "default:steel_ingot", },
 		{"default:steel_ingot", "default:clay", "default:steel_ingot", },
+	}
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "homedecor:refrigerator",
+	recipe = {
+		"homedecor:refrigerator_steel",
+		"dye:white",
+		"dye:white",
+		"dye:white",
 	}
 })
 
@@ -935,6 +956,46 @@ minetest.register_craft({
 		{"group:wood", "default:stick", "group:wood", },
 		{"group:wood", "default:stick", "group:wood", },
 		{"group:wood", "default:stick", "group:wood", },
+	}
+})
+
+minetest.register_craft({
+        output = "homedecor:kitchen_cabinet_steel",
+        recipe = {
+			{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
+			{"", "homedecor:kitchen_cabinet", ""},
+	}
+})
+
+minetest.register_craft({
+        output = "homedecor:kitchen_cabinet_steel",
+        recipe = {
+			{"moreblocks:slab_steelblock_1"},
+			{ "homedecor:kitchen_cabinet" },
+	}
+})
+
+minetest.register_craft({
+        output = "homedecor:kitchen_cabinet_marble",
+        recipe = {
+			{"building_blocks:slab_marble"},
+			{"homedecor:kitchen_cabinet"},
+	}
+})
+
+minetest.register_craft({
+        output = "homedecor:kitchen_cabinet_marble",
+        recipe = {
+			{"technic:slab_marble_1"},
+			{"homedecor:kitchen_cabinet"},
+	}
+})
+
+minetest.register_craft({
+        output = "homedecor:kitchen_cabinet_granite",
+        recipe = {
+			{"technic:slab_granite_1"},
+			{"homedecor:kitchen_cabinet"},
 	}
 })
 
@@ -1391,5 +1452,34 @@ minetest.register_craft( {
 		"homedecor:door_closet_oak_bottom_left",
 		"dye:brown"
         },
+})
+
+-- more misc stuff here
+
+minetest.register_craft({
+        output = "homedecor:chimney 2",
+        recipe = {
+			{ "default:clay_brick", "", "default:clay_brick" },
+			{ "default:clay_brick", "", "default:clay_brick" },
+			{ "default:clay_brick", "", "default:clay_brick" },
+        },
+})
+
+minetest.register_craft({
+        output = "homedecor:fishtank",
+        recipe = {
+			{ "homedecor:plastic_sheeting", "homedecor:glowlight_small_cube_white", "homedecor:plastic_sheeting" },
+			{ "default:glass", "bucket:bucket_water", "default:glass" },
+			{ "default:glass", "building_blocks:gravel_spread", "default:glass" },
+        },
+	replacements = { {"bucket:bucket_water", "bucket:bucket_empty"} }
+})
+
+minetest.register_craft({
+    output = "homedecor:towel_rod",
+    recipe = {
+		{ "default:wood", "default:stick", "default:wood" },
+		{ "", "building_blocks:terrycloth_towel", "" },
+    },
 })
 
