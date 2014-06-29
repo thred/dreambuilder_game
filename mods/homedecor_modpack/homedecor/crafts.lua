@@ -4,11 +4,90 @@
 
 local S = homedecor.gettext
 
--- misc stuff :D
+-- misc craftitems
 
 minetest.register_craftitem("homedecor:terracotta_base", {
         description = S("Uncooked Terracotta Base"),
         inventory_image = "homedecor_terracotta_base.png",
+})
+
+minetest.register_craftitem("homedecor:roof_tile_terracotta", {
+        description = S("Terracotta Roof Tile"),
+        inventory_image = "homedecor_roof_tile_terracotta.png",
+})
+
+minetest.register_craftitem("homedecor:plastic_sheeting", {
+        description = S("Plastic sheet"),
+        inventory_image = "homedecor_plastic_sheeting.png",
+})
+
+minetest.register_craftitem("homedecor:plastic_base", {
+        description = S("Unprocessed Plastic base"),
+        wield_image = "homedecor_plastic_base.png",
+        inventory_image = "homedecor_plastic_base_inv.png",
+})
+
+minetest.register_craftitem("homedecor:drawer_small", {
+        description = S("Small Wooden Drawer"),
+        inventory_image = "homedecor_drawer_small.png",
+})
+
+minetest.register_craftitem("homedecor:brass_ingot", {
+        description = S("Brass Ingot"),
+        inventory_image = "homedecor_brass_ingot.png",
+	groups = { brass_ingot=1 }
+})
+
+minetest.register_craftitem("homedecor:ic", {
+	description = S("Simple Integrated Circuit"),
+	inventory_image = "homedecor_ic.png",
+})
+
+minetest.register_craftitem("homedecor:heating_element", {
+	description = S("Heating element"),
+	inventory_image = "homedecor_heating_element.png",
+})
+
+minetest.register_craftitem("homedecor:motor", {
+	description = S("Motor"),
+	inventory_image = "homedecor_motor.png",
+})
+
+-- alternate craftitem for silicon if mesecons isn't installed.
+
+if ( minetest.get_modpath("mesecons") ) == nil then
+
+	minetest.register_craftitem(":mesecons_materials:silicon", {
+		description = S("Silicon lump"),
+		inventory_image = "homedecor_silicon.png",
+	})
+
+	minetest.register_craft( {
+		output = "mesecons_materials:silicon 4",
+		recipe = {
+			{ "default:sand", "default:sand" },
+			{ "default:sand", "default:steel_ingot" },
+		},
+	})
+
+end
+
+-- the actual crafts
+
+minetest.register_craft( {
+    output = "homedecor:heating_element 2",
+    recipe = {
+		{ "default:copper_ingot", "default:mese_crystal_fragment", "default:copper_ingot" }
+    },
+})
+
+minetest.register_craft( {
+    output = "homedecor:motor 2",
+    recipe = {
+		{ "default:mese_crystal_fragment", "default:iron_lump", "homedecor:plastic_sheeting" },
+		{ "default:copper_ingot", "default:steel_ingot", "default:steel_ingot" },
+		{ "default:mese_crystal_fragment", "default:iron_lump", "homedecor:plastic_sheeting" }
+    },
 })
 
 minetest.register_craft( {
@@ -22,10 +101,7 @@ minetest.register_craft( {
 	replacements = { {"bucket:bucket_water", "bucket:bucket_empty"}, },
 })
 
-minetest.register_craftitem("homedecor:roof_tile_terracotta", {
-        description = S("Terracotta Roof Tile"),
-        inventory_image = "homedecor_roof_tile_terracotta.png",
-})
+
 
 minetest.register_craft({
         type = "cooking",
@@ -57,17 +133,6 @@ minetest.register_craft( {
 })
 
 --
-
-minetest.register_craftitem("homedecor:plastic_sheeting", {
-        description = S("Plastic sheet"),
-        inventory_image = "homedecor_plastic_sheeting.png",
-})
-
-minetest.register_craftitem("homedecor:plastic_base", {
-        description = S("Unprocessed Plastic base"),
-        wield_image = "homedecor_plastic_base.png",
-        inventory_image = "homedecor_plastic_base_inv.png",
-})
 
 minetest.register_craft({
     type = "shapeless",
@@ -503,12 +568,6 @@ minetest.register_craft({
 
 --
 
-minetest.register_craftitem("homedecor:drawer_small", {
-        description = S("Small Wooden Drawer"),
-        inventory_image = "homedecor_drawer_small.png",
-})
-
-
 minetest.register_craft( {
         output = "homedecor:drawer_small",
         recipe = {
@@ -593,12 +652,6 @@ minetest.register_craft({
         burntime = 30,
 })
 
-minetest.register_craftitem("homedecor:brass_ingot", {
-        description = S("Brass Ingot"),
-        inventory_image = "homedecor_brass_ingot.png",
-	groups = { brass_ingot=1 }
-})
-
 minetest.register_craft( {
 	type = "shapeless",
         output = "homedecor:brass_ingot 2",
@@ -665,34 +718,12 @@ minetest.register_craft( {
 
 -- Home electronics
 
-if ( minetest.get_modpath("mesecons") ) == nil then
-
-	minetest.register_craftitem(":mesecons_materials:silicon", {
-		description = S("Silicon lump"),
-		inventory_image = "homedecor_silicon.png",
-	})
-
-	minetest.register_craft( {
-		output = "mesecons_materials:silicon 4",
-		recipe = {
-			{ "default:sand", "default:sand" },
-			{ "default:sand", "default:steel_ingot" },
-		},
-	})
-
-end
-
 minetest.register_craft( {
 	output = "homedecor:ic 4",
 	recipe = {
 		{ "mesecons_materials:silicon", "mesecons_materials:silicon" },
 		{ "mesecons_materials:silicon", "default:copper_ingot" },
 	},
-})
-
-minetest.register_craftitem("homedecor:ic", {
-	description = S("Simple Integrated Circuit"),
-	inventory_image = "homedecor_ic.png",
 })
 
 minetest.register_craft( {
@@ -1452,6 +1483,37 @@ minetest.register_craft( {
 		"homedecor:door_closet_oak_bottom_left",
 		"dye:brown"
         },
+})
+
+-- washer and dryer
+
+minetest.register_craft( {
+    output = "homedecor:washing_machine",
+    recipe = {
+		{ "default:steel_ingot", "default:steel_ingot", "homedecor:ic" },
+		{ "default:steel_ingot", "bucket:bucket_water", "default:steel_ingot" },
+		{ "default:steel_ingot", "homedecor:motor", "default:steel_ingot" }
+    },
+})
+
+minetest.register_craft( {
+    output = "homedecor:dryer",
+    recipe = {
+		{ "default:steel_ingot", "default:steel_ingot", "homedecor:ic" },
+		{ "default:steel_ingot", "bucket:bucket_empty", "homedecor:motor" },
+		{ "default:steel_ingot", "homedecor:heating_element", "default:steel_ingot" }
+    },
+})
+
+-- dishwasher
+
+minetest.register_craft( {
+    output = "homedecor:dishwasher",
+    recipe = {
+		{ "homedecor:ic", "homedecor:fence_chainlink", "default:steel_ingot",  },
+		{ "default:steel_ingot", "homedecor:shower_head", "homedecor:motor" },
+		{ "default:steel_ingot", "homedecor:heating_element", "bucket:bucket_water" }
+    },
 })
 
 -- more misc stuff here
