@@ -237,18 +237,16 @@ minetest.register_craft( {
 })
 
 minetest.register_craft( {
-        output = "homedecor:glass_table_small_square_b 4",
+        output = "homedecor:glass_table_small_square_b 2",
         recipe = {
 		{"homedecor:glass_table_small_round", "homedecor:glass_table_small_round" },
-		{"homedecor:glass_table_small_round", "homedecor:glass_table_small_round" }
 	}
 })
 
 minetest.register_craft( {
-        output = "homedecor:glass_table_large_b 4",
+        output = "homedecor:glass_table_large_b 2",
         recipe = { 
 		{ "homedecor:glass_table_small_square", "homedecor:glass_table_small_square" },
-		{ "homedecor:glass_table_small_square", "homedecor:glass_table_small_square" }
 	}
 })
 
@@ -264,18 +262,16 @@ minetest.register_craft( {
 })
 
 minetest.register_craft( {
-        output = "homedecor:wood_table_small_square_b 4",
+        output = "homedecor:wood_table_small_square_b 2",
         recipe = { 
 		{ "homedecor:wood_table_small_round","homedecor:wood_table_small_round" },
-		{ "homedecor:wood_table_small_round","homedecor:wood_table_small_round" }
 	}
 })
 
 minetest.register_craft( {
-        output = "homedecor:wood_table_large_b 4",
+        output = "homedecor:wood_table_large_b 2",
         recipe = { 
 		{ "homedecor:wood_table_small_square", "homedecor:wood_table_small_square" },
-		{ "homedecor:wood_table_small_square", "homedecor:wood_table_small_square" }
 	}
 })
 
@@ -337,23 +333,26 @@ minetest.register_craft({
 --
 
 minetest.register_craft( {
-        output = "homedecor:skylight 9",
+        output = "homedecor:skylight 4",
         recipe = { 
-		{ "default:glass", "default:glass" },
-		{ "default:glass", "default:glass" },
+		{ "homedecor:glass_table_large", "homedecor:glass_table_large" },
+		{ "homedecor:glass_table_large", "homedecor:glass_table_large" },
         },
 })
 
 minetest.register_craft( {
 	type = "shapeless",
-        output = "homedecor:skylight",
-        recipe = { "homedecor:skylight_frosted" },
+        output = "homedecor:skylight_frosted",
+        recipe = {
+			"dye:white",
+			"homedecor:skylight"
+		},
 })
 
-minetest.register_craft( {
-	type = "shapeless",
-        output = "homedecor:skylight_frosted",
-        recipe = { "homedecor:skylight" },
+minetest.register_craft({
+        type = "cooking",
+        output = "homedecor:skylight",
+        recipe = "homedecor:skylight_frosted",
 })
 
 -- Various colors of shutters
@@ -1592,7 +1591,16 @@ minetest.register_craft({
 minetest.register_craft({
     output = "homedecor:desk",
     recipe = {
-		{ "default:wood", "default:wood", "default:wood" },
+		{ "stairs:slab_wood", "stairs:slab_wood", "stairs:slab_wood" },
+		{ "homedecor:drawer_small", "default:wood", "default:wood" },
+		{ "homedecor:drawer_small", "", "default:wood" },
+    },
+})
+
+minetest.register_craft({
+    output = "homedecor:desk",
+    recipe = {
+		{ "moreblocks:slab_wood", "moreblocks:slab_wood", "moreblocks:slab_wood" },
 		{ "homedecor:drawer_small", "default:wood", "default:wood" },
 		{ "homedecor:drawer_small", "", "default:wood" },
     },
