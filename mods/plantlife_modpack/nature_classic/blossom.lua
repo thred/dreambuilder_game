@@ -1,10 +1,11 @@
 -- Blossom
 
 local BLOSSOM_CHANCE = 15
-local APPLE_CHANCE = 10
 local BLOSSOM_DELAY = 3600
-
 local BLOSSOM_NODE = "nature:blossom"
+
+local APPLE_CHANCE = 10
+local APPLE_SPREAD = 2
 
 local function spawn_apple_under(pos)
     local below = {
@@ -12,8 +13,8 @@ local function spawn_apple_under(pos)
 		y = pos.y - 1,
 		z = pos.z,
 	}
-    if minetest.env:get_node(below).name == "air" then
-		minetest.env:add_node(below, { name = "default:apple" })
+    if minetest.get_node(below).name == "air" then
+		minetest.add_node(below, { name = "default:apple" })
     end
 end
 
@@ -41,7 +42,9 @@ minetest.register_abm({
     chance = BLOSSOM_CHANCE,
 
     action = function(pos, node, active_object_count, active_object_count_wider)
-		nature:grow_node(pos, BLOSSOM_NODE)
+		if nature:is_near_water(pos) then
+			nature:grow_node(pos, BLOSSOM_NODE)
+		end
     end
 })
 
@@ -63,6 +66,8 @@ minetest.register_abm({
     chance = APPLE_CHANCE,
 
     action = function(pos, node, active_object_count, active_object_count_wider)
-		spawn_apple_under(pos)
+		if not minetest.find_node_near(pos, APPLE_SPREAD, { "default:apple" }) then
+			spawn_apple_under(pos)
+		end
     end
 })
