@@ -278,22 +278,25 @@ minetest.register_chatcommand("/volume", {
 	end,
 })
 
-local check_set = function(name, param)
-	local node = get_node(name, param)
-	if not node then return nil end
-	return check_region(name, param)
-end
-
 minetest.register_chatcommand("/set", {
-	params = "<node>",
-	description = "Set the current WorldEdit region to <node>",
+	params = "<node1> ...",
+	description = "Set the current WorldEdit region to a random mix of <node1>, ...",
 	privs = {worldedit=true},
 	func = safe_region(function(name, param)
+        local nodes = {}
+        for nodename in param:gmatch("[^%s]+") do
+            local node = get_node(name, nodename)
+            if not node then
+                worldedit.player_notify(name, "Could not identify node \"" .. name .. "\"")
+                return
+            end
+            nodes[#nodes + 1] = node
+        end
+
 		local pos1, pos2 = worldedit.pos1[name], worldedit.pos2[name]
-		local node = get_node(name, param)
-		local count = worldedit.set(pos1, pos2, node)
+		local count = worldedit.set(pos1, pos2, nodes)
 		worldedit.player_notify(name, count .. " nodes set")
-	end, check_set),
+	end, check_region),
 })
 
 local check_replace = function(name, param)
@@ -614,6 +617,42 @@ minetest.register_chatcommand("/stack", {
 		return nil
 	end),
 })
+
+minetest.register_chatcommand("/stack2", {
+	params = "<count> <x> <y> <z>",
+	description = "Stack the current WorldEdit region <count> times by offset <x>, <y>, <z>",
+	privs = {worldedit=true},
+	func = function(name, param)
+		local pos1, pos2 = worldedit.pos1[name], worldedit.pos2[name]
+        if pos1 == nil or pos2 == nil then
+			worldedit.player_notify(name, "Select a position first!")
+            return
+        end
+        local repetitions, incs = param:match("(%d+)%s*(.+)")
+        if repetitions == nil then
+			worldedit.player_notify(name, "invalid count: " .. param)
+            return
+        end
+		repetitions = tonumber(repetitions)
+
+        local x, y, z = incs:match("([+-]?%d+) ([+-]%d+) ([+-]%d+)")
+        if x == nil then
+            worldedit.player_notify(name, "invalid increments: " .. param)
+            return
+        end
+        x, y, z = tonumber(x), tonumber(y), tonumber(z)
+
+        local count = worldedit.volume(pos1, pos2) * repetitions
+
+        return safe_region(function()
+			worldedit.stack2(pos1, pos2, {x=x, y=y, z=z}, repetitions,
+				function() worldedit.player_notify(name, count .. " nodes stacked") end)
+		end, function()
+			return count
+		end)(name,param) -- more hax
+	end
+})
+
 
 minetest.register_chatcommand("/stretch", {
 	params = "<stretchx> <stretchy> <stretchz>",

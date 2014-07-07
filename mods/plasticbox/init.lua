@@ -146,42 +146,7 @@ minetest.register_craft( {
         },
 })
 
---Register crafts for plastic powder
 
-if minetest.get_modpath("technic") then
-	local grinder_recipes = {
-		{"pipeworks:accelerator_tube_1",    "plasticbox:plastic_powder 1"},
-		{"pipeworks:conductor_tube_off_1",    "plasticbox:plastic_powder 1"},
-		{"pipeworks:crossing_tube_1",    "plasticbox:plastic_powder 1"},
-		{"pipeworks:detector_tube_off_1",    "plasticbox:plastic_powder 1"},
-		{"pipeworks:mese_sand_tube_1",    "plasticbox:plastic_powder 1"},
-		{"pipeworks:mese_tube_000000",    "plasticbox:plastic_powder 1"},
-		{"pipeworks:one_way_tube",    "plasticbox:plastic_powder 1"},
-		{"pipeworks:sand_tube_1",    "plasticbox:plastic_powder 1"},
-		{"pipeworks:teleport_tube_1",    "plasticbox:plastic_powder 1"},
-		{"pipeworks:tube_1",    "plasticbox:plastic_powder 1"},
-		{"plasticbox:plasticbox",    "plasticbox:plastic_powder 2"},
-		{"plasticbox:plasticbox_black",    "plasticbox:plastic_powder 2"},
-		{"plasticbox:plasticbox_blue",    "plasticbox:plastic_powder 2"},
-		{"plasticbox:plasticbox_brown",    "plasticbox:plastic_powder 2"},
-		{"plasticbox:plasticbox_cyan",    "plasticbox:plastic_powder 2"},
-		{"plasticbox:plasticbox_darkgreen",    "plasticbox:plastic_powder 2"},
-		{"plasticbox:plasticbox_darkgrey",    "plasticbox:plastic_powder 2"},
-		{"plasticbox:plasticbox_green",    "plasticbox:plastic_powder 2"},
-		{"plasticbox:plasticbox_grey",    "plasticbox:plastic_powder 2"},
-		{"plasticbox:plasticbox_magenta",    "plasticbox:plastic_powder 2"},
-		{"plasticbox:plasticbox_orange",    "plasticbox:plastic_powder 2"},
-		{"plasticbox:plasticbox_pink",    "plasticbox:plastic_powder 2"},
-		{"plasticbox:plasticbox_red",    "plasticbox:plastic_powder 2"},
-		{"plasticbox:plasticbox_violet",    "plasticbox:plastic_powder 2"},
-		{"plasticbox:plasticbox_white",    "plasticbox:plastic_powder 2"},
-		{"plasticbox:plasticbox_yellow",    "plasticbox:plastic_powder 2"},
-		{"homedecor:plastic_sheeting",       "plasticbox:plastic_powder 1"}
-	}
-	for _, data in pairs(grinder_recipes) do
-		technic.register_grinder_recipe({input=data[1], output=data[2]})
-	end
-else
 minetest.register_craft( {
         output = "homedecor:plastic_sheeting 7",
         recipe = {
@@ -189,7 +154,6 @@ minetest.register_craft( {
                 { "plasticbox:plasticbox", "plasticbox:plasticbox" },
         },
 })
-end
 
 minetest.register_craft({
      type = "cooking",
