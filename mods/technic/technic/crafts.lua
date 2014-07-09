@@ -37,18 +37,18 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'technic:blue_energy_crystal',
 	recipe = {
-		{'default:gold_ingot', 'technic:battery', 'dye:blue'},
+		{'moreores:mithril_ingot', 'technic:battery', 'dye:blue'},
 		{'technic:battery', 'technic:green_energy_crystal', 'technic:battery'},
-		{'dye:blue', 'technic:battery', 'default:gold_ingot'},
+		{'dye:blue', 'technic:battery', 'moreores:mithril_ingot'},
 	}
 })
 
 minetest.register_craft({
 	output = 'technic:red_energy_crystal',
 	recipe = {
-		{'default:gold_ingot', 'technic:battery', 'dye:red'},
+		{'moreores:silver_ingot', 'technic:battery', 'dye:red'},
 		{'technic:battery', 'default:diamondblock', 'technic:battery'},
-		{'dye:red', 'technic:battery', 'default:gold_ingot'},
+		{'dye:red', 'technic:battery', 'moreores:silver_ingot'},
 	}
 })
 
@@ -58,6 +58,24 @@ minetest.register_craft({
 		{'', 'default:copper_ingot', ''},
 		{'', 'default:copper_ingot', ''},
 		{'', 'default:copper_ingot', ''},
+	}
+})
+
+minetest.register_craft({
+	output = 'technic:fine_gold_wire 2',
+	recipe = {
+		{'', 'default:gold_ingot', ''},
+		{'', 'default:gold_ingot', ''},
+		{'', 'default:gold_ingot', ''},
+	}
+})
+
+minetest.register_craft({
+	output = 'technic:fine_silver_wire 2',
+	recipe = {
+		{'', 'moreores:silver_ingot', ''},
+		{'', 'moreores:silver_ingot', ''},
+		{'', 'moreores:silver_ingot', ''},
 	}
 })
 
@@ -82,7 +100,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'technic:lv_transformer',
 	recipe = {
-		{'technic:wrought_iron_ingot', 'technic:wrought_iron_ingot', 'technic:wrought_iron_ingot'},
+		{'mesecons_materials:fiber',   'technic:wrought_iron_ingot', 'mesecons_materials:fiber'},
 		{'technic:copper_coil',        'technic:wrought_iron_ingot', 'technic:copper_coil'},
 		{'technic:wrought_iron_ingot', 'technic:wrought_iron_ingot', 'technic:wrought_iron_ingot'},
 	}
@@ -91,7 +109,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'technic:mv_transformer',
 	recipe = {
-		{'technic:carbon_steel_ingot', 'technic:carbon_steel_ingot', 'technic:carbon_steel_ingot'},
+		{'mesecons_materials:fiber',   'technic:carbon_steel_ingot', 'mesecons_materials:fiber'},
 		{'technic:copper_coil',        'technic:carbon_steel_ingot', 'technic:copper_coil'},
 		{'technic:carbon_steel_ingot', 'technic:carbon_steel_ingot', 'technic:carbon_steel_ingot'},
 	}
@@ -100,7 +118,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'technic:hv_transformer',
 	recipe = {
-		{'technic:stainless_steel_ingot', 'technic:stainless_steel_ingot', 'technic:stainless_steel_ingot'},
+		{'mesecons_materials:fiber',      'technic:stainless_steel_ingot', 'mesecons_materials:fiber'},
 		{'technic:copper_coil',           'technic:stainless_steel_ingot', 'technic:copper_coil'},
 		{'technic:stainless_steel_ingot', 'technic:stainless_steel_ingot', 'technic:stainless_steel_ingot'},
 	}
@@ -109,9 +127,9 @@ minetest.register_craft({
 minetest.register_craft({
 	output = 'technic:control_logic_unit',
 	recipe = {
-		{'', 'default:gold_ingot', ''},
+		{'', 'technic:fine_gold_wire', ''},
 		{'default:copper_ingot', 'technic:silicon_wafer', 'default:copper_ingot'},
-		{'', 'default:copper_ingot', ''},
+		{'', 'technic:chromium_ingot', ''},
 	}
 })
 
@@ -131,10 +149,20 @@ minetest.register_craft({
 	}
 })
 
+minetest.register_craft({
+	output = "technic:machine_casing",
+	recipe = {
+		{ "technic:cast_iron_ingot", "technic:cast_iron_ingot", "technic:cast_iron_ingot" },
+		{ "technic:cast_iron_ingot", "technic:brass_ingot", "technic:cast_iron_ingot" },
+		{ "technic:cast_iron_ingot", "technic:cast_iron_ingot", "technic:cast_iron_ingot" },
+	},
+})
+
 -- Remove some recipes
 minetest.register_craftitem("technic:nothing", {
 	description = "",
 	inventory_image = "blank.png",
+	groups = { not_in_creative_inventory = 1 },
 })
 
 if minetest.register_craft_predict then

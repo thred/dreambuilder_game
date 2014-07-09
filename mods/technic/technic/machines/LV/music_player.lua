@@ -7,9 +7,9 @@ minetest.register_alias("music_player", "technic:music_player")
 minetest.register_craft({
 	output = 'technic:music_player',
 	recipe = {
-		{'group:wood',      'group:wood',           'group:wood'},
-		{'default:diamond', 'default:diamond',      'default:diamond'},
-		{'default:stone',   'default:copper_ingot', 'default:stone'},
+		{'technic:chromium_ingot', 'default:diamond',        'technic:chromium_ingot'},
+		{'default:diamond',        'technic:machine_casing', 'default:diamond'},
+		{'default:mossycobble',    'technic:lv_cable0',      'default:mossycobble'},
 	}
 })
 

@@ -80,6 +80,16 @@ minetest.register_craftitem("technic:fine_copper_wire", {
 	inventory_image = "technic_fine_copper_wire.png",
 })
 
+minetest.register_craftitem("technic:fine_gold_wire", {
+	description = S("Fine Gold Wire"),
+	inventory_image = "technic_fine_gold_wire.png",
+})
+
+minetest.register_craftitem("technic:fine_silver_wire", {
+	description = S("Fine Silver Wire"),
+	inventory_image = "technic_fine_silver_wire.png",
+})
+
 minetest.register_craftitem("technic:copper_coil", {
 	description = S("Copper Coil"),
 	inventory_image = "technic_copper_coil.png",
@@ -144,3 +154,12 @@ minetest.register_craftitem("technic:carbon_cloth", {
 	inventory_image = "technic_carbon_cloth.png",
 })
 
+minetest.register_node("technic:machine_casing", {
+	description = S("Machine Casing"),
+	groups = {cracky=2},
+	sunlight_propagates = true,
+	paramtype = "light",
+	drawtype = "allfaces",
+	tiles = {"technic_machine_casing.png"},
+	sounds = default.node_sound_stone_defaults(),
+})
