@@ -192,13 +192,15 @@ minetest.register_craft({
 	recipe = "usesdirt:dirt_cobble_stone",
 })
 --Furnace
-default.furnace_inactive_formspec =
+
+local furnace_inactive_formspec =
 	"size[8,9]"..
 	"image[2,2;1,1;default_furnace_fire_bg.png]"..
 	"list[current_name;fuel;2,3;1,1;]"..
 	"list[current_name;src;2,1;1,1;]"..
 	"list[current_name;dst;5,1;2,2;]"..
-	"list[current_player;main;0,5;8,4;]"
+	"list[current_player;main;0,5;8,4;]"..
+	"background[-0.5,-0.65;9,10.35;bg_furnace.jpg]"
 
 minetest.register_node("usesdirt:dirt_furnace", {
 	description = "Furnace",
@@ -209,7 +211,7 @@ minetest.register_node("usesdirt:dirt_furnace", {
 	legacy_facedir_simple = true,
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
-		meta:set_string("formspec", default.furnace_inactive_formspec)
+		meta:set_string("formspec", furnace_inactive_formspec)
 		meta:set_string("infotext", "Furnace")
 		local inv = meta:get_inventory()
 		inv:set_size("fuel", 1)
@@ -242,7 +244,7 @@ minetest.register_node("usesdirt:dirt_furnace_active", {
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.env:get_meta(pos)
-		meta:set_string("formspec", default.furnace_inactive_formspec)
+		meta:set_string("formspec", furnace_inactive_formspec)
 		meta:set_string("infotext", "Furnace");
 		local inv = meta:get_inventory()
 		inv:set_size("fuel", 1)
@@ -356,7 +358,7 @@ minetest.register_abm({
 		if fuel.time <= 0 then
 			meta:set_string("infotext","Furnace out of fuel")
 			hacky_swap_node(pos,"usesdirt:dirt_furnace")
-			meta:set_string("formspec", default.furnace_inactive_formspec)
+			meta:set_string("formspec", furnace_inactive_formspec)
 			return
 		end
 
@@ -364,7 +366,7 @@ minetest.register_abm({
 			if was_active then
 				meta:set_string("infotext","Furnace is empty")
 				hacky_swap_node(pos,"usesdirt:dirt_furnace")
-				meta:set_string("formspec", default.furnace_inactive_formspec)
+				meta:set_string("formspec", furnace_inactive_formspec)
 			end
 			return
 		end
