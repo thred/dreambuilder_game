@@ -254,6 +254,7 @@ minetest.register_node("pipeworks:nodebreaker_off", {
 				"label[0,0;Node breaker]"..
 				"list[current_name;pick;3.5,0;1,1;]"..
 				"list[current_player;main;0,2;8,4;]")
+		meta:set_string("infotext", "Node Breaker")
 	end,
 	after_place_node = function (pos, placer)
 		pipeworks.scan_for_tube_objects(pos, placer)
@@ -278,7 +279,7 @@ minetest.register_node("pipeworks:nodebreaker_off", {
 		minetest.get_meta(pos):set_string("owner", placer:get_player_name())
 	end,
 	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		if oldmetadata.inventory.pick then
+		if oldmetadata.inventory.pick and oldmetadata.fields.formspec then
 			local stack = oldmetadata.inventory.pick[1]
 			if not stack:is_empty() then
 				minetest.add_item(pos, stack)
@@ -354,6 +355,7 @@ minetest.register_node("pipeworks:nodebreaker_on", {
 				"list[current_name;pick;3.5,0;1,1;]"..
 				"list[current_player;main;0,2;8,4;]")
 		--inv:set_stack("pick", 1, ItemStack("default:pick_mese"))
+		meta:set_string("infotext", "Node Breaker")
 	end,
 	after_place_node = function (pos, placer)
 		pipeworks.scan_for_tube_objects(pos, placer)
@@ -378,7 +380,7 @@ minetest.register_node("pipeworks:nodebreaker_on", {
 		minetest.get_meta(pos):set_string("owner", placer:get_player_name())
 	end,
 	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		if oldmetadata.inventory.pick then
+		if oldmetadata.inventory.pick and oldmetadata.fields.formspec then
 			local stack = oldmetadata.inventory.pick[1]
 			if not stack:is_empty() then
 				minetest.add_item(pos, stack)
