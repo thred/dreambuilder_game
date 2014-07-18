@@ -20,3 +20,9 @@ dofile(minetest.get_modpath("default").."/crafting.lua")
 dofile(minetest.get_modpath("default").."/mapgen.lua")
 dofile(minetest.get_modpath("default").."/player.lua")
 dofile(minetest.get_modpath("default").."/trees.lua")
+
+hotbar_size = minetest.setting_get("hotbar_size") or 16
+
+minetest.register_on_joinplayer(function(player)
+	player:hud_set_hotbar_itemcount(hotbar_size)
+end)
