@@ -25,4 +25,8 @@ hotbar_size = minetest.setting_get("hotbar_size") or 16
 
 minetest.register_on_joinplayer(function(player)
 	player:hud_set_hotbar_itemcount(hotbar_size)
+	minetest.after(0.5,function()
+--		player:hud_set_hotbar_image("dreambuilder_hotbar.png")
+		player:hud_set_hotbar_selected_image("dreambuilder_hotbar_selected.png")
+	end)
 end)
