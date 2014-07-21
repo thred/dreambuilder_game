@@ -20,6 +20,7 @@ dofile(minetest.get_modpath("default").."/crafting.lua")
 dofile(minetest.get_modpath("default").."/mapgen.lua")
 dofile(minetest.get_modpath("default").."/player.lua")
 dofile(minetest.get_modpath("default").."/trees.lua")
+dofile(minetest.get_modpath("default").."/commands.lua")
 
 hotbar_size = minetest.setting_get("hotbar_size") or 16
 
