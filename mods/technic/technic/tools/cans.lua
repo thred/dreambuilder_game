@@ -1,25 +1,4 @@
-local water_can_max_load = 16
-local lava_can_max_load = 8
-
 local S = technic.getter
-
-minetest.register_craft({
-	output = 'technic:water_can 1',
-	recipe = {
-		{'technic:zinc_ingot', 'technic:rubber','technic:zinc_ingot'},
-		{'technic:carbon_steel_ingot', '', 'technic:carbon_steel_ingot'},
-		{'technic:zinc_ingot', 'technic:carbon_steel_ingot', 'technic:zinc_ingot'},
-	}
-})
-
-minetest.register_craft({
-	output = 'technic:lava_can 1',
-	recipe = {
-		{'technic:zinc_ingot', 'technic:stainless_steel_ingot','technic:zinc_ingot'},
-		{'technic:stainless_steel_ingot', '', 'technic:stainless_steel_ingot'},
-		{'technic:zinc_ingot', 'technic:stainless_steel_ingot', 'technic:zinc_ingot'},
-	}
-})
 
 local function set_can_wear(itemstack, level, max_level)
 	local temp
@@ -33,113 +12,103 @@ local function set_can_wear(itemstack, level, max_level)
 	itemstack:set_wear(temp)
 end
 
-minetest.register_tool("technic:water_can", {
-	description = S("Water Can"),
-	inventory_image = "technic_water_can.png",
-	stack_max = 1,
-	wear_represents = "content_level",
-	liquids_pointable = true,
-	on_use = function(itemstack, user, pointed_thing)
-		if pointed_thing.type ~= "node" then
-			return
-		end
-		node = minetest.get_node(pointed_thing.under)
+local function get_can_level(itemstack)
+	if itemstack:get_metadata() == "" then
+		return 0
+	else
+		return tonumber(itemstack:get_metadata())
+	end
+end
 
-		local charge = nil
-		if itemstack:get_metadata() == "" then
-			charge = 0
-		else
-			charge = tonumber(itemstack:get_metadata())
-		end
-		if node.name == "default:water_source" then
-			if charge < water_can_max_load then
-				minetest.remove_node(pointed_thing.under)
-				charge = charge + 1
-				itemstack:set_metadata(tostring(charge))
-				set_can_wear(itemstack, charge, water_can_max_load)
+function technic.register_can(d)
+	local data = {}
+	for k, v in pairs(d) do data[k] = v end
+	minetest.register_tool(data.can_name, {
+		description = data.can_description,
+		inventory_image = data.can_inventory_image,
+		stack_max = 1,
+		wear_represents = "content_level",
+		liquids_pointable = true,
+		on_use = function(itemstack, user, pointed_thing)
+			if pointed_thing.type ~= "node" then return end
+			local node = minetest.get_node(pointed_thing.under)
+			if node.name ~= data.liquid_source_name then return end
+			local charge = get_can_level(itemstack)
+			if charge == data.can_capacity then return end
+			if minetest.is_protected(pointed_thing.under, user:get_player_name()) then
+				minetest.log("action", user:get_player_name().." tried to take "..node.name.." at protected position "..minetest.pos_to_string(pointed_thing.under).." with a "..data.can_name)
+				return
 			end
+			minetest.remove_node(pointed_thing.under)
+			charge = charge + 1
+			itemstack:set_metadata(tostring(charge))
+			set_can_wear(itemstack, charge, data.can_capacity)
 			return itemstack
-		end
-		if charge == 0 then
-			return
-		end
-
-		if node.name == "default:water_flowing" then
-			minetest.set_node(pointed_thing.under, {name="default:water_source"})
+		end,
+		on_place = function(itemstack, user, pointed_thing)
+			if pointed_thing.type ~= "node" then return end
+			local pos = pointed_thing.under
+			local def = minetest.registered_nodes[minetest.get_node(pos).name] or {}
+			if def.on_rightclick and user and not user:get_player_control().sneak then
+				return def.on_rightclick(pos, minetest.get_node(pos), user, itemstack, pointed_thing)
+			end
+			if not def.buildable_to then
+				pos = pointed_thing.above
+				def = minetest.registered_nodes[minetest.get_node(pos).name] or {}
+				if not def.buildable_to then return end
+			end
+			local charge = get_can_level(itemstack)
+			if charge == 0 then return end
+			if minetest.is_protected(pos, user:get_player_name()) then
+				minetest.log("action", user:get_player_name().." tried to place "..data.liquid_source_name.." at protected position "..minetest.pos_to_string(pos).." with a "..data.can_name)
+				return
+			end
+			minetest.set_node(pos, {name=data.liquid_source_name})
 			charge = charge - 1
 			itemstack:set_metadata(tostring(charge))
-			set_can_wear(itemstack, charge, water_can_max_load)
+			set_can_wear(itemstack, charge, data.can_capacity)
 			return itemstack
-		end
+		end,
+		on_refill = function(stack)
+			stack:set_metadata(tostring(data.can_capacity))
+			set_can_wear(stack, data.can_capacity, data.can_capacity)
+			return stack
+		end,
+	})
+end
 
-		node = minetest.get_node(pointed_thing.above)
-		if node.name == "air" then
-			minetest.set_node(pointed_thing.above, {name="default:water_source"})
-			charge = charge - 1;
-			itemstack:set_metadata(tostring(charge))
-			set_can_wear(itemstack, charge, water_can_max_load)
-			return itemstack
-		end		
-	end,
-	on_refill = function(stack)
-		stack:set_metadata(tostring(water_can_max_load))
-		set_can_wear(stack, water_can_max_load, water_can_max_load)
-		return stack
-	end,
+technic.register_can({
+	can_name = "technic:water_can",
+	can_description = S("Water Can"),
+	can_inventory_image = "technic_water_can.png",
+	can_capacity = 16,
+	liquid_source_name = "default:water_source",
+	liquid_flowing_name = "default:water_flowing",
 })
 
-minetest.register_tool("technic:lava_can", {
-	description = S("Lava Can"),
-	inventory_image = "technic_lava_can.png",
-	stack_max = 1,
-	wear_represents = "content_level",
-	liquids_pointable = true,
-	on_use = function(itemstack, user, pointed_thing)
-		if pointed_thing.type ~= "node" then
-			return
-		end
-		node = minetest.get_node(pointed_thing.under)
-		local charge = 0
-		if itemstack:get_metadata() == "" then
-			charge = 0
-		else
-			charge = tonumber(itemstack:get_metadata())
-		end
-
-		if node.name == "default:lava_source" then
-			if charge < lava_can_max_load then
-				minetest.remove_node(pointed_thing.under)
-				charge = charge + 1
-				itemstack:set_metadata(tostring(charge))
-				set_can_wear(itemstack, charge, lava_can_max_load)
-			end
-			return itemstack
-		end
-		if charge == 0 then
-			return
-		end
-
-		if node.name == "default:lava_flowing" then
-			minetest.set_node(pointed_thing.under, {name="default:lava_source"})
-			charge = charge - 1	
-			itemstack:set_metadata(tostring(charge))
-			set_can_wear(itemstack, charge, lava_can_max_load)
-			return itemstack
-		end
-
-		node = minetest.get_node(pointed_thing.above)
-		if node.name == "air" then
-			minetest.set_node(pointed_thing.above, {name="default:lava_source"})
-			charge = charge - 1
-			itemstack:set_metadata(tostring(charge))
-			set_can_wear(itemstack, charge, lava_can_max_load)
-			return itemstack
-		end
-	end,
-	on_refill = function(stack)
-		stack:set_metadata(tostring(lava_can_max_load))
-		set_can_wear(stack, lava_can_max_load, lava_can_max_load)
-		return stack
-	end,
+minetest.register_craft({
+	output = 'technic:water_can 1',
+	recipe = {
+		{'technic:zinc_ingot', 'technic:rubber','technic:zinc_ingot'},
+		{'technic:carbon_steel_ingot', '', 'technic:carbon_steel_ingot'},
+		{'technic:zinc_ingot', 'technic:carbon_steel_ingot', 'technic:zinc_ingot'},
+	}
 })
 
+technic.register_can({
+	can_name = "technic:lava_can",
+	can_description = S("Lava Can"),
+	can_inventory_image = "technic_lava_can.png",
+	can_capacity = 8,
+	liquid_source_name = "default:lava_source",
+	liquid_flowing_name = "default:lava_flowing",
+})
+
+minetest.register_craft({
+	output = 'technic:lava_can 1',
+	recipe = {
+		{'technic:zinc_ingot', 'technic:stainless_steel_ingot','technic:zinc_ingot'},
+		{'technic:stainless_steel_ingot', '', 'technic:stainless_steel_ingot'},
+		{'technic:zinc_ingot', 'technic:stainless_steel_ingot', 'technic:zinc_ingot'},
+	}
+})
