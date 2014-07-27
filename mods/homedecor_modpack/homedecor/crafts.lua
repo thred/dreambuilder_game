@@ -2125,3 +2125,31 @@ minetest.register_craft( {
 			{"homedecor:plastic_sheeting", "homedecor:heating_element", "homedecor:plastic_sheeting"}
         },
 })
+
+-- bathroom/kitchen tiles
+
+local color_pairings = { 
+	{ "grey",		"white",		"1" },
+	{ "dark_grey",	"white",		"2" },
+	{ "black",		"white",		"3" },
+	{ "black",		"dark_grey",	"4" },
+	{ "red",		"white",		"red" },
+	{ "green",		"white",		"green" },
+	{ "blue",		"white",		"blue" },
+	{ "yellow",		"white",		"yellow" },
+	{ "brown",		"white",		"tan" }
+}
+
+for i in ipairs(color_pairings) do
+	local dye1 = color_pairings[i][1]
+	local dye2 = color_pairings[i][2]
+	local result = color_pairings[i][3]
+	minetest.register_craft( {
+		    output = "homedecor:tiles_"..result.." 2",
+		    recipe = {
+				{ "building_blocks:Marble", "dye:"..dye1 },
+				{ "building_blocks:Marble", "dye:"..dye2 }
+		    },
+	})
+end
+
