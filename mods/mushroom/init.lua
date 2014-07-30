@@ -8,15 +8,6 @@
 
 mushroom = {}
 
-function mushroom:clone_node(name)
-	node2={}
-	node=minetest.registered_nodes[name]
-	for k,v in pairs(node) do
-		node2[k]=v
-	end
-	return node2
-end
-
 minetest.register_node("mushroom:brown",{
 	description = "Brown Mushroom",
 	drawtype = "plantlike",

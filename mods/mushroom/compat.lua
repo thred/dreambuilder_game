@@ -1,8 +1,8 @@
 
 -- Redefine grass and dirt nodes
 
-dirt = mushroom:clone_node("default:dirt")
-	dirt.drop = {
+minetest.override_item("default:dirt", {
+	drop = {
 		max_items = 2,
 		items = {
 			{
@@ -18,11 +18,10 @@ dirt = mushroom:clone_node("default:dirt")
 			}
 		}
 	}
+})
 
-minetest.register_node(":default:dirt", dirt)
-
-dirt_with_grass = mushroom:clone_node("default:dirt_with_grass")
-	dirt_with_grass.drop = {
+minetest.override_item("default:dirt_with_grass", {
+	drop = {
 		max_items = 2,
 		items = {
 			{
@@ -38,6 +37,5 @@ dirt_with_grass = mushroom:clone_node("default:dirt_with_grass")
 			}
 		}
 	}
-
-minetest.register_node(":default:dirt_with_grass", dirt_with_grass)
+})
 
