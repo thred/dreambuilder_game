@@ -35,33 +35,6 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "default:axe_wood",
-	recipe = {
-		{"default:wood", "default:wood"},
-		{"default:stick", "default:wood"},
-		{"default:stick", ""},
-	}
-})
-
-minetest.register_craft({
-	output = "default:axe_stone",
-	recipe = {
-		{"default:cobble", "default:cobble"},
-		{"default:stick", "default:cobble"},
-		{"default:stick", ""},
-	}
-})
-
-minetest.register_craft({
-	output = "default:axe_steel",
-	recipe = {
-		{"default:steel_ingot", "default:steel_ingot"},
-		{"default:stick", "default:steel_ingot"},
-		{"default:stick", ""},
-	}
-})
-
-minetest.register_craft({
 	type = "toolrepair",
 	additional_wear = -0.15, -- Tool repair buff (15% bonus instead of 2%).
 })
@@ -121,7 +94,7 @@ minetest.override_item("default:grass_1", {
 })
 
 for i = 2, 5 do
-	minetest.override_item("default:grass_"..i, {
+	minetest.override_item("default:grass_" ..i, {
 		paramtype = "light",
 		sunlight_propagates = true,
 	})

@@ -1,7 +1,9 @@
 worldedit = worldedit or {}
 local minetest = minetest --local copy of global
 
---modifies positions `pos1` and `pos2` so that each component of `pos1` is less than or equal to its corresponding conent of `pos2`, returning two new positions
+-- Copies and modifies positions `pos1` and `pos2` so that each component of
+-- `pos1` is less than or equal to the corresponding component of `pos2`.
+-- Returns the new positions.
 worldedit.sort_pos = function(pos1, pos2)
 	pos1 = {x=pos1.x, y=pos1.y, z=pos1.z}
 	pos2 = {x=pos2.x, y=pos2.y, z=pos2.z}
@@ -25,9 +27,9 @@ end
 
 --sets a region defined by positions `pos1` and `pos2` to `nodename`, returning the number of nodes filled
 worldedit.set = function(pos1, pos2, nodenames)
-    if type(nodenames) == 'string' then
-        nodenames = {nodenames}
-    end
+	if type(nodenames) == "string" then
+		nodenames = {nodenames}
+	end
 
 	local pos1, pos2 = worldedit.sort_pos(pos1, pos2)
 
@@ -45,13 +47,13 @@ worldedit.set = function(pos1, pos2, nodenames)
 
 	--fill selected area with node
 	local node_ids = {}
-    for i,v in ipairs(nodenames) do
-        node_ids[i] = minetest.get_content_id(nodenames[i])
-    end
+	for i,v in ipairs(nodenames) do
+		node_ids[i] = minetest.get_content_id(nodenames[i])
+	end
 	if #node_ids == 1 then --only one type of node
 		local id = node_ids[1]
 		for i in area:iterp(pos1, pos2) do nodes[i] = id end --fill area with node
-	else --several tpyes of nodes specified
+	else --several types of nodes specified
 		local id_count, rand = #node_ids, math.random
 		for i in area:iterp(pos1, pos2) do nodes[i] = node_ids[rand(id_count)] end --fill randomly with all types of specified nodes
 	end
@@ -420,10 +422,16 @@ worldedit.stack = function(pos1, pos2, axis, count)
 	end
 	local amount = 0
 	local copy = worldedit.copy
-	for i = 1, count do
-		amount = amount + length
-		copy(pos1, pos2, axis, amount)
+	local i = 1
+	function nextone()
+		if i <= count then
+			i = i + 1
+			amount = amount + length
+			copy(pos1, pos2, axis, amount)
+			minetest.after(0, nextone)
+		end
 	end
+	nextone()
 	return worldedit.volume(pos1, pos2) * count
 end
 

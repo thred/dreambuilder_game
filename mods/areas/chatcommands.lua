@@ -35,7 +35,7 @@ minetest.register_chatcommand("set_owner", {
 	description = "Protect an area beetween two positions and give"
 		.." a player access to it without setting the parent of the"
 		.." area to any existing area",
-	privs = {areas=true},
+	privs = areas.adminPrivs,
 	func = function(name, param)
 		local ownerName, areaName = param:match('^(%S+)%s(.+)$')
 
@@ -78,7 +78,7 @@ minetest.register_chatcommand("add_owner", {
 		local pid, ownerName, areaName
 				= param:match('^(%d+) ([^ ]+) (.+)$')
 
-		if not found then
+		if not pid then
 			minetest.chat_send_player(name, "Incorrect usage, see /help add_owner")
 			return
 		end
@@ -120,7 +120,7 @@ minetest.register_chatcommand("rename_area", {
 	description = "Rename a area that you own",
 	func = function(name, param)
 		local id, newName = param:match("^(%d+)%s(.+)$")
-		if not found then
+		if not id then
 			return false, "Invalid usage, see /help rename_area."
 		end
 
@@ -175,7 +175,7 @@ minetest.register_chatcommand("find_areas", {
 minetest.register_chatcommand("list_areas", {
 	description = "List your areas, or all areas if you are an admin.",
 	func = function(name, param)
-		local admin = minetest.check_player_privs(name, {areas=true})
+		local admin = minetest.check_player_privs(name, areas.adminPrivs)
 		local areaStrings = {}
 		for id, area in pairs(areas.areas) do
 			if admin or areas:isAreaOwner(id, name) then
