@@ -2,9 +2,8 @@ local c_air = minetest.get_content_id("air")
 local c_ignore = minetest.get_content_id("ignore")
 local c_tree = minetest.get_content_id("default:tree")
 local c_leaves = minetest.get_content_id("default:leaves")
-local c_apple = minetest.get_content_id("default:apple")
 
-function default.grow_tree(data, a, pos, is_apple_tree, seed)
+function default.grow_tree(data, a, pos, foo, seed)
         --[[
                 NOTE: Tree-placing code is currently duplicated in the engine
                 and in games that have saplings; both are deprecated but not
@@ -57,11 +56,7 @@ function default.grow_tree(data, a, pos, is_apple_tree, seed)
                         local vi = a:index(x+xi, y+yi, z+zi)
                         if data[vi] == c_air or data[vi] == c_ignore then
                                 if leaves_buffer[leaves_a:index(xi, yi, zi)] then
-                                        if is_apple_tree and pr:next(1, 100) <=  10 then
-                                                data[vi] = c_apple
-                                        else
-                                                data[vi] = c_leaves
-                                        end
+									data[vi] = c_leaves
                                 end
                         end
                 end
