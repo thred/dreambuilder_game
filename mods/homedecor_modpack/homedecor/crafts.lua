@@ -98,6 +98,11 @@ minetest.register_craftitem("homedecor:fan_blades", {
 	inventory_image = "homedecor_fan_blades.png"
 })
 
+minetest.register_craftitem("homedecor:copper_strip", {
+	description = S("Copper Strip"),
+	inventory_image = "homedecor_copper_strip.png"
+})
+
 -- alternate crafting if mesecons is/isn't installed
 
 if not minetest.get_modpath("mesecons") then
@@ -139,6 +144,13 @@ end
 minetest.register_alias("homedecor:brass_ingot", "technic:brass_ingot")
 
 -- the actual crafts
+
+minetest.register_craft( {
+    output = "homedecor:copper_strip 12",
+    recipe = {
+		{ "default:copper_ingot", "default:copper_ingot" }
+    },
+})
 
 minetest.register_craft( {
     output = "homedecor:fan_blades 2",
@@ -1956,6 +1968,15 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+    output = "homedecor:medicine_cabinet",
+    recipe = {
+		{ "group:stick", "default:glass", "group:stick" },
+		{ "group:stick", "default:glass", "group:stick" },
+		{ "group:stick", "default:glass", "group:stick" }
+    },
+})
+
+minetest.register_craft({
     output = "homedecor:cardboard_box 2",
     recipe = {
 		{ "default:paper", "", "default:paper" },
@@ -1978,6 +1999,15 @@ minetest.register_craft({
 		{ "moreblocks:slab_wood", "moreblocks:slab_wood", "moreblocks:slab_wood" },
 		{ "homedecor:drawer_small", "default:wood", "default:wood" },
 		{ "homedecor:drawer_small", "", "default:wood" },
+    },
+})
+
+minetest.register_craft({
+    output = "homedecor:filing_cabinet",
+    recipe = {
+		{ "", "default:wood", "" },
+		{ "default:wood", "homedecor:drawer_small", "default:wood" },
+		{ "", "default:wood", "" },
     },
 })
 
@@ -2190,3 +2220,22 @@ for i in ipairs(color_pairings) do
 	})
 end
 
+-- misc electrical
+
+minetest.register_craft( {
+        output = "homedecor:power_outlet",
+        recipe = {
+			{"homedecor:plastic_sheeting", "homedecor:copper_strip"},
+			{"homedecor:plastic_sheeting", ""},
+			{"homedecor:plastic_sheeting", "homedecor:copper_strip"}
+        },
+})
+
+minetest.register_craft( {
+        output = "homedecor:light_switch",
+        recipe = {
+			{"", "homedecor:plastic_sheeting", "homedecor:copper_strip"},
+			{"homedecor:plastic_sheeting", "homedecor:plastic_sheeting", "homedecor:copper_strip"},
+			{"", "homedecor:plastic_sheeting", "homedecor:copper_strip"}
+        },
+})
