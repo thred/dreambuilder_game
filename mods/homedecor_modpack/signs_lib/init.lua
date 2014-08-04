@@ -5,36 +5,69 @@
 
 signs_lib = {}
 
-signs_lib.wall_sign_text_pos = {
-    {delta = {x =  0,     y = 0.15, z =  0.399}, yaw = 0},
-    {delta = {x =  0.399, y = 0.15, z =  0    }, yaw = math.pi / -2},
-    {delta = {x =  0,     y = 0.15, z = -0.399}, yaw = math.pi},
-    {delta = {x = -0.399, y = 0.15, z =  0    }, yaw = math.pi / 2},
-}
-
-signs_lib.hanging_sign_text_pos = {
-    {delta = {x =  0,     y = 0.032, z = -0.05}, yaw = 0},
-    {delta = {x = -0.05,  y = 0.032, z =  0   }, yaw = math.pi / -2},
-    {delta = {x =  0,     y = 0.032, z =  0.05}, yaw = math.pi},
-    {delta = {x =  0.05,  y = 0.032, z =  0   }, yaw = math.pi / 2},
-}
-
-signs_lib.yard_sign_text_pos = {
-    {delta = {x =  0,     y = 0.15, z = -0.05}, yaw = 0},
-    {delta = {x = -0.05,  y = 0.15, z =  0   }, yaw = math.pi / -2},
-    {delta = {x =  0,     y = 0.15, z =  0.05}, yaw = math.pi},
-    {delta = {x =  0.05,  y = 0.15, z =  0   }, yaw = math.pi / 2},
-}
-
-signs_lib.sign_post_text_pos = {
-    {delta = {x = 0,      y = 0.15, z = -0.226}, yaw = 0},
-    {delta = {x = -0.226, y = 0.15, z = 0     }, yaw = math.pi / -2},
-    {delta = {x = 0,      y = 0.15, z = 0.226 }, yaw = math.pi},
-    {delta = {x = 0.226,  y = 0.15, z = 0     }, yaw = math.pi / 2},
-}
-
 signs_lib.modpath = minetest.get_modpath("signs_lib")
 signs_lib.intllib_modpath = minetest.get_modpath("intllib")
+
+signs_lib.wall_sign_model = {
+	nodebox = {
+		type = "fixed",
+		fixed = {-0.4375, -0.25, 0.4375, 0.4375, 0.375, 0.5}
+	},
+	textpos = {
+		{delta = {x =  0,     y = 0.07, z =  0.436}, yaw = 0},
+		{delta = {x =  0.436, y = 0.07, z =  0    }, yaw = math.pi / -2},
+		{delta = {x =  0,     y = 0.07, z = -0.436}, yaw = math.pi},
+		{delta = {x = -0.436, y = 0.07, z =  0    }, yaw = math.pi / 2},
+	}
+}
+
+signs_lib.yard_sign_model = {
+	nodebox = {
+		type = "fixed",
+		fixed = {
+				{-0.4375, -0.25, -0.0625, 0.4375, 0.375, 0},
+				{-0.0625, -0.5, -0.0625, 0.0625, -0.1875, 0},
+		}
+	},
+	textpos = {
+		{delta = {x =  0,      y = 0.07, z = -0.063}, yaw = 0},
+		{delta = {x = -0.063,  y = 0.07, z =  0    }, yaw = math.pi / -2},
+		{delta = {x =  0,      y = 0.07, z =  0.063}, yaw = math.pi},
+		{delta = {x =  0.063,  y = 0.07, z =  0    }, yaw = math.pi / 2},
+	}
+}
+
+signs_lib.hanging_sign_model = {
+	nodebox = {
+		type = "fixed",
+		fixed = {
+				{-0.4375, -0.3125, -0.0625, 0.4375, 0.3125, 0},
+				{-0.4375, 0.25, -0.03125, 0.4375, 0.5, -0.03125},
+		}
+	},
+	textpos = {
+		{delta = {x =  0,      y = -0.02, z = -0.063}, yaw = 0},
+		{delta = {x = -0.063,  y = -0.02, z =  0    }, yaw = math.pi / -2},
+		{delta = {x =  0,      y = -0.02, z =  0.063}, yaw = math.pi},
+		{delta = {x =  0.063,  y = -0.02, z =  0    }, yaw = math.pi / 2},
+	}
+}
+
+signs_lib.sign_post_model = {
+	nodebox = {
+		type = "fixed",
+		fixed = {
+				{-0.4375, -0.25, -0.1875, 0.4375, 0.375, -0.125},
+				{-0.125, -0.5, -0.125, 0.125, 0.5, 0.125},
+		}
+	},
+	textpos = {
+		{delta = {x = 0,      y = 0.07, z = -0.188}, yaw = 0},
+		{delta = {x = -0.188, y = 0.07, z = 0     }, yaw = math.pi / -2},
+		{delta = {x = 0,      y = 0.07, z = 0.188 }, yaw = math.pi},
+		{delta = {x = 0.188,  y = 0.07, z = 0     }, yaw = math.pi / 2},
+	}
+}
 
 local S
 if signs_lib.intllib_modpath then
@@ -451,14 +484,17 @@ signs_lib.update_sign = function(pos, fields)
 
 	-- if there is no entity
 	local sign_info
-	if minetest.get_node(pos).name == "signs:sign_yard" then
-		sign_info = signs_lib.yard_sign_text_pos[minetest.get_node(pos).param2 + 1]
-	elseif minetest.get_node(pos).name == "signs:sign_hanging" then
-		sign_info = signs_lib.hanging_sign_text_pos[minetest.get_node(pos).param2 + 1]
-	elseif minetest.get_node(pos).name == "default:sign_wall" then
-		sign_info = signs_lib.wall_sign_text_pos[minetest.get_node(pos).param2 + 1]
-	else --if minetest.get_node(pos).name == "signs:sign_post" then
-		sign_info = signs_lib.sign_post_text_pos[minetest.get_node(pos).param2 + 1]
+	local signnode = minetest.get_node(pos)
+	if signnode.name == "signs:sign_yard" then
+		sign_info = signs_lib.yard_sign_model.textpos[minetest.get_node(pos).param2 + 1]
+	elseif signnode.name == "signs:sign_hanging" then
+		sign_info = signs_lib.hanging_sign_model.textpos[minetest.get_node(pos).param2 + 1]
+	elseif signnode.name == "default:sign_wall" 
+		or signnode.name == "signs:sign_wall_green"
+		or signnode.name == "signs:sign_wall_yellow" then
+		sign_info = signs_lib.wall_sign_model.textpos[minetest.get_node(pos).param2 + 1]
+	else -- ...it must be a sign on a fence post.
+		sign_info = signs_lib.sign_post_model.textpos[minetest.get_node(pos).param2 + 1]
 	end
 	if sign_info == nil then
 		return
@@ -520,20 +556,23 @@ function signs_lib.determine_sign_type(itemstack, placer, pointed_thing)
 		local sign_info
 		local pt_name = minetest.get_node(under).name
 		print(dump(pt_name))
+		local signname = itemstack:get_name()
 
-		if fences_with_sign[pt_name] then
+		if fences_with_sign[pt_name] and signname == "default:sign_wall" then
 			minetest.add_node(under, {name = fences_with_sign[pt_name], param2 = fdir})
-			sign_info = signs_lib.sign_post_text_pos[fdir + 1]
+			sign_info = signs_lib.sign_post_model.textpos[fdir + 1]
 
-		elseif wdir == 0 then
+		elseif wdir == 0 and signname == "default:sign_wall" then
 			minetest.add_node(above, {name = "signs:sign_hanging", param2 = fdir})
-			sign_info = signs_lib.hanging_sign_text_pos[fdir + 1]
-		elseif wdir == 1 then
+			sign_info = signs_lib.hanging_sign_model.textpos[fdir + 1]
+
+		elseif wdir == 1 and signname == "default:sign_wall" then
 			minetest.add_node(above, {name = "signs:sign_yard", param2 = fdir})
-			sign_info = signs_lib.yard_sign_text_pos[fdir + 1]
+			sign_info = signs_lib.yard_sign_model.textpos[fdir + 1]
+
 		else
-			minetest.add_node(above, {name = "default:sign_wall", param2 = fdir})
-			sign_info = signs_lib.wall_sign_text_pos[fdir + 1]
+			minetest.add_node(above, {name = signname, param2 = fdir})
+			sign_info = signs_lib.wall_sign_model.textpos[fdir + 1]
 		end
 
 		local text = minetest.add_entity({x = above.x + sign_info.delta.x,
@@ -573,8 +612,7 @@ minetest.register_node(":default:sign_wall", {
 	sunlight_propagates = true,
 	paramtype2 = "facedir",
 	drawtype = "nodebox",
-	node_box = {type = "fixed", fixed = {-0.45, -0.15, 0.4, 0.45, 0.45, 0.498}},
-	selection_box = {type = "fixed", fixed = {-0.45, -0.15, 0.4, 0.45, 0.45, 0.498}},
+	node_box = signs_lib.wall_sign_model.nodebox,
 	tiles = {"signs_top.png", "signs_bottom.png", "signs_side.png", "signs_side.png", "signs_back.png", "signs_front.png"},
 	groups = sign_groups,
 
@@ -600,11 +638,11 @@ minetest.register_node(":signs:sign_yard", {
 	sunlight_propagates = true,
     paramtype2 = "facedir",
     drawtype = "nodebox",
-    node_box = {type = "fixed", fixed = {
-        {-0.45, -0.15, -0.049, 0.45, 0.45, 0.049},
-        {-0.05, -0.5, -0.049, 0.05, -0.15, 0.049}
-    }},
-    selection_box = {type = "fixed", fixed = {-0.45, -0.15, -0.049, 0.45, 0.45, 0.049}},
+    node_box = signs_lib.yard_sign_model.nodebox,
+	selection_box = {
+		type = "fixed",
+		fixed = {-0.4375, -0.5, -0.0625, 0.4375, 0.375, 0}
+	},
     tiles = {"signs_top.png", "signs_bottom.png", "signs_side.png", "signs_side.png", "signs_back.png", "signs_front.png"},
     groups = {choppy=2, dig_immediate=2},
     drop = "default:sign_wall",
@@ -628,10 +666,7 @@ minetest.register_node(":signs:sign_hanging", {
 	sunlight_propagates = true,
     paramtype2 = "facedir",
     drawtype = "nodebox",
-    node_box = {type = "fixed", fixed = {
-        {-0.45,  0.3124,  0,     0.45, 0.5,   0},
-        {-0.45, -0.2875, -0.049, 0.45, 0.3125, 0.049}
-    }},
+    node_box = signs_lib.hanging_sign_model.nodebox,
     selection_box = {
 		type = "fixed",
 		fixed = {-0.45, -0.275, -0.049, 0.45, 0.5, 0.049}
@@ -666,20 +701,7 @@ minetest.register_node(":signs:sign_post", {
 	sunlight_propagates = true,
     paramtype2 = "facedir",
     drawtype = "nodebox",
-    node_box = {
-		type = "fixed",
-		fixed = {
-			{ -0.125, -0.5, -0.125, 0.125, 0.5, 0.125 },
-			{ -0.45, -0.15, -0.225, 0.45, 0.45, -0.125 },
-		}
-    },
-    selection_box = {
-		type = "fixed",
-		fixed = {
-			{ -0.125, -0.5, -0.125, 0.125, 0.5, 0.125 },
-			{ -0.45, -0.15, -0.225, 0.45, 0.45, -0.125 },
-		}
-    },
+    node_box = signs_lib.sign_post_model.nodebox,
     tiles = {
 		"signs_post_top.png",
 		"signs_post_bottom.png",
@@ -696,6 +718,78 @@ minetest.register_node(":signs:sign_post", {
 			{ items = { "default:fence_wood" }},
 		},
     },
+})
+
+minetest.register_node(":signs:sign_wall_green", {
+	description = S("Sign (green, metal)"),
+	inventory_image = "signs_green_inv.png",
+	wield_image = "signs_green_inv.png",
+	node_placement_prediction = "",
+	paramtype = "light",
+	sunlight_propagates = true,
+	paramtype2 = "facedir",
+	drawtype = "nodebox",
+	node_box = signs_lib.wall_sign_model.nodebox,
+	tiles = {
+		"signs_green_top.png",
+		"signs_green_bottom.png",
+		"signs_green_sides.png",
+		"signs_green_sides.png",
+		"signs_back_metal.png",
+		"signs_green_front.png"
+	},
+	groups = sign_groups,
+	on_place = function(itemstack, placer, pointed_thing)
+		return signs_lib.determine_sign_type(itemstack, placer, pointed_thing)
+	end,
+	on_construct = function(pos)
+		signs_lib.construct_sign(pos)
+	end,
+	on_destruct = function(pos)
+		signs_lib.destruct_sign(pos)
+	end,
+	on_receive_fields = function(pos, formname, fields, sender)
+		signs_lib.receive_fields(pos, formname, fields, sender)
+	end,
+	on_punch = function(pos, node, puncher)
+		signs_lib.update_sign(pos)
+	end,
+})
+
+minetest.register_node(":signs:sign_wall_yellow", {
+	description = S("Sign (yellow, metal)"),
+	inventory_image = "signs_yellow_inv.png",
+	wield_image = "signs_yellow_inv.png",
+	node_placement_prediction = "",
+	paramtype = "light",
+	sunlight_propagates = true,
+	paramtype2 = "facedir",
+	drawtype = "nodebox",
+	node_box = signs_lib.wall_sign_model.nodebox,
+	tiles = {
+		"signs_yellow_top.png",
+		"signs_yellow_bottom.png",
+		"signs_yellow_sides.png",
+		"signs_yellow_sides.png",
+		"signs_back_metal.png",
+		"signs_yellow_front.png"
+	},
+	groups = sign_groups,
+	on_place = function(itemstack, placer, pointed_thing)
+		return signs_lib.determine_sign_type(itemstack, placer, pointed_thing)
+	end,
+	on_construct = function(pos)
+		signs_lib.construct_sign(pos)
+	end,
+	on_destruct = function(pos)
+		signs_lib.destruct_sign(pos)
+	end,
+	on_receive_fields = function(pos, formname, fields, sender)
+		signs_lib.receive_fields(pos, formname, fields, sender)
+	end,
+	on_punch = function(pos, node, puncher)
+		signs_lib.update_sign(pos)
+	end,
 })
 
 local signs_text_on_activate
@@ -794,6 +888,40 @@ build_char_db()
 minetest.register_alias("homedecor:fence_wood_with_sign", "signs:sign_post")
 
 signs_lib.register_fence_with_sign("default:fence_wood", "signs:sign_post")
+
+-- craft recipes for the green and yellow signs
+
+minetest.register_craft( {
+        output = "signs:sign_wall_green 4",
+        recipe = {
+			{ "dye:dark_green", "dye:white", "dye:dark_green" },
+			{ "default:steel_ingot", "default:steel_ingot", "default:steel_ingot" }
+        },
+})
+
+minetest.register_craft( {
+        output = "signs:sign_wall_green 2",
+        recipe = {
+			{ "dye:dark_green", "dye:white", "dye:dark_green" },
+			{ "steel:sheet_metal", "steel:sheet_metal", "steel:sheet_metal" }
+        },
+})
+
+minetest.register_craft( {
+        output = "signs:sign_wall_yellow 4",
+        recipe = {
+			{ "dye:yellow", "dye:black", "dye:yellow" },
+			{ "default:steel_ingot", "default:steel_ingot", "default:steel_ingot" }
+        },
+})
+
+minetest.register_craft( {
+        output = "signs:sign_wall_yellow 2",
+        recipe = {
+			{ "dye:yellow", "dye:black", "dye:yellow" },
+			{ "steel:sheet_metal", "steel:sheet_metal", "steel:sheet_metal" }
+        },
+})
 
 if minetest.setting_get("log_mods") then
 	minetest.log("action", S("signs loaded"))
