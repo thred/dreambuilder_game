@@ -140,7 +140,7 @@ minetest.register_entity("prefab:boat", boat)
 
 
 minetest.register_craftitem("prefab:boat", {
-	description = "Concrete Barge",
+	description = "Prefab Concrete Barge",
 	inventory_image = "prefab_boat_inventory.png",
 	wield_scale = {x=2, y=2, z=1},
 	liquids_pointable = true,

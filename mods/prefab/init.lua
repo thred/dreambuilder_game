@@ -9,7 +9,7 @@ print("Prefab Loaded!")
 
 minetest.register_node("prefab:concrete", {
         drawtype = "normal",
-	description = "Solid Block of Concrete",
+	description = "Block of Prefab Concrete",
 	paramtype = "light",
 	tiles = {"prefab_concrete.png"},
 	is_ground_content = false,
@@ -18,7 +18,7 @@ minetest.register_node("prefab:concrete", {
 })
 
 minetest.register_node("prefab:concrete_with_grass", {
-	description = "Concrete with Grass",
+	description = "Prefab Concrete with Grass",
 	paramtype = "light",
 	tiles = {"default_grass.png",
 	                "prefab_concrete.png",
@@ -30,7 +30,7 @@ minetest.register_node("prefab:concrete_with_grass", {
 
 minetest.register_node("prefab:concrete_wall", {
         drawtype = "nodebox",
-	description = "Concrete Wall Section",
+	description = "Prefab Concrete Wall Section",
 	tiles = {"prefab_concrete.png",
 	                "prefab_concrete.png",
 			"prefab_concrete_wall.png",
@@ -52,7 +52,7 @@ minetest.register_node("prefab:concrete_wall", {
 
 minetest.register_node("prefab:concrete_stair", {
         drawtype = "nodebox",
-	description = "Concrete Stair",
+	description = "Prefab Concrete Stair",
 	tiles = {"prefab_concrete.png"},
 	paramtype = "light",
     paramtype2 = "facedir",
@@ -70,7 +70,7 @@ minetest.register_node("prefab:concrete_stair", {
 
 minetest.register_node("prefab:concrete_slab", {
         drawtype = "nodebox",
-	description = "Concrete Slab",
+	description = "Prefab Concrete Slab",
 	tiles = {"prefab_concrete.png"},
 	paramtype = "light",
 	node_box = {
@@ -86,7 +86,7 @@ minetest.register_node("prefab:concrete_slab", {
 
 minetest.register_node("prefab:concrete_stair_inverted", {
         drawtype = "nodebox",
-	description = "Concrete Stair (inverted)",
+	description = "Prefab Concrete Stair (inverted)",
 	tiles = {"prefab_concrete.png"},
 	paramtype = "light",
     paramtype2 = "facedir",
@@ -104,7 +104,7 @@ minetest.register_node("prefab:concrete_stair_inverted", {
 
 minetest.register_node("prefab:concrete_slab_inverted", {
         drawtype = "nodebox",
-	description = "Concrete Slab (inverted)",
+	description = "Prefab Concrete Slab (inverted)",
 	tiles = {"prefab_concrete.png"},
 	paramtype = "light",
 	node_box = {
@@ -120,7 +120,7 @@ minetest.register_node("prefab:concrete_slab_inverted", {
 
 minetest.register_node("prefab:concrete_slit", {
         drawtype = "nodebox",
-	description = "Horizontal Concrete Slit",
+	description = "Prefab Horizontal Concrete Slit",
 	tiles = {"prefab_concrete.png"},
 	paramtype = "light",
 	node_box = {
@@ -143,7 +143,7 @@ minetest.register_node("prefab:concrete_slit", {
 
 minetest.register_node("prefab:concrete_window", {
         drawtype = "nodebox",
-	description = "Concrete Framed Window",
+	description = "Prefab Concrete Framed Window",
 	tiles = {"prefab_concrete.png",
 	                "prefab_concrete.png",
 			"prefab_concrete.png",
@@ -175,7 +175,7 @@ minetest.register_node("prefab:concrete_window", {
 
 minetest.register_node("prefab:concrete_ladder", {
 	drawtype = "signlike",
-	description = "Concrete Ladder",
+	description = "Prefab Concrete Ladder",
 	tiles = {"prefab_concrete_ladder.png"},
 	paramtype = "light",
 	paramtype2 = "wallmounted",
@@ -190,7 +190,7 @@ minetest.register_node("prefab:concrete_ladder", {
 })
 
 minetest.register_node("prefab:concrete_fence", {
-	description = "Concrete Fence",
+	description = "Prefab Concrete Fence",
 	drawtype = "fencelike",
 	paramtype = "light",
 	selection_box = {
@@ -204,7 +204,7 @@ minetest.register_node("prefab:concrete_fence", {
 })
 
 doors:register_door("prefab:concrete_door", {
-	description = "Concrete Door",
+	description = "Prefab Concrete Door",
 	inventory_image = "prefab_concrete_door.png",
 	groups = {cracky=2,door=1},
 	tiles_bottom = {"prefab_concrete_door_bottom.png", "prefab_concrete_grey.png"},
@@ -214,7 +214,7 @@ doors:register_door("prefab:concrete_door", {
 
 minetest.register_node("prefab:concrete_cylinder", {
         drawtype = "nodebox",
-	description = "Concrete Cylinder",
+	description = "Prefab Concrete Cylinder",
 	tiles = {"prefab_concrete.png"},
 	paramtype = "light",
 	node_box = {
@@ -239,7 +239,7 @@ minetest.register_node("prefab:concrete_cylinder", {
 
 minetest.register_node("prefab:concrete_bollard", {
         drawtype = "nodebox",
-	description = "Concrete Bollard",
+	description = "Prefab Concrete Bollard",
 	tiles = {"prefab_concrete.png"},
 	paramtype = "light",
 	node_box = {
@@ -267,7 +267,7 @@ minetest.register_node("prefab:concrete_bollard", {
 
 minetest.register_node("prefab:concrete_bench", {
         drawtype = "nodebox",
-	description = "Concrete Bench",
+	description = "Prefab Concrete Bench",
 	tiles = {"prefab_concrete.png"},
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -291,7 +291,7 @@ minetest.register_node("prefab:concrete_bench", {
 
 minetest.register_node("prefab:concrete_railing", {
         drawtype = "nodebox",
-	description = "Concrete Railing",
+	description = "Prefab Concrete Railing",
 	tiles = {"prefab_concrete.png"},
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -309,7 +309,7 @@ minetest.register_node("prefab:concrete_railing", {
 
 minetest.register_node("prefab:concrete_railing_corner", {
         drawtype = "nodebox",
-	description = "Concrete Railing Corner",
+	description = "Prefab Concrete Railing Corner",
 	tiles = {"prefab_concrete.png"},
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -333,7 +333,7 @@ minetest.register_node("prefab:electric_fence", {
 	sunlight_propagates = true,
 	paramtype = "light",
 	paramtype2 = "facedir",
-	
+	damage_per_second = 30,
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -358,7 +358,7 @@ minetest.register_node("prefab:electric_fence_corner", {
 	sunlight_propagates = true,
 	paramtype = "light",
 	paramtype2 = "facedir",
-	
+	damage_per_second = 30,
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -403,7 +403,7 @@ minetest.register_node("prefab:electric_fence_end", {
 
 minetest.register_node("prefab:concrete_catwalk",{
 	drawtype="nodebox",
-	description= "Concrete Catwalk",
+	description= "Prefab Concrete Catwalk",
 	paramtype = "light",
 	paramtype2 = "facedir",
 	tiles = { 'prefab_concrete.png', },
