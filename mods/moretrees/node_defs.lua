@@ -408,12 +408,15 @@ minetest.register_abm({
 
 minetest.register_alias("technic:rubber_tree_full",      "moretrees:rubber_tree_trunk")
 minetest.register_alias("farming_plus:rubber_tree_full", "moretrees:rubber_tree_trunk")
+minetest.register_alias("farming:rubber_tree_full", "moretrees:rubber_tree_trunk")
 
 minetest.register_alias("technic:rubber_leaves",      "moretrees:rubber_tree_leaves")
 minetest.register_alias("farming_plus:rubber_leaves", "moretrees:rubber_tree_leaves")
+minetest.register_alias("farming:rubber_leaves", "moretrees:rubber_tree_leaves")
 
-minetest.register_alias("farming_plus:rubber_sapling", "moretrees:rubber_tree_sapling")
 minetest.register_alias("technic:rubber_tree_sapling", "moretrees:rubber_tree_sapling")
+minetest.register_alias("farming_plus:rubber_sapling", "moretrees:rubber_tree_sapling")
+minetest.register_alias("farming:rubber_sapling", "moretrees:rubber_tree_sapling")
 
 minetest.register_alias("default:junglesapling","moretrees:jungletree_sapling")
 minetest.register_alias("moretrees:jungletree_trunk_sideways", "moreblocks:horizontal_jungle_tree")
