@@ -118,3 +118,35 @@ plantslib:register_generate_plant({
   },
   "abstract_woodsoils.place_soil"
 )
+
+minetest.register_abm({
+	nodenames = {"default:papyrus"},
+	neighbors = {
+		"woodsoils:dirt_with_leaves_1",
+		"woodsoils:dirt_with_leaves_2",
+		"woodsoils:grass_with_leaves_1",
+		"woodsoils:grass_with_leaves_2"
+	},
+	interval = 50,
+	chance = 20,
+	action = function(pos, node)
+		pos.y = pos.y-1
+		local name = minetest.get_node(pos).name
+		if string.find(name, "_with_leaves_") then
+			if minetest.find_node_near(pos, 3, {"group:water"}) == nil then
+				return
+			end
+			pos.y = pos.y+1
+			local height = 0
+			while minetest.get_node(pos).name == "default:papyrus" and height < 4 do
+				height = height+1
+				pos.y = pos.y+1
+			end
+			if height < 4 then
+				if minetest.get_node(pos).name == "air" then
+					minetest.set_node(pos, {name="default:papyrus"})
+				end
+			end
+		end
+	end,
+})
