@@ -174,19 +174,20 @@ for i = 1, detail-1 do
 end
 
 minetest.register_node("homedecor:pole_brass", {
-        description = S("Brass Pole"),
-        drawtype = "nodebox",
-        tiles = {"homedecor_tile_brass2.png"},
-        inventory_image = "homedecor_pole_brass2.png",
-        wield_image = "homedecor_pole_brass2.png",
-        paramtype = "light",
-        is_ground_content = true,
-        selection_box = {
-                type = "fixed",
-                fixed = {-size/2, -0.5, -size/2, size/2, 0.5, size/2},
-        },
-        groups = {snappy=3},
-        sounds = default.node_sound_wood_defaults(),
+    description = S("Brass Pole"),
+    drawtype = "nodebox",
+    tiles = {"homedecor_tile_brass2.png"},
+    inventory_image = "homedecor_pole_brass2.png",
+    wield_image = "homedecor_pole_brass2.png",
+    paramtype = "light",
+	paramtype2 = "facedir",
+    is_ground_content = true,
+    selection_box = {
+            type = "fixed",
+            fixed = {-size/2, -0.5, -size/2, size/2, 0.5, size/2},
+    },
+    groups = {snappy=3},
+    sounds = default.node_sound_wood_defaults(),
 	walkable = true,
 	node_box = {
 		type = "fixed",
@@ -195,23 +196,24 @@ minetest.register_node("homedecor:pole_brass", {
 })
 	
 minetest.register_node("homedecor:pole_wrought_iron", {
-        description = S("Wrought Iron Pole"),
-        drawtype = "nodebox",
-        tiles = {"homedecor_tile_wrought_iron2.png"},
-        inventory_image = "homedecor_pole_wrought_iron.png",
-        wield_image = "homedecor_pole_wrought_iron.png",
-        paramtype = "light",
-        is_ground_content = true,
-        selection_box = {
-                type = "fixed",
-                fixed = {-0.0625, -0.5, -0.0625, 0.0625, 0.5, 0.0625}
-        },
+    description = S("Wrought Iron Pole"),
+    drawtype = "nodebox",
+    tiles = {"homedecor_tile_wrought_iron2.png"},
+    inventory_image = "homedecor_pole_wrought_iron.png",
+    wield_image = "homedecor_pole_wrought_iron.png",
+    paramtype = "light",
+	paramtype2 = "facedir",
+    is_ground_content = true,
+    selection_box = {
+            type = "fixed",
+            fixed = {-0.0625, -0.5, -0.0625, 0.0625, 0.5, 0.0625}
+    },
 	node_box = {
 		type = "fixed",
                 fixed = {-0.0625, -0.5, -0.0625, 0.0625, 0.5, 0.0625}
 	},
-        groups = {snappy=3},
-        sounds = default.node_sound_wood_defaults(),
+    groups = {snappy=3},
+    sounds = default.node_sound_wood_defaults(),
 	walkable = true,
 })
 
@@ -920,5 +922,25 @@ minetest.register_node("homedecor:trash_can", {
 		type = "fixed",
 		fixed = { -0.25, -0.5, -0.25, 0.25, 0.125, 0.25 }
 	}
+})
+
+minetest.register_node("homedecor:cobweb", {
+	description = "Cobweb",
+	drawtype = "plantlike",
+	tiles = { "homedecor_cobweb.png" },
+	inventory_image = "homedecor_cobweb_inv.png",
+	paramtype = "light",
+	paramtype2 = "facedir",
+	sunlight_propagates = true,
+	walkable = false,
+	selection_box = {
+		type = "fixed",
+		fixed = {-0.5, -0.5, -0.5, 0.5, 0.5, 0.5}
+	},
+	visual_scale = 1.189,
+	groups = { snappy = 3 },
+    after_place_node = function(pos, placer, itemstack, pointed_thing)
+		minetest.add_node(pos, { name = "homedecor:cobweb", param2 = 0 })
+	end
 })
 
