@@ -1,10 +1,14 @@
+-- Original code by Traxie21 and released with the WTFPL license
+-- https://forum.minetest.net/viewtopic.php?id=4457
+
+-- Updates by Zeno and ChaosWormz
 
 local timeout_delay = 60
 
 -- Set to true to register tpr_admin priv
 local regnewpriv = false
 
-local version = "0.2"
+local version = "1.1"
 
 local tpr_list = {}
 local tphr_list = {}
@@ -26,7 +30,6 @@ local function tpr_send(name, param)
 		minetest.chat_send_player(sender, 'Teleport request sent! It will time out in '.. timeout_delay ..' seconds.')
 
 		--Write name values to list and clear old values.
-		tpr_list[receiver] = nil
 		tpr_list[receiver] = sender
 		--Teleport timeout delay
 		minetest.after(timeout_delay, function(name)
@@ -49,11 +52,10 @@ local function tphr_send(name, param)
 
 	--If paremeter is valid, Send teleport message and set the table.
 	if minetest.env:get_player_by_name(receiver) then
-		minetest.chat_send_player(receiver, sender ..' is requesting that you teleport to them. /tpy to accept.')
+		minetest.chat_send_player(receiver, sender ..' is requesting that you teleport to them. /tpy to accept; /tpn to deny')
 		minetest.chat_send_player(sender, 'Teleport request sent! It will time out in '.. timeout_delay ..' seconds.')
 
 		--Write name values to list and clear old values.
-		tphr_list[receiver] = nil
 		tphr_list[receiver] = sender
 		--Teleport timeout delay
 		minetest.after(timeout_delay, function(name)
