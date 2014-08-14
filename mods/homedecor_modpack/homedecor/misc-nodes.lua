@@ -757,7 +757,7 @@ minetest.register_node("homedecor:pool_table", {
 			{-0.3125,  0.1875,   -0.3125,  0.3125,   0.25,     0.5},      --  NodeBox12
 			{-0.4375,  0.1875,   -0.3125,  0.4375,   0.25,     0.4375},   --  NodeBox13
 			{-0.3125,  0.1875,   -0.5,     0.3125,   0.25,     -0.3125},  --  NodeBox14
-			{-0.25,    -0.125,   -0.375,   0.25,     0,        -0.3125},  --  NodeBox15
+			{-0.25,    -0.125,   -0.325,   0.25,     0,        -0.3125},  --  NodeBox15
 			{0.25,     0.125,    -0.4375,  0.4375,   0.1875,   0.5},      --  NodeBox16
 			{-0.4375,  0.125,    -0.4375,  -0.25,    0.1875,   0.5},      --  NodeBox17
 			{-0.5,     0.25,     -0.5,     -0.4375,  0.3125,   0.5},      --  NodeBox18
@@ -803,6 +803,7 @@ minetest.register_node("homedecor:pool_table", {
 	end,
 	after_dig_node = function(pos, oldnode, oldmetadata, digger)
 		local fdir = oldnode.param2
+		if not fdir or fdir > 3 then return end
 		local pos2 = { x = pos.x + fdir_to_fwd[fdir+1][1], y=pos.y, z = pos.z + fdir_to_fwd[fdir+1][2] }
 		if minetest.get_node(pos2).name == "homedecor:pool_table2" then
 			minetest.remove_node(pos2)
@@ -840,7 +841,7 @@ minetest.register_node("homedecor:pool_table2", {
 			{-0.3125,  0.1875,   -0.3125,  0.3125,   0.25,     0.5},      --  NodeBox12
 			{-0.4375,  0.1875,   -0.3125,  0.4375,   0.25,     0.4375},   --  NodeBox13
 			{-0.3125,  0.1875,   -0.5,     0.3125,   0.25,     -0.3125},  --  NodeBox14
-			{-0.25,    -0.125,   -0.375,   0.25,     0,        -0.3125},  --  NodeBox15
+			{-0.25,    -0.125,   -0.325,   0.25,     0,        -0.3125},  --  NodeBox15
 			{0.25,     0.125,    -0.4375,  0.4375,   0.1875,   0.5},      --  NodeBox16
 			{-0.4375,  0.125,    -0.4375,  -0.25,    0.1875,   0.5},      --  NodeBox17
 			{-0.5,     0.25,     -0.5,     -0.4375,  0.3125,   0.5},      --  NodeBox18
@@ -1081,5 +1082,76 @@ minetest.register_node("homedecor:well_top", {
 		type = "fixed",
 		fixed = { 0, 0, 0, 0, 0, 0 }
 	},
+})
+
+minetest.register_node("homedecor:coatrack_wallmount", {
+	tiles = { "homedecor_coatrack_wood.png" },
+	inventory_image = "homedecor_coatrack_wallmount_inv.png",
+	description = "Coatrack (wallmounted)",
+	drawtype = "nodebox",
+	paramtype = "light",
+	paramtype2 = "facedir",
+        groups = {snappy=3},
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.375, 0, 0.4375, 0.375, 0.14, 0.5}, -- NodeBox1
+			{-0.3025, 0.0475, 0.375, -0.26, 0.09, 0.4375}, -- NodeBox2
+			{0.26, 0.0475, 0.375, 0.3025, 0.09, 0.4375}, -- NodeBox3
+			{0.0725, 0.0475, 0.375, 0.115, 0.09, 0.4375}, -- NodeBox4
+			{-0.115, 0.0475, 0.375, -0.0725, 0.09, 0.4375}, -- NodeBox5
+			{0.24, 0.025, 0.352697, 0.3225, 0.115, 0.375}, -- NodeBox6
+			{-0.3225, 0.025, 0.352697, -0.24, 0.115, 0.375}, -- NodeBox7
+			{-0.135, 0.025, 0.352697, -0.0525, 0.115, 0.375}, -- NodeBox8
+			{0.0525, 0.025, 0.352697, 0.135, 0.115, 0.375}, -- NodeBox9
+		}
+	},
+})
+
+
+minetest.register_node("homedecor:coat_tree", {
+	tiles = { "homedecor_coatrack_wood.png" },
+	description = "Coat tree",
+	drawtype = "nodebox",
+	paramtype = "light",
+        paramtype2 = "facedir",
+        groups = {snappy=3},
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{0, -0.5, 0, 0.0625, 1.5, 0.0625}, -- NodeBox1
+			{-0.125, -0.5, -0.125, 0.1875, -0.4375, 0.1875}, -- NodeBox2
+			{0.1875, -0.5, -0.0625, 0.22, -0.4375, 0.125}, -- NodeBox3
+			{-0.0625, -0.5, 0.188, 0.125, -0.4375, 0.22}, -- NodeBox4
+			{-0.16, -0.5, -0.0625, -0.125, -0.4375, 0.125}, -- NodeBox5
+			{-0.0625, -0.5, -0.16, 0.125, -0.4375, -0.125}, -- NodeBox6
+			{-0.25, 1.1875, 0, 0.3125, 1.25, 0.0625}, -- NodeBox7
+			{0, 1.1875, -0.25, 0.0625, 1.25, 0.3125}, -- NodeBox8
+			{-0.0207468, 1.4375, -0.0207468, 0.0829876, 1.5, 0.0829876}, -- NodeBox9
+		}
+	},
+})
+
+minetest.register_node("homedecor:doorbell", {
+	tiles = { "homedecor_doorbell.png" },
+	inventory_image = "homedecor_doorbell_inv.png",
+	description = "Doorbell",
+	drawtype = "nodebox",
+	paramtype = "light",
+    paramtype2 = "facedir",
+    groups = {snappy=3},
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.0625, 0, 0.46875, 0.0625, 0.1875, 0.5}, -- NodeBox1
+			{-0.03125, 0.0625, 0.45, 0.03125, 0.125, 0.4675}, -- NodeBox2
+		}
+	},
+	on_punch = function(pos, node, puncher, pointed_thing)
+		minetest.sound_play("homedecor_doorbell", {
+			gain = 1.0,
+			max_hear_distance = 32
+		}) 
+	end
 })
 
