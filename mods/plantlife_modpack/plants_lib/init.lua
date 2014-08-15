@@ -13,6 +13,8 @@ plantslib = {}
 plantslib.modpath = minetest.get_modpath("plants_lib")
 plantslib.intllib_modpath = minetest.get_modpath("intllib")
 
+plantslib.total_legacy_calls = 0
+
 local S
 if plantslib.intllib_modpath then
     dofile(plantslib.intllib_modpath.."/intllib.lua")
@@ -117,30 +119,39 @@ function plantslib:register_generate_plant(biomedef, node_or_function_or_model)
 	if type(node_or_function_or_model) == "string"
 	  and string.find(node_or_function_or_model, ":")
 	  and not minetest.registered_nodes[node_or_function_or_model] then
-		print("[Plants Lib] Warning: Ignored registration for undefined node: "..dump(node_or_function_or_model))
+		plantslib:dbg("Warning: Ignored registration for undefined spawn node: "..dump(node_or_function_or_model))
 		return
 	end
 
 	if type(node_or_function_or_model) == "string"
 	  and not string.find(node_or_function_or_model, ":") then
-		print("[Plants Lib] Warning: Registered function call using deprecated string method: "..dump(node_or_function_or_model))
+		plantslib:dbg("Warning: Registered function call using deprecated string method: "..dump(node_or_function_or_model))
 	end
 
 	if biomedef.check_air == false then 
-		print("[Plants Lib] Warning: Registered legacy mapgen hook: "..dump(node_or_function_or_model))
+		plantslib:dbg("Warning: Registered legacy mapgen hook: "..dump(node_or_function_or_model))
 		minetest.register_on_generated(plantslib:generate_block_legacy(minp, maxp, biomedef, node_or_function_or_model))
+		plantslib.total_legacy_calls = plantslib.total_legacy_calls + 1
 	else
 		plantslib.actions_list[#plantslib.actions_list + 1] = { biomedef, node_or_function_or_model }
 		local s = biomedef.surface
 		if type(s) == "string" then
-			if not search_table(plantslib.surfaces_list, s) then
-				plantslib.surfaces_list[#plantslib.surfaces_list + 1] = s
+			if s and minetest.registered_nodes[s] then
+				if not search_table(plantslib.surfaces_list, s) then
+					plantslib.surfaces_list[#plantslib.surfaces_list + 1] = s
+				end
+			else
+				plantslib:dbg("Warning: Ignored registration for undefined surface node: "..dump(s))
 			end
 		else
 			for i = 1, #biomedef.surface do
 				local s = biomedef.surface[i]
-				if not search_table(plantslib.surfaces_list, s) then
-					plantslib.surfaces_list[#plantslib.surfaces_list + 1] = s
+				if s and minetest.registered_nodes[s] then
+					if not search_table(plantslib.surfaces_list, s) then
+						plantslib.surfaces_list[#plantslib.surfaces_list + 1] = s
+					end
+				else
+					plantslib:dbg("Warning: Ignored registration for undefined surface node: "..dump(s))
 				end
 			end
 		end
@@ -258,7 +269,7 @@ function plantslib:generate_block(minp, maxp, blockseed)
 								format(node_or_function_or_model)),pos) then
 								spawned = true
 							else
-								print("Ignored invalid definition for object "..dump(node_or_function_or_model).." that was pointed at {"..dump(pos).."}")
+								plantslib:dbg("Warning: Ignored invalid definition for object "..dump(node_or_function_or_model).." that was pointed at {"..dump(pos).."}")
 							end
 						else
 							tries = tries + 1
@@ -610,7 +621,7 @@ function plantslib:generate_block_legacy(minp, maxp, biomedef, node_or_function_
 							format(node_or_function_or_model)),pos) then
 							spawned = true
 						else
-							print("Ignored invalid definition for object "..dump(node_or_function_or_model).." that was pointed at {"..dump(pos).."}")
+							plantslib:dbg("Warning:  Ignored invalid definition for object "..dump(node_or_function_or_model).." that was pointed at {"..dump(pos).."}")
 						end
 					else
 						tries = tries + 1
@@ -621,4 +632,10 @@ function plantslib:generate_block_legacy(minp, maxp, biomedef, node_or_function_
 	end
 end
 
-print(S("[Plantlife Library] Loaded"))
+print("[Plants Lib] Loaded")
+
+minetest.after(0, function()
+	print("[Plants Lib] Registered a total of "..#plantslib.surfaces_list.." surface types to be evaluated,")
+	print("[Plants Lib] a total of "..#plantslib.actions_list.." actions, and "..plantslib.total_legacy_calls.." legacy mapgen hooks.")
+end)
+
