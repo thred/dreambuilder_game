@@ -11,7 +11,7 @@
 -- lot of code, lot to load
 
 abstract_ferns.grow_giant_tree_fern = function(pos)
-	local size = math.random(12,16)
+	local size = math.random(12,16)	-- min of range must be >= 4
 	local pos_01 = {x = pos.x, y = pos.y + 1, z = pos.z}
 	
 	local leave_a_1 = {x = pos.x + 1, y = pos.y + size - 1, z = pos.z    }
@@ -38,51 +38,12 @@ abstract_ferns.grow_giant_tree_fern = function(pos)
 	or minetest.env:get_node(pos_01).name == "ferns:sapling_giant_tree_fern"
 	or minetest.env:get_node(pos_01).name == "default:junglegrass" then
 		
-		minetest.env:add_node({x = pos.x, y = pos.y + 1, z = pos.z}, {name="ferns:fern_trunk_big"})
-		minetest.env:add_node({x = pos.x, y = pos.y + 2, z = pos.z}, {name="ferns:fern_trunk_big"})
-		minetest.env:add_node({x = pos.x, y = pos.y + 3, z = pos.z}, {name="ferns:fern_trunk_big"})
-		minetest.env:add_node({x = pos.x, y = pos.y + 4, z = pos.z}, {name="ferns:fern_trunk_big"})
-		minetest.env:add_node({x = pos.x, y = pos.y + 5, z = pos.z}, {name="ferns:fern_trunk_big"})
-		minetest.env:add_node({x = pos.x, y = pos.y + 6, z = pos.z}, {name="ferns:fern_trunk_big"})
-		minetest.env:add_node({x = pos.x, y = pos.y + 7, z = pos.z}, {name="ferns:fern_trunk_big"})
-		minetest.env:add_node({x = pos.x, y = pos.y + 8, z = pos.z}, {name="ferns:fern_trunk_big"})
-			
-		if size > 11 then
-			minetest.env:add_node({x = pos.x, y = pos.y + 9, z = pos.z}, {name="ferns:fern_trunk_big"})
-		end	
-		if size > 12 then
-			minetest.env:add_node({x = pos.x, y = pos.y + 10, z = pos.z}, {name="ferns:fern_trunk_big"})
-		end	
-		if size > 13 then
-			minetest.env:add_node({x = pos.x, y = pos.y + 11, z = pos.z}, {name="ferns:fern_trunk_big"})
-		end	
-		if size > 14 then
-			minetest.env:add_node({x = pos.x, y = pos.y + 12, z = pos.z}, {name="ferns:fern_trunk_big"})
+		for i = 1, size-3 do
+			minetest.env:add_node({x = pos.x, y = pos.y + i, z = pos.z}, {name="ferns:fern_trunk_big"})
 		end
-		if size > 15 then
-			minetest.env:add_node({x = pos.x, y = pos.y + 13, z = pos.z}, {name="ferns:fern_trunk_big"})
-		end
-		if size > 16 then
-			minetest.env:add_node({x = pos.x, y = pos.y + 14, z = pos.z}, {name="ferns:fern_trunk_big"})
-		end
-		if size > 17 then
-			minetest.env:add_node({x = pos.x, y = pos.y + 15, z = pos.z}, {name="ferns:fern_trunk_big"})
-		end
-		if size > 18 then
-			minetest.env:add_node({x = pos.x, y = pos.y + 16, z = pos.z}, {name="ferns:fern_trunk_big"})
-		end
-		if size > 19 then
-			minetest.env:add_node({x = pos.x, y = pos.y + 17, z = pos.z}, {name="ferns:fern_trunk_big"})
-		end
-		if size > 20 then
-			minetest.env:add_node({x = pos.x, y = pos.y + 18, z = pos.z}, {name="ferns:fern_trunk_big"})
-		end
-		if size > 21 then
-			minetest.env:add_node({x = pos.x, y = pos.y + 19, z = pos.z}, {name="ferns:fern_trunk_big"})
-		end
-		
-		minetest.env:add_node({x = pos.x, y = pos.y + size - 2, z = pos.z    }, {name="ferns:fern_trunk_big_top"})
-		
+		minetest.env:add_node({x = pos.x, y = pos.y + size-2, z = pos.z}, {name="ferns:fern_trunk_big_top"})
+		minetest.env:add_node({x = pos.x, y = pos.y + size-1, z = pos.z}, {name="ferns:tree_fern_leaves_giant"})
+
 		-- all the checking for air below is to prevent some ugly bugs (incomplete trunks of neighbouring trees), it's a bit slower, but worth the result
 		
 		if minetest.env:get_node(leave_a_1).name == "air" then	
@@ -136,9 +97,7 @@ abstract_ferns.grow_giant_tree_fern = function(pos)
 				end
 			end
 		end
-			
-		minetest.env:add_node({x = pos.x, y = pos.y + size - 1, z = pos.z    }, {name="ferns:tree_fern_leaves_giant"})
-		
+
 		-- bug fixes # 2 - doesn't really work, so disabled for now
 		--[[if minetest.env:get_node(leave_a_4).name == "ferns:tree_fern_leave_big_end"
 		and minetest.env:get_node(leave_a_3).name == "ferns:fern_trunk_big" then
