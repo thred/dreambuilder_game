@@ -104,7 +104,7 @@ plantslib.actions_list = {}
 plantslib.surface_nodes = {}
 
 local function search_table(t, s)
-	for i in ipairs(t) do
+	for i = 1, #t do
 		if t[i] == s then return true end
 	end
 	return false
@@ -114,20 +114,29 @@ end
 
 function plantslib:register_generate_plant(biomedef, node_or_function_or_model)
 
+	-- if calling code passes an undefined node, don't register an action for it.
+	if type(node_or_function_or_model) == "string"
+	  and string.find(node_or_function_or_model, ":")
+	  and not minetest.registered_nodes[node_or_function_or_model] then
+		print("[Plants Lib] Ignored registration for undefined node "..dump(node_or_function_or_model))
+		return
+	end
+
 	if biomedef.check_air == false then 
-		print("==>> Called legacy mapgen code for "..dump(node_or_function_or_model))
+		print("[Plants Lib] Called legacy mapgen code for "..dump(node_or_function_or_model))
 		minetest.register_on_generated(plantslib:generate_block_legacy(minp, maxp, biomedef, node_or_function_or_model))
 	else
-		table.insert(plantslib.actions_list, { biomedef, node_or_function_or_model })
+		plantslib.actions_list[#plantslib.actions_list + 1] = { biomedef, node_or_function_or_model }
 		local s = biomedef.surface
 		if type(s) == "string" then
 			if not search_table(plantslib.surfaces_list, s) then
-				table.insert(plantslib.surfaces_list, s)
+				plantslib.surfaces_list[#plantslib.surfaces_list + 1] = s
 			end
 		else
-			for _, s in ipairs(biomedef.surface) do
+			for i = 1, #biomedef.surface do
+				local s = biomedef.surface[i]
 				if not search_table(plantslib.surfaces_list, s) then
-					table.insert(plantslib.surfaces_list, s)
+					plantslib.surfaces_list[#plantslib.surfaces_list + 1] = s
 				end
 			end
 		end
@@ -145,16 +154,18 @@ function plantslib:generate_block(minp, maxp, blockseed)
 
 		-- search the generated block for surfaces
 
-		plantslib.surface_nodes.blockhash = {}
-		for _, pos in ipairs(search_area) do
+		local surface_nodes = {}
+		surface_nodes.blockhash = {}
+
+		for i = 1, #search_area do
+		local pos = search_area[i]
 			local p_top = { x=pos.x, y=pos.y+1, z=pos.z }
 			if minetest.get_node(p_top).name == "air" then
-				table.insert(plantslib.surface_nodes.blockhash, pos)
+				surface_nodes.blockhash[#surface_nodes.blockhash + 1] = pos
 			end
 		end
 
-		for action in ipairs(plantslib.actions_list) do
-
+		for action = 1, #plantslib.actions_list do
 			local biome = plantslib.actions_list[action][1]
 			local node_or_function_or_model = plantslib.actions_list[action][2]
 
@@ -163,10 +174,12 @@ function plantslib:generate_block(minp, maxp, blockseed)
 			-- filter stage 1 - find nodes from the supplied surfaces that are within the current biome.
 
 			local in_biome_nodes = {}
-			for _ , pos in ipairs(plantslib.surface_nodes.blockhash) do
+			local perlin_fertile_area = minetest.get_perlin(biome.seed_diff, perlin_octaves, perlin_persistence, perlin_scale)
+
+			for i = 1, #surface_nodes.blockhash do
+				local pos = surface_nodes.blockhash[i]
 				local p_top = { x = pos.x, y = pos.y + 1, z = pos.z }
-				local perlin1 = minetest.get_perlin(biome.seed_diff, perlin_octaves, perlin_persistence, perlin_scale)
-				local noise1 = perlin1:get2d({x=pos.x, y=pos.z})
+				local noise1 = perlin_fertile_area:get2d({x=pos.x, y=pos.z})
 				local noise2 = plantslib.perlin_temperature:get2d({x=pos.x, y=pos.z})
 				local noise3 = plantslib.perlin_humidity:get2d({x=pos.x+150, y=pos.z+50})
 				local biome_surfaces_string = dump(biome.surface)
@@ -184,7 +197,7 @@ function plantslib:generate_block(minp, maxp, blockseed)
 				  and math.random(1,100) > biome.rarity
 				  and (not biome.below_nodes or string.find(dump(biome.below_nodes), minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name) )
 				  then
-					table.insert(in_biome_nodes, pos)
+					in_biome_nodes[#in_biome_nodes + 1] = pos
 				end
 			end
 
@@ -250,7 +263,7 @@ function plantslib:generate_block(minp, maxp, blockseed)
 				end
 			end
 		end
-		plantslib.surface_nodes.blockhash = nil -- nuke the block cache after using it (prevent a mem leak).
+		surface_nodes.blockhash = nil -- nuke the block cache after using it (prevent a mem leak).
 	end
 end
 
@@ -290,8 +303,8 @@ function plantslib:spawn_on_surfaces(sd,sp,sr,sc,ss,sa)
 		action = function(pos, node, active_object_count, active_object_count_wider)
 			local p_top = { x = pos.x, y = pos.y + 1, z = pos.z }	
 			local n_top = minetest.get_node(p_top)
-			local perlin1 = minetest.get_perlin(biome.seed_diff, perlin_octaves, perlin_persistence, perlin_scale)
-			local noise1 = perlin1:get2d({x=p_top.x, y=p_top.z})
+			local perlin_fertile_area = minetest.get_perlin(biome.seed_diff, perlin_octaves, perlin_persistence, perlin_scale)
+			local noise1 = perlin_fertile_area:get2d({x=p_top.x, y=p_top.z})
 			local noise2 = plantslib.perlin_temperature:get2d({x=p_top.x, y=p_top.z})
 			local noise3 = plantslib.perlin_humidity:get2d({x=p_top.x+150, y=p_top.z+50})
 			if noise1 > biome.plantlife_limit 
@@ -417,14 +430,14 @@ function plantslib:replace_object(pos, replacement, grow_function, walldir, seed
 		plantslib:grow_tree(pos, grow_function)
 		return
 	elseif growtype == "function" then
-		local perlin1 = minetest.get_perlin(seeddiff, perlin_octaves, perlin_persistence, perlin_scale)
-		local noise1 = perlin1:get2d({x=pos.x, y=pos.z})
+		local perlin_fertile_area = minetest.get_perlin(seeddiff, perlin_octaves, perlin_persistence, perlin_scale)
+		local noise1 = perlin_fertile_area:get2d({x=pos.x, y=pos.z})
 		local noise2 = plantslib.perlin_temperature:get2d({x=pos.x, y=pos.z})
 		grow_function(pos,noise1,noise2,walldir)
 		return
 	elseif growtype == "string" then
-		local perlin1 = minetest.get_perlin(seeddiff, perlin_octaves, perlin_persistence, perlin_scale)
-		local noise1 = perlin1:get2d({x=pos.x, y=pos.z})
+		local perlin_fertile_area = minetest.get_perlin(seeddiff, perlin_octaves, perlin_persistence, perlin_scale)
+		local noise1 = perlin_fertile_area:get2d({x=pos.x, y=pos.z})
 		local noise2 = plantslib.perlin_temperature:get2d({x=pos.x, y=pos.z})
 		assert(loadstring(grow_function.."(...)"))(pos,noise1,noise2,walldir)
 		return
@@ -507,8 +520,8 @@ function plantslib:get_nodedef_field(nodename, fieldname)
 	return minetest.registered_nodes[nodename][fieldname]
 end
 
--- The old version of the mapgen spawner, for mods that require re-checking
--- the map on each call.
+-- The old version of the mapgen spawner, for mods that require disabling of
+-- checking for air during the initial map read stage.
 
 function plantslib:generate_block_legacy(minp, maxp, biomedef, node_or_function_or_model)
 	return function(minp, maxp, blockseed)
@@ -517,14 +530,15 @@ function plantslib:generate_block_legacy(minp, maxp, biomedef, node_or_function_
 
 		local searchnodes = minetest.find_nodes_in_area(minp, maxp, biome.surface)
 		local in_biome_nodes = {}
-		for _ , pos in ipairs(searchnodes) do
+		local perlin_fertile_area = minetest.get_perlin(biome.seed_diff, perlin_octaves, perlin_persistence, perlin_scale)
+
+		for i = 1, #searchnodes do
+			local pos = searchnodes[i]
 			local p_top = { x = pos.x, y = pos.y + 1, z = pos.z }
-			local perlin1 = minetest.get_perlin(biome.seed_diff, perlin_octaves, perlin_persistence, perlin_scale)
-			local noise1 = perlin1:get2d({x=p_top.x, y=p_top.z})
+			local noise1 = perlin_fertile_area:get2d({x=p_top.x, y=p_top.z})
 			local noise2 = plantslib.perlin_temperature:get2d({x=p_top.x, y=p_top.z})
 			local noise3 = plantslib.perlin_humidity:get2d({x=p_top.x+150, y=p_top.z+50})
 			if (not biome.depth or minetest.get_node({ x = pos.x, y = pos.y-biome.depth-1, z = pos.z }).name ~= biome.surface)
-			  and (not biome.check_air or (biome.check_air and minetest.get_node(p_top).name == "air"))
 			  and pos.y >= biome.min_elevation
 			  and pos.y <= biome.max_elevation
 			  and noise1 > biome.plantlife_limit
@@ -537,7 +551,7 @@ function plantslib:generate_block_legacy(minp, maxp, biomedef, node_or_function_
 			  and math.random(1,100) > biome.rarity
 			  and (not biome.below_nodes or string.find(dump(biome.below_nodes), minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name) )
 			  then
-				table.insert(in_biome_nodes, pos)
+				in_biome_nodes[#in_biome_nodes + 1] = pos
 			end
 		end
 
