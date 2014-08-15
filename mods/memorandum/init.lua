@@ -56,10 +56,15 @@ minetest.register_node("memorandum:letter_empty", {
 		end
 		meta:set_string("text", fields.text)
 		meta:set_string("signed", "")
-		meta:set_string("infotext", info..fields.text..'" Unsigned')
-		if fields.signed ~= "" then
-			meta:set_string("signed", fields.signed)
-			meta:set_string("infotext", info..fields.text..sign..fields.signed)
+		if fields.text then
+			if fields.signed ~= "" then
+				meta:set_string("signed", fields.signed)
+				meta:set_string("infotext", info..fields.text..sign..fields.signed)
+			else
+				meta:set_string("infotext", info..fields.text..'" Unsigned')
+			end
+		else
+			meta:set_string("infotext", "" )	
 		end
 	end,
 	on_dig = function(pos, node, digger)
@@ -151,10 +156,15 @@ minetest.register_node("memorandum:letter_written", {
 			end
 			meta:set_string("text", fields.text)
 			meta:set_string("signed", "")
-			meta:set_string("infotext", info..fields.text..'" Unsigned')
-			if fields.signed ~= "" then
-				meta:set_string("signed", fields.signed)
-				meta:set_string("infotext", info..fields.text..sign..fields.signed)
+			if fields.text then
+				if fields.signed ~= "" then
+					meta:set_string("signed", fields.signed)
+					meta:set_string("infotext", info..fields.text..sign..fields.signed)
+				else
+					meta:set_string("infotext", info..fields.text..'" Unsigned')
+				end
+			else
+				meta:set_string("infotext", "" )	
 			end
 		end
 	end,
