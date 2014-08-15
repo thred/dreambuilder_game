@@ -15,22 +15,6 @@ minetest.register_craft({
 
 local music_handles = {}
 
-local music_player_formspec =
-	"invsize[8,9;]"..
-	"label[0,0;"..S("%s Music Player"):format("LV").."]"..
-	"button[4,1;1,1;track1;1]"..
-	"button[5,1;1,1;track2;2]"..
-	"button[6,1;1,1;track3;3]"..
-	"button[4,2;1,1;track4;4]"..
-	"button[5,2;1,1;track5;5]"..
-	"button[6,2;1,1;track6;6]"..
-	"button[4,3;1,1;track7;7]"..
-	"button[5,3;1,1;track8;8]"..
-	"button[6,3;1,1;track9;9]"..
-	"button[4,4;1,2;play;Play]"..
-	"button[6,4;1,2;stop;Stop]"..
-	"label[4,0;"..S("Current track %s"):format("--").."]"
-
 local function play_track(pos, track)
 	return minetest.sound_play("technic_track"..tostring(track),
 			{pos = pos, gain = 1.0, loop = true, max_hear_distance = 72,})
@@ -76,6 +60,36 @@ local run = function(pos, node)
 	meta:set_int("LV_EU_demand", demand)
 end
 
+local function stop_player(pos, node)
+	local pos_hash = minetest.hash_node_position(pos)
+	local music_handle = music_handles[pos_hash]
+	if music_handle then
+		minetest.sound_stop(music_handle)
+		music_handles[pos_hash] = nil
+	end
+end
+
+local function set_display(meta)
+	meta:set_string("formspec",
+			"size[4,4.5]"..
+			"item_image[0,0;1,1;technic:music_player]"..
+			"label[1,0;"..S("%s Music Player"):format("LV").."]"..
+			"button[0,1;1,1;track1;1]"..
+			"button[1,1;1,1;track2;2]"..
+			"button[2,1;1,1;track3;3]"..
+			"button[0,2;1,1;track4;4]"..
+			"button[1,2;1,1;track5;5]"..
+			"button[2,2;1,1;track6;6]"..
+			"button[0,3;1,1;track7;7]"..
+			"button[1,3;1,1;track8;8]"..
+			"button[2,3;1,1;track9;9]"..
+			"button[3,1;1,1;stop;Stop]"..
+			"label[0,4;"..minetest.formspec_escape(
+				meta:get_int("active") == 0 and
+					S("Stopped") or
+					S("Current track %s"):format(meta:get_int("current_track"))).."]")
+end
+
 minetest.register_node("technic:music_player", {
 	description = S("%s Music Player"):format("LV"),
 	tiles = {"technic_music_player_top.png", "technic_machine_bottom.png", "technic_music_player_side.png",
@@ -85,57 +99,31 @@ minetest.register_node("technic:music_player", {
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("infotext", S("%s Music Player"):format("LV"))
-		meta:set_int("active", 0)
-		meta:set_int("current_track", 1)
-		meta:set_string("formspec", music_player_formspec)
+		set_display(meta)
 	end,
 	on_receive_fields = function(pos, formanme, fields, sender)
-		local meta          = minetest.get_meta(pos)
-		local pos_hash      = minetest.hash_node_position(pos)
-		local music_handle  = music_handles[pos_hash]
-		local current_track = meta:get_int("current_track")
-		if fields.track1 then current_track = 1 end
-		if fields.track2 then current_track = 2 end
-		if fields.track3 then current_track = 3 end
-		if fields.track4 then current_track = 4 end
-		if fields.track5 then current_track = 5 end
-		if fields.track6 then current_track = 6 end
-		if fields.track7 then current_track = 7 end
-		if fields.track8 then current_track = 8 end
-		if fields.track9 then current_track = 9 end
-		meta:set_int("current_track", current_track)
-		meta:set_string("formspec",
-				"invsize[8,9;]"..
-				"label[0,0;"..S("%s Music Player"):format("LV").."]"..
-				"button[4,1;1,1;track1;1]"..
-				"button[5,1;1,1;track2;2]"..
-				"button[6,1;1,1;track3;3]"..
-				"button[4,2;1,1;track4;4]"..
-				"button[5,2;1,1;track5;5]"..
-				"button[6,2;1,1;track6;6]"..
-				"button[4,3;1,1;track7;7]"..
-				"button[5,3;1,1;track8;8]"..
-				"button[6,3;1,1;track9;9]"..
-				"button[4,4;1,2;play;Play]"..
-				"button[6,4;1,2;stop;Stop]"..
-				"label[4,0;"..S("Current track %s")
-					:format(current_track).."]")
-		if fields.play then
-			if music_handle then
-				minetest.sound_stop(music_handle)
-			end
-			music_handle = play_track(pos, current_track)
-			meta:set_int("active", 1)
+		local new_track = nil
+		if fields.stop then new_track = 0 end
+		if fields.track1 then new_track = 1 end
+		if fields.track2 then new_track = 2 end
+		if fields.track3 then new_track = 3 end
+		if fields.track4 then new_track = 4 end
+		if fields.track5 then new_track = 5 end
+		if fields.track6 then new_track = 6 end
+		if fields.track7 then new_track = 7 end
+		if fields.track8 then new_track = 8 end
+		if fields.track9 then new_track = 9 end
+		if new_track then
+			stop_player(pos)
+			local meta = minetest.get_meta(pos)
+			meta:set_int("active", new_track == 0 and 0 or 1)
+			meta:set_int("current_track", new_track)
+			set_display(meta)
 		end
-		if fields.stop then
-			meta:set_int("active", 0)
-			if music_handle then
-				minetest.sound_stop(music_handle)
-			end
-		end
-		music_handles[pos_hash] = music_handle
 	end,
+	on_destruct = stop_player,
 	technic_run = run,
+	technic_on_disable = stop_player,
 })
 
 technic.register_machine("LV", "technic:music_player", technic.receiver)

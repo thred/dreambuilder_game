@@ -241,7 +241,7 @@ if pipeworks.enable_mese_tube then
 	local function update_formspec(pos)
 		local meta = minetest.get_meta(pos)
 		local old_formspec = meta:get_string("formspec")
-		if string.find(old_formspec, "button0") then -- Old version
+		if string.find(old_formspec, "button1") then -- Old version
 			local inv = meta:get_inventory()
 			for i = 1, 6 do
 				for _, stack in ipairs(inv:get_list("line"..i)) do
@@ -323,6 +323,7 @@ if pipeworks.enable_mese_tube then
 							 inv:is_empty("line4") and inv:is_empty("line5") and inv:is_empty("line6"))
 				 end,
 				 allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+				 	update_formspec(pos) -- For old tubes
 				 	local inv = minetest.get_meta(pos):get_inventory()
 				 	local stack_copy = ItemStack(stack)
 				 	stack_copy:set_count(1)
@@ -330,11 +331,13 @@ if pipeworks.enable_mese_tube then
 				 	return 0
 				 end,
 				 allow_metadata_inventory_take = function(pos, listname, index, stack, player)
+				 	update_formspec(pos) -- For old tubes
 				 	local inv = minetest.get_meta(pos):get_inventory()
 				 	inv:set_stack(listname, index, ItemStack(""))
 				 	return 0
 				 end,
 				 allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+				 	update_formspec(pos) -- For old tubes
 				 	local inv = minetest.get_meta(pos):get_inventory()
 				 	inv:set_stack(from_list, from_index, ItemStack(""))
 				 	return 0
@@ -493,7 +496,7 @@ if pipeworks.enable_sand_tube then
 				       for _, object in ipairs(minetest.get_objects_inside_radius(pos, 2)) do
 					       if not object:is_player() and object:get_luaentity() and object:get_luaentity().name == "__builtin:item" then
 						       if object:get_luaentity().itemstring ~= "" then
-							       pipeworks.tube_item(pos, pos, vector.new(0, 0, 0), object:get_luaentity().itemstring)
+							       pipeworks.tube_inject_item(pos, pos, vector.new(0, 0, 0), object:get_luaentity().itemstring)
 						       end
 						       object:get_luaentity().itemstring = ""
 						       object:remove()
@@ -553,7 +556,7 @@ if pipeworks.enable_mese_sand_tube then
 				       for _,object in ipairs(get_objects_with_square_radius(pos, minetest.env:get_meta(pos):get_int("dist"))) do
 					       if not object:is_player() and object:get_luaentity() and object:get_luaentity().name == "__builtin:item" then
 						       if object:get_luaentity().itemstring ~= "" then
-							       pipeworks.tube_item(pos, pos, vector.new(0, 0, 0), object:get_luaentity().itemstring)
+							       pipeworks.tube_inject_item(pos, pos, vector.new(0, 0, 0), object:get_luaentity().itemstring)
 						       end
 						       object:get_luaentity().itemstring = ""
 						       object:remove()
