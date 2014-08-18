@@ -1155,3 +1155,75 @@ minetest.register_node("homedecor:doorbell", {
 	end
 })
 
+minetest.register_node("homedecor:kitchen_faucet", {
+	tiles = { "homedecor_bright_metal.png" },
+	inventory_image = "homedecor_kitchen_faucet_inv.png",
+	description = "Kitchen Faucet",
+	drawtype = "nodebox",
+	paramtype = "light",
+        paramtype2 = "facedir",
+        groups = {snappy=3},
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{0, -0.5, 0.375, 0.0625, -0.1875, 0.4375}, -- NodeBox1
+			{0, -0.1875, 0.352697, 0.0625, -0.147303, 0.4375}, -- NodeBox2
+			{0, -0.109959, 0.319502, 0.0625, -0.147303, 0.406639}, -- NodeBox3
+			{0.0070, -0.119556, 0.17, 0.0550,-0.109959, 0.1285}, -- NodeBox4
+			{0, -0.109959, 0.125, 0.0625, -0.0726142, 0.352697}, -- NodeBox5
+			{-0.06, -0.479253, 0.385892, 0.125, -0.454357, 0.427386}, -- NodeBox6
+			{-0.06, -0.490701, 0.394191, 0.125, -0.444357, 0.419087}, -- NodeBox7
+		}
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = { -0.0625, -0.5, 0.125, 0.125, -0.0625, 0.4375 }
+	},
+})
+
+minetest.register_node("homedecor:cutlery_set", {
+	tiles = {
+		"homedecor_cutlery_set_top.png",
+		"homedecor_cutlery_set_bottom.png",
+		"homedecor_cutlery_set_sides.png"
+	},
+	inventory_image = "homedecor_cutlery_set_inv.png",
+	description = "Cutlery set",
+	drawtype = "nodebox",
+	paramtype = "light",
+	paramtype2 = "facedir",
+	groups = {snappy=3},
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.125, -0.5, -0.4375, 0.125, -0.49, -0.1875}, -- NodeBox1
+			{-0.0625, -0.5, -0.125, 0.0625, -0.375, -0.1153}, -- NodeBox3
+			{0.0539418, -0.5, -0.125, 0.0625, -0.375, 0}, -- NodeBox4
+			{-0.0625, -0.5, -0.125, -0.053942, -0.375, 0}, -- NodeBox5
+			{-0.0625, -0.5, -0.011563, 0.0625, -0.375, 0}, -- NodeBox6
+			{-0.0625, -0.40, -0.125, 0.0625, -0.5, 0}, -- NodeBox7
+			{-0.22, -0.5, -0.45, -0.205, -0.49, -0.245}, -- NodeBox8
+			{-0.23, -0.5, -0.245, -0.195, -0.49, -0.24}, -- NodeBox9
+			{-0.23, -0.5, -0.24, -0.225, -0.49, -0.1875}, -- NodeBox11
+			{-0.22, -0.5, -0.24, -0.215, -0.49, -0.1875}, -- NodeBox12
+			{-0.21, -0.5, -0.24, -0.205, -0.49, -0.1875}, -- NodeBox13
+			{-0.2, -0.5, -0.24, -0.195, -0.49, -0.1875}, -- NodeBox14
+			{0.21, -0.5, -0.45, 0.237261, -0.49, -0.3125}, -- NodeBox15
+			{0.1956, -0.5, -0.3125, 0.237261, -0.49, -0.185839}, -- NodeBox16
+			{0.202, -0.5, -0.185839, 0.237261, -0.49, -0.1625}, -- NodeBox17
+			{-0.1037, -0.5, -0.1875, 0.103734, -0.48, -0.173}, -- NodeBox18
+			{-0.1079, -0.5, -0.45, 0.103734, -0.48, -0.4375}, -- NodeBox19
+			{-0.143, -0.5, -0.4205, -0.125, -0.48, -0.2125}, -- NodeBox20
+			{0.125, -0.5, -0.42, 0.143, -0.48, -0.2125}, -- NodeBox21
+			{0.1036, -0.5, -0.4375, 0.125, -0.48, -0.42}, -- NodeBox22
+			{-0.125, -0.5, -0.4375, -0.108, -0.48, -0.42}, -- NodeBox23
+			{0.1037, -0.5, -0.213, 0.125, -0.48, -0.1875}, -- NodeBox24
+			{-0.125, -0.5, -0.213, -0.1036, -0.48, -0.1875}, -- NodeBox25
+		}
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = { -0.25, -0.5, -0.5, 0.25, -0.375, 0 }
+	}
+})
+
