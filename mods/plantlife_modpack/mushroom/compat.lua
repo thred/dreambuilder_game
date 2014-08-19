@@ -6,15 +6,15 @@ minetest.override_item("default:dirt", {
 		max_items = 2,
 		items = {
 			{
-				items = {'mushroom:spore1'},
+				items = {"mushroom:spore1"},
 				rarity = 40,
 			},
 			{
-				items = {'mushroom:spore2'},
+				items = {"mushroom:spore2"},
 				rarity = 40,
 			},
 			{
-				items = {'default:dirt'},
+				items = {"default:dirt"},
 			}
 		}
 	}
@@ -25,15 +25,15 @@ minetest.override_item("default:dirt_with_grass", {
 		max_items = 2,
 		items = {
 			{
-				items = {'mushroom:spore1'},
+				items = {"mushroom:spore1"},
 				rarity = 40,
 			},
 			{
-				items = {'mushroom:spore2'},
+				items = {"mushroom:spore2"},
 				rarity = 40,
 			},
 			{
-				items = {'default:dirt'},
+				items = {"default:dirt"},
 			}
 		}
 	}
