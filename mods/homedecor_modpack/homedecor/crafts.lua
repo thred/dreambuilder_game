@@ -1822,6 +1822,14 @@ minetest.register_craft( {
 minetest.register_craft( {
     output = "homedecor:dishwasher_wood",
     recipe = {
+		{ "moreblocks:slab_wood" },
+		{ "homedecor:dishwasher" },
+    },
+})
+
+minetest.register_craft( {
+    output = "homedecor:dishwasher_wood",
+    recipe = {
 		{ "moreblocks:slab_wood_1" },
 		{ "homedecor:dishwasher" },
     },
@@ -2365,15 +2373,6 @@ minetest.register_craft( {
 })
 
 minetest.register_craft( {
-        output = "homedecor:bed_blue_foot",
-        recipe = {
-			{ "group:stick", "", "group:stick" },
-			{ "wool:white", "wool:blue", "wool:blue" },
-			{ "group:wood", "", "group:wood" },
-        },
-})
-
-minetest.register_craft( {
         output = "homedecor:pool_table",
         recipe = {
 			{ "wool:dark_green", "wool:dark_green", "wool:dark_green" },
@@ -2456,7 +2455,16 @@ minetest.register_craft( {
         recipe = {
 			{ "homedecor:shutter_oak", "homedecor:shutter_oak", "homedecor:shutter_oak" },
 			{ "group:wood", "group:wood", "group:wood" },
-			{ "group:stick", "", "group:stick" }
+			{ "stairs:slab_wood", "", "stairs:slab_wood" }
+        },
+})
+
+minetest.register_craft( {
+        output = "homedecor:bench_large_2_left",
+        recipe = {
+			{ "homedecor:shutter_oak", "homedecor:shutter_oak", "homedecor:shutter_oak" },
+			{ "group:wood", "group:wood", "group:wood" },
+			{ "moreblocks:slab_wood", "", "moreblocks:slab_wood" }
         },
 })
 
@@ -2485,3 +2493,40 @@ minetest.register_craft( {
         },
 })
 
+minetest.register_craft( {
+        output = "homedecor:simple_bench",
+        recipe = {
+			{ "stairs:slab_wood", "stairs:slab_wood", "stairs:slab_wood" },
+			{ "stairs:slab_wood", "", "stairs:slab_wood" }
+        },
+})
+
+minetest.register_craft( {
+        output = "homedecor:simple_bench",
+        recipe = {
+			{ "moreblocks:slab_wood", "moreblocks:slab_wood", "moreblocks:slab_wood" },
+			{ "moreblocks:slab_wood", "", "moreblocks:slab_wood" }
+        },
+})
+
+local bedcolors = {
+	{ "red", "red"},
+	{ "green", "dark_green"},
+	{ "blue", "blue"},
+	{ "violet", "violet"}
+}
+
+for c in ipairs(bedcolors) do
+	local color = bedcolors[c][1]
+	local woolcolor = bedcolors[c][2]
+
+	minetest.register_craft( {
+		    output = "homedecor:bed_"..color.."_foot",
+		    recipe = {
+				{ "group:stick", "", "group:stick" },
+				{ "wool:white", "wool:"..woolcolor, "wool:"..woolcolor },
+				{ "group:wood", "", "group:wood" },
+		    },
+	})
+
+end
