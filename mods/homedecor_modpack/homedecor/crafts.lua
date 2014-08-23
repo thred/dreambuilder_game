@@ -2511,9 +2511,14 @@ minetest.register_craft( {
 
 local bedcolors = {
 	{ "red", "red"},
+	{ "orange", "orange" },
+	{ "yellow", "yellow"},
 	{ "green", "dark_green"},
 	{ "blue", "blue"},
-	{ "violet", "violet"}
+	{ "violet", "violet"},
+	{ "pink", "pink"},
+	{ "darkgrey", "dark_grey"},
+	{ "brown", "brown" },
 }
 
 for c in ipairs(bedcolors) do
@@ -2530,3 +2535,17 @@ for c in ipairs(bedcolors) do
 	})
 
 end
+
+minetest.register_craft( {
+        output = "homedecor:bottle_green",
+        recipe = {
+			{ "vessels:glass_bottle", "dye:green" }
+        },
+})
+
+minetest.register_craft( {
+        output = "homedecor:bottle_brown",
+        recipe = {
+			{ "vessels:glass_bottle", "dye:brown" }
+        },
+})

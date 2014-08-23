@@ -7,71 +7,38 @@
 -- Looked at code from:		default	, trees			
 -----------------------------------------------------------------------------------------------
 
+assert(abstract_ferns.config.enable_treefern == true)
+
 abstract_ferns.grow_tree_fern = function(pos)
-	local size = math.random(1,5)
-	local crown = math.random(1,2)
+
 	local pos_01 = {x = pos.x, y = pos.y + 1, z = pos.z}
-	local pos_02 = {x = pos.x, y = pos.y + 2, z = pos.z}
-	local pos_03 = {x = pos.x, y = pos.y + 3, z = pos.z}
-	local pos_04 = {x = pos.x, y = pos.y + 4, z = pos.z}
-	local pos_05 = {x = pos.x, y = pos.y + 5, z = pos.z}
-	
-	if minetest.get_node(pos_01).name == "air"  -- instead of check_air = true,
-	or minetest.get_node(pos_01).name == "ferns:sapling_tree_fern"
-	or minetest.get_node(pos_01).name == "default:junglegrass" then
-	
-		if minetest.get_node(pos_02).name ~= "air"
-		or size == 1 then
-			minetest.set_node(pos_01, {name="ferns:tree_fern_leaves"})
-			
-		elseif minetest.get_node(pos_03).name ~= "air" 
-		or size == 2 then
-			minetest.set_node(pos_01, {name="ferns:fern_trunk"})
-			if crown == 1 then
-				minetest.set_node(pos_02, {name="ferns:tree_fern_leaves"})
-			else
-				minetest.set_node(pos_02, {name="ferns:tree_fern_leaves_02"})
-			end
-			
-		elseif minetest.get_node(pos_04).name ~= "air"
-		or size == 3 then
-			minetest.set_node(pos_01, {name="ferns:fern_trunk"})
-			minetest.set_node(pos_02, {name="ferns:fern_trunk"})
-			if crown == 1 then
-				minetest.set_node(pos_03, {name="ferns:tree_fern_leaves"})
-			else
-				minetest.set_node(pos_03, {name="ferns:tree_fern_leaves_02"})
-			end
-			
-		elseif minetest.get_node(pos_05).name ~= "air"
-		or size == 4 then
-			minetest.set_node(pos_01, {name="ferns:fern_trunk"})
-			minetest.set_node(pos_02, {name="ferns:fern_trunk"})
-			minetest.set_node(pos_03, {name="ferns:fern_trunk"})
-			if crown == 1 then
-				minetest.set_node(pos_04, {name="ferns:tree_fern_leaves"})
-			else
-				minetest.set_node(pos_04, {name="ferns:tree_fern_leaves_02"})
-			end
-		
-		elseif size == 5 then
-			minetest.set_node(pos_01, {name="ferns:fern_trunk"})
-			minetest.set_node(pos_02, {name="ferns:fern_trunk"})
-			minetest.set_node(pos_03, {name="ferns:fern_trunk"})
-			minetest.set_node(pos_04, {name="ferns:fern_trunk"})
-			if crown == 1 then
-				minetest.set_node(pos_05, {name="ferns:tree_fern_leaves"})
-			else
-				minetest.set_node(pos_05, {name="ferns:tree_fern_leaves_02"})
-			end
-			
-		end
+	if minetest.get_node(pos_01).name ~= "air"
+			and minetest.get_node(pos_01).name ~= "ferns:sapling_tree_fern"
+			and minetest.get_node(pos_01).name ~= "default:junglegrass" then
+		return
 	end
+		
+	local size = math.random(1, 5)
+	local crown = ({ "ferns:tree_fern_leaves", "ferns:tree_fern_leaves_02" })[math.random(1, 2)]
+	
+	local i = 1
+	while (i < size-1) do
+		if minetest.get_node({x = pos.x, y = pos.y + i + 1, z = pos.z}).name ~= "air" then
+			break
+		end
+		minetest.set_node({x = pos.x, y = pos.y + i, z = pos.z}, { name = "ferns:fern_trunk" })
+		i = i + 1
+	end
+
+	minetest.set_node({x = pos.x, y = pos.y + i, z = pos.z}, { name = crown })
 end
 
 -----------------------------------------------------------------------------------------------
 -- TREE FERN LEAVES
 -----------------------------------------------------------------------------------------------
+
+-- TODO: Both of these nodes look the same?
+
 minetest.register_node("ferns:tree_fern_leaves", {
 	description = "Tree Fern Crown (Dicksonia)",
 	drawtype = "plantlike",
@@ -188,58 +155,58 @@ minetest.register_abm({
 -----------------------------------------------------------------------------------------------
 -- GENERATE TREE FERN
 -----------------------------------------------------------------------------------------------
+
 -- in jungles
-if Tree_Ferns_in_Jungle == true	then
-plantslib:register_generate_plant({
-    surface = {
-		"default:dirt_with_grass", 
-		"default:sand", 
-		"default:desert_sand"--, 
-		--"dryplants:grass_short"
+if abstract_ferns.config.enable_treeferns_in_jungle == true then
+	plantslib:register_generate_plant({
+		surface = {
+			"default:dirt_with_grass",
+			"default:sand",
+			"default:desert_sand",
+		},
+		max_count = 35,--27,
+		avoid_nodes = {"default:tree"},
+		avoid_radius = 4,
+		rarity = 50,
+		seed_diff = 329,
+		min_elevation = -10,
+		near_nodes = {"default:jungletree"},
+		near_nodes_size = 6,
+		near_nodes_vertical = 2,--4,
+		near_nodes_count = 1,
+		plantlife_limit = -0.9,
+		humidity_max = -1.0,
+		humidity_min = 0.4,
+		temp_max = -0.5,
+		temp_min = 0.13,
 	},
-    max_count = 35,--27,
-    avoid_nodes = {"default:tree"},
-    avoid_radius = 4,
-    rarity = 50,
-    seed_diff = 329,
-    min_elevation = -10,
-	near_nodes = {"default:jungletree"},
-	near_nodes_size = 6,
-	near_nodes_vertical = 2,--4,
-	near_nodes_count = 1,
-    plantlife_limit = -0.9,
-    humidity_max = -1.0,
-    humidity_min = 0.4,
-    temp_max = -0.5,
-    temp_min = 0.13,
-  },
-  abstract_ferns.grow_tree_fern
-)
+	abstract_ferns.grow_tree_fern
+	)
 end
 
 -- for oases & tropical beaches
-if Tree_Ferns_for_Oases == true then
-plantslib:register_generate_plant({
-    surface = {
-		"default:sand"--,
-		--"default:desert_sand"
+if abstract_ferns.config.enable_treeferns_in_oases == true then
+	plantslib:register_generate_plant({
+		surface = {
+			"default:sand"--,
+			--"default:desert_sand"
+		},
+		max_count = 35,
+		rarity = 50,
+		seed_diff = 329,
+		neighbors = {"default:desert_sand"},
+		ncount = 1,
+		min_elevation = 1,
+		near_nodes = {"default:water_source"},
+		near_nodes_size = 2,
+		near_nodes_vertical = 1,
+		near_nodes_count = 1,
+		plantlife_limit = -0.9,
+		humidity_max = -1.0,
+		humidity_min = 1.0,
+		temp_max = -1.0,
+		temp_min = 1.0,
 	},
-    max_count = 35,
-    rarity = 50,
-    seed_diff = 329,
-	neighbors = {"default:desert_sand"},
-	ncount = 1,
-    min_elevation = 1,
-	near_nodes = {"default:water_source"},
-	near_nodes_size = 2,
-	near_nodes_vertical = 1,
-	near_nodes_count = 1,
-    plantlife_limit = -0.9,
-    humidity_max = -1.0,
-    humidity_min = 1.0,
-    temp_max = -1.0,
-    temp_min = 1.0,
-  },
-  abstract_ferns.grow_tree_fern
+	abstract_ferns.grow_tree_fern
 )
 end
