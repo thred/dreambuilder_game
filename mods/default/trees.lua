@@ -15,7 +15,7 @@ function default.grow_tree(data, a, pos, is_apple_tree, seed)
     for z_area = -2, 2 do
         if math.random(1,30) < 23 then  --randomize leaves
             local area_l = a:index(pos.x+x_area, pos.y+hight+y_area-1, pos.z+z_area)  --sets area for leaves
-            if data[area_l] ~= c_air or data[area_l] ~= c_ignore then    --sets if not air or ignore 
+            if data[area_l] == c_air or data[area_l] == c_ignore then    --sets if it's air or ignore 
                 data[area_l] = c_leaves    --add leaves now
             end
          end       
@@ -45,7 +45,7 @@ function default.grow_jungletree(data, a, pos, seed)
     for z_area = -3, 3 do
         if math.random(1,30) < 23 then  --randomize leaves
             local area_l = a:index(pos.x+x_area, pos.y+hight+y_area-1, pos.z+z_area)  --sets area for leaves
-            if data[area_l] ~= c_air or data[area_l] ~= c_ignore then    --sets if not air or ignore
+            if data[area_l] == c_air or data[area_l] == c_ignore then    --sets if it's air or ignore
                 data[area_l] = c_jungleleaves    --add leaves now
             end
          end       
