@@ -2392,9 +2392,8 @@ minetest.register_craft( {
 })
 
 minetest.register_craft( {
-        output = "homedecor:trash_can 2",
+        output = "homedecor:trash_can 3",
         recipe = {
-			{ "homedecor:steel_wire", "", "homedecor:steel_wire" },
 			{ "homedecor:steel_wire", "", "homedecor:steel_wire" },
 			{ "default:steel_ingot", "default:steel_ingot", "default:steel_ingot" }
         },
@@ -2599,6 +2598,24 @@ minetest.register_craft({
 	    {"homedecor:plastic_sheeting", "bucket:bucket_water", "homedecor:plastic_sheeting"},
 	    {"homedecor:plastic_sheeting", "default:glass", "homedecor:plastic_sheeting"},
 	    {"homedecor:plastic_sheeting", "homedecor:heating_element", "homedecor:plastic_sheeting"}
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:dartboard",
+	recipe = {
+	    {"dye:black", "homedecor:plastic_sheeting", "dye:white"},
+	    {"homedecor:plastic_sheeting", "homedecor:plastic_sheeting", "homedecor:plastic_sheeting"},
+	    {"dye:dark_green", "homedecor:plastic_sheeting", "dye:red"}
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:piano_left",
+	recipe = {
+		{ "", "homedecor:steel_wire", "building_blocks:hardwood" },
+		{ "homedecor:plastic_strips", "homedecor:steel_wire", "building_blocks:hardwood" },
+		{ "building_blocks:hardwood", "default:steelblock", "building_blocks:hardwood" }
 	},
 })
 
