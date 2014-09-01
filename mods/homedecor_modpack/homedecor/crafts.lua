@@ -2619,3 +2619,22 @@ minetest.register_craft({
 	},
 })
 
+minetest.register_craft({
+	output = "homedecor:toaster",
+	recipe = {
+		{ "default:steel_ingot", "homedecor:heating_element", "default:steel_ingot" },
+		{ "default:steel_ingot", "homedecor:heating_element", "default:steel_ingot" }
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:deckchair_foot",
+	recipe = {
+		{ "group:stick", "building_blocks:terrycloth_towel", "group:stick" },
+		{ "group:stick", "building_blocks:terrycloth_towel", "group:stick" },
+		{ "group:stick", "building_blocks:terrycloth_towel", "group:stick" }
+	},
+})
+
+
+
