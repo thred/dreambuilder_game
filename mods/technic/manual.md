@@ -499,6 +499,22 @@ pile individually into whatever centrifuge is available: they must be
 input in matched pairs.  Any odd dust pile in a centrifuge will not be
 processed and will prevent that centrifuge from accepting any other input.
 
+### concrete ###
+
+Concrete is a synthetic building material.  The technic modpack implements
+it in the game.
+
+Two forms of concrete are available as building blocks: ordinary
+"concrete" and more advanced "blast-resistant concrete".  Despite its
+name, the latter has no special resistance to explosions or to any other
+means of destruction.
+
+Concrete can also be used to make fences.  They act just like wooden
+fences, but aren't flammable.  Confusingly, the item that corresponds
+to a wooden "fence" is called "concrete post".  Posts placed adjacently
+will implicitly create fence between them.  Fencing also appears between
+a post and adjacent concrete block.
+
 industrial processes
 --------------------
 
@@ -723,6 +739,544 @@ the electrical system which is 100% efficient in moving energy around.
 To transfer more than 10000 EU/s between networks, connect multiple
 supply converters in parallel.
 
+powered machines
+----------------
+
+### powered machine tiers ###
+
+Each powered machine takes its power in some specific form, being
+either fuel-fired (burning fuel directly) or electrically powered at
+some specific voltage.  There is a general progression through the
+game from using fuel-fired machines to electrical machines, and to
+higher electrical voltages.  The most important kinds of machine come
+in multiple variants that are powered in different ways, so the earlier
+ones can be superseded.  However, some machines are only available for
+a specific power tier, so the tier can't be entirely superseded.
+
+### powered machine upgrades ###
+
+Some machines have inventory slots that are used to upgrade them in
+some way.  Generally, machines of MV and HV tiers have two upgrade slots,
+and machines of lower tiers (fuel-fired and LV) do not.  Any item can
+be placed in an upgrade slot, but only specific items will have any
+upgrading effect.  It is possible to have multiple upgrades of the same
+type, but this can't be achieved by stacking more than one upgrade item
+in one slot: it is necessary to put the same kind of item in more than one
+upgrade slot.  The ability to upgrade machines is therefore very limited.
+Two kinds of upgrade are currently possible: an energy upgrade and a
+tube upgrade.
+
+An energy upgrade consists of a battery item, the same kind of battery
+that serves as a mobile energy store.  The effect of an energy upgrade
+is to improve in some way the machine's use of electrical energy, most
+often by making it use less energy.  The upgrade effect has no relation
+to energy stored in the battery: the battery's charge level is irrelevant
+and will not be affected.
+
+A tube upgrade consists of a control logic unit item.  The effect of a
+tube upgrade is to make the machine able, or more able, to eject items
+it has finished with into pneumatic tubes.  The machines that can take
+this kind of upgrade are in any case capable of accepting inputs from
+pneumatic tubes.  These upgrades are essential in using powered machines
+as components in larger automated systems.
+
+### tubes with powered machines ###
+
+Generally, powered machines of MV and HV tiers can work with pneumatic
+tubes, and those of lower tiers cannot.  (As an exception, the fuel-fired
+furnace from the basic Minetest game can accept inputs through tubes,
+but can't output into tubes.)
+
+If a machine can accept inputs through tubes at all, then this
+is a capability of the basic machine, not requiring any upgrade.
+Most item-processing machines take only one kind of input, and in that
+case they will accept that input from any direction.  This doesn't match
+how tubes visually connect to the machines: generally tubes will visually
+connect to any face except the front, but an item passing through a tube
+in front of the machine will actually be accepted into the machine.
+
+A minority of machines take more than one kind of input, and in that
+case the input slot into which an arriving item goes is determined by the
+direction from which it arrives.  In this case the machine may be picky
+about the direction of arriving items, associating each input type with
+a single face of the machine and not accepting inputs at all through the
+remaining faces.  Again, the visual connection of tubes doesn't match:
+generally tubes will still visually connect to any face except the front,
+thus connecting to faces that neither accept inputs nor emit outputs.
+
+Machines do not accept items from tubes into non-input inventory slots:
+the output slots or upgrade slots.  Output slots are normally filled
+only by the processing operation of the machine, and upgrade slots must
+be filled manually.
+
+Powered machines generally do not eject outputs into tubes without
+an upgrade.  One tube upgrade will make them eject outputs at a slow
+rate; a second tube upgrade will increase the rate.  Whether the slower
+rate is adequate depends on how it compares to the rate at which the
+machine produces outputs, and on how the machine is being used as part
+of a larger construct.  The machine always ejects its outputs through a
+particular face, usually a side.  Due to a bug, the side through which
+outputs are ejected is not consistent: when the machine is rotated one
+way, the direction of ejection is rotated the other way.  This will
+probably be fixed some day, but because a straightforward fix would
+break half the machines already in use, the fix may be tied to some
+larger change such as free selection of the direction of ejection.
+
+### battery boxes ###
+
+The primary purpose of battery boxes is to temporarily store electrical
+energy to let an electrical network cope with mismatched supply and
+demand.  They have a secondary purpose of charging and discharging
+powered tools.  They are thus a mixture of electrical infrastructure,
+powered machine, and generator.
+
+MV and HV battery boxes have upgrade slots.  Energy upgrades increase
+the capacity of a battery box, each by 10% of the un-upgraded capacity.
+This increase is far in excess of the capacity of the battery that forms
+the upgrade.
+
+For charging and discharging of power tools, rather than having input and
+output slots, each battery box has a charging slot and a discharging slot.
+A fully charged/discharged item stays in its slot.  The rates at which a
+battery box can charge and discharge increase with voltage, so it can
+be worth building a battery box of higher tier before one has other
+infrastructure of that tier, just to get access to faster charging.
+
+MV and HV battery boxes work with pneumatic tubes.  An item can be input
+to the charging slot through the bottom of the battery box, or to the
+discharging slot through the top.  Items are not accepted through the
+front, back, or sides.  With a tube upgrade, fully charged/discharged
+tools (as appropriate for their slot) will be ejected through a side.
+
+### processing machines ###
+
+The furnace, alloy furnace, grinder, extractor, compressor, and centrifuge
+have much in common.  Each implements some industrial process that
+transforms items into other items, and they manner in which they present
+these processes as powered machines is essentially identical.
+
+Most of the processing machines operate on inputs of only a single type
+at a time, and correspondingly have only a single input slot.  The alloy
+furnace is an exception: it operates on inputs of two distinct types at
+once, and correspondingly has two input slots.  It doesn't matter which
+way round the alloy furnace's inputs are placed in the two slots.
+
+The processing machines are mostly available in variants for multiple
+tiers.  The furnace and alloy furnace are each available in fuel-fired,
+LV, and MV forms.  The grinder, extractor, and compressor are each
+available in LV and MV forms.  The centrifuge is the only single-tier
+processing machine, being only available in MV form.  The higher-tier
+machines process items faster than the lower-tier ones, but also have
+higher power consumption, usually taking more energy overall to perform
+the same amount of processing.  The MV machines have upgrade slots,
+and energy upgrades reduce their energy consumption.
+
+The MV machines can work with pneumatic tubes.  They accept inputs via
+tubes from any direction.  For most of the machines, having only a single
+input slot, this is perfectly simple behavior.  The alloy furnace is more
+complex: it will put an arriving item in either input slot, preferring to
+stack it with existing items of the same type.  It doesn't matter which
+slot each of the alloy furnace's inputs is in, so it doesn't matter that
+there's no direct control ovar that, but there is a risk that supplying
+a lot of one item type through tubes will result in both slots containing
+the same type of item, leaving no room for the second input.
+
+The MV machines can be given a tube upgrade to make them automatically
+eject output items into pneumatic tubes.  The items are always ejected
+through a side, though which side it is depends on the machine's
+orientation, due to a bug.  Output items are always ejected singly.
+For some machines, such as the grinder, the ejection rate with a
+single tube upgrade doesn't keep up with the rate at which items can
+be processed.  A second tube upgrade increases the ejection rate.
+
+The LV and fuel-fired machines do not work with pneumatic tubes, except
+that the fuel-fired furnace (actually part of the basic Minetest game)
+can accept inputs from tubes.  Items arriving through the bottom of
+the furnace go into the fuel slot, and items arriving from all other
+directions go into the input slot.
+
+### music player ###
+
+The music player is an LV powered machine that plays audio recordings.
+It offers a selection of up to nine tracks.  The technic modpack doesn't
+include specific music tracks for this purpose; they have to be installed
+separately.
+
+The music player gives the impression that the music is being played in
+the Minetest world.  The music only plays as long as the music player
+is in place and is receiving electrical power, and the choice of music
+is controlled by interaction with the machine.  The sound also appears
+to emanate specifically from the music player: the ability to hear it
+depends on the player's distance from the music player.  However, the
+game engine doesn't currently support any other positional cues for
+sound, such as attenuation, panning, or HRTF.  The impression of the
+sound being located in the Minetest world is also compromised by the
+subjective nature of track choice: the specific music that is played to
+a player depends on what media the player has installed.
+
+### CNC machine ###
+
+The CNC machine is an LV powered machine that cuts building blocks into a
+variety of sub-block shapes that are not covered by the crafting recipes
+of the stairs mod and its variants.  Most of the target shapes are not
+rectilinear, involving diagonal or curved surfaces.
+
+Only certain kinds of building material can be processed in the CNC
+machine.
+
+### tool workshop ###
+
+The tool workshop is an MV powered machine that repairs mechanically-worn
+tools, such as pickaxes and the other ordinary digging tools.  It has
+a single slot for a tool to be repaired, and gradually repairs the
+tool while it is powered.  For any single tool, equal amounts of tool
+wear, resulting from equal amounts of tool use, take equal amounts of
+repair effort.  Also, all repairable tools currently take equal effort
+to repair equal percentages of wear.  The amount of tool use enabled by
+equal amounts of repair therefore depends on the tool type.
+
+The mechanical wear that the tool workshop repairs is always indicated in
+inventory displays by a colored bar overlaid on the tool image.  The bar
+can be seen to fill and change color as the tool workshop operates,
+eventually disappearing when the repair is complete.  However, not every
+item that shows such a wear bar is using it to show mechanical wear.
+A wear bar can also be used to indicate charging of a power tool with
+stored electrical energy, or filling of a container, or potentially for
+all sorts of other uses.  The tool workshop won't affect items that use
+wear bars to indicate anything other than mechanical wear.
+
+The tool workshop has upgrade slots.  Energy upgrades reduce its power
+consumption.
+
+It can work with pneumatic tubes.  Tools to be repaired are accepted
+via tubes from any direction.  With a tube upgrade, the tool workshop
+will also eject fully-repaired tools via one side, the choice of side
+depending on the machine's orientation, as for processing machines.  It is
+safe to put into the tool workshop a tool that is already fully repaired:
+assuming the presence of a tube upgrade, the tool will be quickly ejected.
+Furthermore, any item of unrepairable type will also be ejected as if
+fully repaired.  (Due to a historical limitation of the basic Minetest
+game, it is impossible for the tool workshop to distinguish between a
+fully-repaired tool and any item type that never displays a wear bar.)
+
+### quarry ###
+
+The quarry is an HV powered machine that automatically digs out a
+large area.  The region that it digs out is a cuboid with a square
+horizontal cross section, located immediately behind the quarry machine.
+The quarry's action is slow and energy-intensive, but requires little
+player effort.
+
+The size of the quarry's horizontal cross section is configurable through
+the machine's interaction form.  A setting referred to as "radius"
+is an integer number of meters which can vary from 2 to 8 inclusive.
+The horizontal cross section is a square with side length of twice the
+radius plus one meter, thus varying from 5 to 17 inclusive.  Vertically,
+the quarry always digs from 3 m above the machine to 100 m below it,
+inclusive, a total vertical height of 104 m.
+
+Whatever the quarry digs up is ejected through the top of the machine,
+as if from a pneumatic tube.  Normally a tube should be placed there
+to convey the material into a sorting system, processing machines, or
+at least chests.  A chest may be placed directly above the machine to
+capture the output without sorting, but is liable to overflow.
+
+If the quarry encounters something that cannot be dug, such as a liquid,
+a locked chest, or a protected area, it will skip past that and attempt
+to continue digging.  However, anything remaining in the quarry area
+after the machine has attempted to dig there will prevent the machine
+from digging anything directly below it, all the way to the bottom
+of the quarry.  An undiggable block therefore casts a shadow of undug
+blocks below it.  If liquid is encountered, it is quite likely to flow
+across the entire cross section of the quarry, preventing all digging.
+The depth at which the quarry is currently attempting to dig is reported
+in its interaction form, and can be manually reset to the top of the
+quarry, which is useful to do if an undiggable obstruction has been
+manually removed.
+
+The quarry consumes 10 kEU per block dug, which is quite a lot of energy.
+With most of what is dug being mere stone, it is usually not economically
+favorable to power a quarry from anything other than solar power.
+In particular, one cannot expect to power a quarry by burning the coal
+that it digs up.
+
+Given sufficient power, the quarry digs at a rate of one block per second.
+This is rather tedious to wait for.  Unfortunately, leaving the quarry
+unattended normally means that the Minetest server won't keep the machine
+running: it needs a player nearby.  This can be resolved by using a world
+anchor.  The digging is still quite slow, and independently of whether a
+world anchor is used the digging can be speeded up by placing multiple
+quarry machines with overlapping digging areas.  Four can be placed to
+dig identical areas, one on each side of the square cross section.
+
+### forcefield emitter ###
+
+The forcefield emitter is an HV powered machine that generates a
+forcefield remeniscent of those seen in many science-fiction stories.
+
+The emitter can be configured to generate a forcefield of either
+spherical or cubical shape, in either case centered on the emitter.
+The size of the forcefield is configured using a radius parameter that
+is an integer number of meters which can vary from 5 to 20 inclusive.
+For a spherical forcefield this is simply the radius of the forcefield;
+for a cubical forcefield it is the distance from the emitter to the
+center of each square face.
+
+The power drawn by the emitter is proportional to the surface area of
+the forcefield being generated.  A spherical forcefield is therefore the
+cheapest way to enclose a specified volume of space with a forcefield,
+if the shape of the space doesn't matter.  A cubical forcefield is less
+efficient at enclosing volume, but is cheaper than the larger spherical
+forcefield that would be required if it is necessary to enclose a
+cubical space.
+
+The emitter is normally controlled merely through its interaction form,
+which has an enable/disable toggle.  However, it can also (via the form)
+be placed in a mesecon-controlled mode.  If mesecon control is enabled,
+the emitter must be receiving a mesecon signal in addition to being
+manually enabled, in order for it to generate the forcefield.
+
+The forcefield itself behaves largely as if solid, despite being
+immaterial: it cannot be traversed, and prevents access to blocks behind
+it.  It is transparent, but not totally invisible.  It cannot be dug.
+Some effects can pass through it, however, such as the beam of a mining
+laser, and explosions.  In fact, explosions as currently implemented by
+the tnt mod actually temporarily destroy the forcefield itself; the tnt
+mod assumes too much about the regularity of node types.
+
+The forcefield occupies space that would otherwise have been air, but does
+not replace or otherwise interfere with materials that are solid, liquid,
+or otherwise not just air.  If such an object blocking the forcefield is
+removed, the forcefield will quickly extend into the now-available space,
+but it does not do so instantly: there is a brief moment when the space
+is air and can be traversed.
+
+It is possible to have a doorway in a forcefield, by placing in advance,
+in space that the forcefield would otherwise occupy, some non-air blocks
+that can be walked through.  For example, a door suffices, and can be
+opened and closed while the forcefield is in place.
+
+power generators
+----------------
+
+### fuel-fired generators ###
+
+The fiel-fired generators are electrical power generators that generate
+power by the combustion of fuel.  Versions of them are available for
+all three voltages (LV, MV, and HV).  These are all capable of burning
+any type of combustible fuel, such as coal.  They are relatively easy
+to build, and so tend to be the first kind of generator used to power
+electrical machines.  In this role they form an intermediate step between
+the directly fuel-fired machines and a more mature electrical network
+powered by means other than fuel combustion.  They are also, by virtue of
+simplicity and controllability, a useful fallback or peak load generator
+for electrical networks that normally use more sophisticated generators.
+
+The MV and HV fuel-fired generators can accept fuel via pneumatic tube,
+from any direction.
+
+Keeping a fuel-fired generator fully fuelled is usually wasteful, because
+it will burn fuel as long as it has any, even if there is no demand for
+the electrical power that it generates.  This is unlike the directly
+fuel-fired machines, which only burn fuel when they have work to do.
+To satisfy intermittent demand without waste, a fuel-fired generator must
+only be given fuel when there is either demand for the energy or at least
+sufficient battery capacity on the network to soak up the excess energy.
+
+The higher-tier fuel-fired generators get much more energy out of a
+fuel item than the lower-tier ones.  The difference is much more than
+is needed to overcome the inefficiency of supply converters, so it is
+worth operating fuel-fired generators at a higher tier than the machines
+being powered.
+
+### solar generators ###
+
+The solar generators are electrical power generators that generate power
+from sunlight.  Versions of them are available for all three voltages
+(LV, MV, and HV).  There are four types in total, two LV and one each
+of MV and HV, forming a sequence of four tiers.  The higher-tier ones
+are each built mainly from three solar generators of the next tier down,
+and their outputs scale in rough accordance, tripling at each tier.
+
+To operate, an arrayed solar generator must be at elevation +1 or above
+and have a transparent block (typically air) immediately above it.
+It will generate power only when the block above is well lit during
+daylight hours.  It will generate more power at higher elevation,
+reaching maximum output at elevation +36 or higher when sunlit.  The small
+solar generator has similar rules with slightly different thresholds.
+These rules are an attempt to ensure that the generator will only operate
+from sunlight, but it is actually possible to fool them to some extent
+with light sources such as meselamps.
+
+### hydro generator ###
+
+The hydro generator is an LV power generator that generates a small amount
+of power from the natural motion of water.  To operate, the generator must
+be horizontally adjacent to water.  It doesn't matter whether the water
+consists of source blocks or flowing blocks.  Having water adjacent on
+more than one side, up to the full four, increases the generator's output.
+The water itself is unaffected by the generator.
+
+### geothermal generator ###
+
+The geothermal generator is an LV power generator that generates a small
+amount of power from the temperature difference between lava and water.
+To operate, the generator must be horizontally adjacent to both lava
+and water.  It doesn't matter whether the liquids consist of source
+blocks or flowing blocks.
+
+Beware that if lava and water blocks are adjacent to each other then the
+lava will be solidified into stone or obsidian.  If the lava adjacent to
+the generator is thus destroyed, the generator will stop producing power.
+Currently, in the default Minetest game, lava is destroyed even if
+it is only diagonally adjacent to water.  Under these circumstances,
+the only way to operate the geothermal generator is with it adjacent
+to one lava block and one water block, which are on opposite sides of
+the generator.  If diagonal adjacency doesn't destroy lava, such as with
+the gloopblocks mod, then it is possible to have more than one lava or
+water block adjacent to the geothermal generator.  This increases the
+generator's output, with the maximum output achieved with two adjacent
+blocks of each liquid.
+
+### wind generator ###
+
+The wind generator is an MV power generator that generates a moderate
+amount of energy from wind.  To operate, the generator must be placed
+atop a column of at least 20 wind mill frame blocks, and must be at
+an elevation of +30 or higher.  It generates more at higher elevation,
+reaching maximum output at elevation +50 or higher.  Its surroundings
+don't otherwise matter; it doesn't actually need to be in open air.
+
+### nuclear generator ###
+
+The nuclear generator (nuclear reactor) is an HV power generator that
+generates a large amount of energy from the controlled fission of
+uranium-235.  It must be fuelled, with uranium fuel rods, but consumes
+the fuel quite slowly in relation to the rate at which it is likely to
+be mined.  The operation of a nuclear reactor poses radiological hazards
+to which some thought must be given.  Economically, the use of nuclear
+power requires a high capital investment, and a secure infrastructure,
+but rewards the investment well.
+
+Nuclear fuel is made from uranium.  Natural uranium doesn't have a
+sufficiently high proportion of U-235, so it must first be enriched
+via centrifuge.  Producing one unit of 3.5%-fissile uranium requires
+the input of five units of 0.7%-fissile (natural) uranium, and produces
+four units of 0.0%-fissile (fully depleted) uranium as a byproduct.
+It takes five ingots of 3.5%-fissile uranium to make each fuel rod, and
+six rods to fuel a reactor.  It thus takes the input of the equivalent
+of 150 ingots of natural uranium, which can be obtained from the mining
+of 75 blocks of uranium ore, to make a full set of reactor fuel.
+
+The nuclear reactor is a large multi-block structure.  Only one block in
+the structure, the reactor core, is of a type that is truly specific to
+the reactor; the rest of the structure consists of blocks that have mainly
+non-nuclear uses.  The reactor core is where all the generator-specific
+action happens: it is where the fuel rods are inserted, and where the
+power cable must connect to draw off the generated power.
+
+The reactor structure consists of concentric layers, each a cubical
+shell, around the core.  Immediately around the core is a layer of water,
+representing the reactor coolant; water blocks may be either source blocks
+or flowing blocks.  Around that is a layer of stainless steel blocks,
+representing the reactor pressure vessel, and around that a layer of
+blast-resistant concrete blocks, representing a containment structure.
+It is customary, though no longer mandatory, to surround this with a
+layer of ordinary concrete blocks.  The mandatory reactor structure
+makes a 7&times;7&times;7 cube, and the full customary structure a
+9&times;9&times;9 cube.
+
+The layers surrounding the core don't have to be absolutely complete.
+Indeed, if they were complete, it would be impossible to cable the core to
+a power network.  The cable makes it necessary to have at least one block
+missing from each surrounding layer.  The water layer is only permitted
+to have one water block missing of the 26 possible.  The steel layer may
+have up to two blocks missing of the 98 possible, and the blast-resistant
+concrete layer may have up to two blocks missing of the 218 possible.
+Thus it is possible to have not only a cable duct, but also a separate
+inspection hole through the solid layers.  The separate inspection hole
+is of limited use: the cable duct can serve double duty.
+
+Once running, the reactor core is significantly radioactive.  The layers
+of reactor structure provide quite a lot of shielding, but not enough
+to make the reactor safe to be around, in two respects.  Firstly, the
+shortest possible path from the core to a player outside the reactor
+is sufficiently short, and has sufficiently little shielding material,
+that it will damage the player.  This only affects a player who is
+extremely close to the reactor, and close to a face rather than a vertex.
+The customary additional layer of ordinary concrete around the reactor
+adds sufficient distance and shielding to negate this risk, but it can
+also be addressed by just keeping extra distance (a little over two
+meters of air).
+
+The second radiological hazard of a running reactor arises from shine
+paths; that is, specific paths from the core that lack sufficient
+shielding.  The necessary cable duct, if straight, forms a perfect
+shine path, because the cable itself has no radiation shielding effect.
+Any secondary inspection hole also makes a shine path, along which the
+only shielding material is the water of the reactor coolant.  The shine
+path aspect of the cable duct can be ameliorated by adding a kink in the
+cable, but this still yields paths with reduced shielding.  Ultimately,
+shine paths must be managed either with specific shielding outside the
+mandatory structure, or with additional no-go areas.
+
+The radioactivity of an operating reactor core makes starting up a reactor
+hazardous, and can come as a surprise because the non-operating core
+isn't radioactive at all.  The radioactive damage is survivable, but it is
+normally preferable to avoid it by some care around the startup sequence.
+To start up, the reactor must have a full set of fuel inserted, have all
+the mandatory structure around it, and be cabled to a switching station.
+Only the fuel insertion requires direct access to the core, so irradiation
+of the player can be avoided by making one of the other two criteria be
+the last one satisfied.  Completing the cabling to a switching station
+is the easiest to do from a safe distance.
+
+Once running, the reactor will generate 100 kEU/s for a week (168 hours,
+604800 seconds), a total of 6.048 GEU from one set of fuel.  After the
+week is up, it will stop generating and no longer be radioactive.  It can
+then be refuelled to run for another week.  It is not really intended
+to be possible to pause a running reactor, but actually disconnecting
+it from a switching station will have the effect of pausing the week.
+This will probably change in the future.  A paused reactor is still
+radioactive, just not generating electrical power.
+
+A running reactor can't be safely dismantled, and not only because
+dismantling the reactor implies removing the shielding that makes
+it safe to be close to the core.  The mandatory parts of the reactor
+structure are not just mandatory in order to start the reactor; they're
+mandatory in order to keep it intact.  If the structure around the core
+gets damaged, and remains damaged, the core will eventually melt down.
+How long there is before meltdown depends on the extent of the damage;
+if only one mandatory block is missing, meltdown will follow in 100
+seconds.  While the structure of a running reactor is in a damaged state,
+heading towards meltdown, a siren built into the reactor core will sound.
+If the structure is rectified, the siren will signal all-clear.  If the
+siren stops sounding without signalling all-clear, then it was stopped
+by meltdown.
+
+If meltdown is imminent because of damaged reactor structure, digging the
+reactor core is not a way to avert it.  Digging the core of a running
+reactor causes instant meltdown.  The only way to dismantle a reactor
+without causing meltdown is to start by waiting for it to finish the
+week-long burning of its current set of fuel.  Once a reactor is no longer
+operating, it can be dismantled by ordinary means, with no special risks.
+
+Meltdown, if it occurs, destroys the reactor and poses a major
+environmental hazard.  The reactor core melts, becoming a hot, highly
+radioactive liquid known as "corium".  A single meltdown yields a single
+corium source block, where the core used to be.  Corium flows, and the
+flowing corium is very destructive to whatever it comes into contact with.
+Flowing corium also randomly solidifies into a radioactive solid called
+"Chernobylite".  The random solidification and random destruction of
+solid blocks means that the flow of corium is constantly changing.
+This combined with the severe radioactivity makes corium much more
+challenging to deal with than lava.  If a meltdown is left to its own
+devices, it gets worse over time, as the corium works its way through
+the reactor structure and starts to flow over a variety of paths.
+It is best to tackle a meltdown quickly; the priority is to extinguish
+the corium source block, normally by dropping gravel into it.  Only the
+most motivated should attempt to pick up the corium in a bucket.
+
 administrative world anchor
 ---------------------------
 
@@ -737,7 +1291,7 @@ administrative privileges.  In a single-player world, the single player
 normally has administrative privileges, and can obtain a world anchor
 by entering the chat command "/give singleplayer technic:admin\_anchor".
 
-The world anchor tries to force a cubical area, centred upon the anchor,
+The world anchor tries to force a cubical area, centered upon the anchor,
 to stay loaded.  The distance from the anchor to the most distant map
 nodes that it will keep loaded is referred to as the "radius", and can be
 set in the world anchor's interaction form.  The radius can be set as low
@@ -784,36 +1338,17 @@ subjects missing from this manual
 
 This manual needs to be extended with sections on:
 
-*   substances
-    *   concrete
-*   powered machines
-    *   machine upgrades
-    *   how machines interact with tubes
-    *   battery box
-    *   processing machines
-    *   CNC machine
-    *   music player
-    *   tool workshop
-    *   forcefield emitter
-    *   quarry
-*   power generators
-    *   hydro
-    *   geothermal
-    *   fuel-fired
-    *   wind
-    *   solar
-    *   nuclear
-*   tools
+*   powered tools
     *   tool charging
     *   battery and energy crystals
     *   chainsaw
     *   flashlight
     *   mining lasers
-    *   liquid cans
     *   mining drills
     *   prospector
     *   sonic screwdriver
-    *   wrench
+*   liquid cans
+*   wrench
 *   radioactivity
 *   frames
 *   templates
