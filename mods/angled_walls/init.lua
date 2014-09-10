@@ -87,18 +87,18 @@ function angled_walls.rotate_to_45(pos, name)
 end
 
 local nodes_list = {
-	{ "default:brick",				"brick",				"stairs:slab_brick" },
-	{ "default:wood",				"wood",					"stairs:slab_wood" },
-	{ "default:junglewood",			"jungle_wood",			"stairs:slab_junglewood" },
-	{ "default:steelblock",			"steelblock",			"stairs:slab_steelblock" },
-	{ "default:sandstone",			"sandstone",			"stairs:slab_sandstone" },
-	{ "default:sandstonebrick",		"sandstone_brick",		"stairs:slab_sandstonebrick" },
-	{ "default:cobble",				"cobble",				"stairs:slab_cobble"},
-	{ "default:desert_cobble", 		"desert_cobble",		"stairs:slab_desert_cobble" },
-	{ "default:stone",				"stone",				"stairs:slab_stone" },
-	{ "default:stonebrick",			"stone_brick",			"stairs:slab_stonebrick"},
-	{ "default:desert_stone",		"desert_stone",			"stairs:slab_desert_stone" },
-	{ "default:desert_stonebrick",	"desert_stone_brick",	"stairs:slab_desert_stonebrick" }
+	{ "default:brick",				"brick",				"slab_brick" },
+	{ "default:wood",				"wood",					"slab_wood" },
+	{ "default:junglewood",			"jungle_wood",			"slab_junglewood" },
+	{ "default:steelblock",			"steelblock",			"slab_steelblock" },
+	{ "default:sandstone",			"sandstone",			"slab_sandstone" },
+	{ "default:sandstonebrick",		"sandstone_brick",		"slab_sandstonebrick" },
+	{ "default:cobble",				"cobble",				"slab_cobble"},
+	{ "default:desert_cobble", 		"desert_cobble",		"slab_desert_cobble" },
+	{ "default:stone",				"stone",				"slab_stone" },
+	{ "default:stonebrick",			"stone_brick",			"slab_stonebrick"},
+	{ "default:desert_stone",		"desert_stone",			"slab_desert_stone" },
+	{ "default:desert_stonebrick",	"desert_stone_brick",	"slab_desert_stonebrick" }
 }
 
 for i in ipairs(nodes_list) do
@@ -238,10 +238,21 @@ for i in ipairs(nodes_list) do
 	minetest.register_craft( {
 	    output = "angled_walls:"..angledname.."_corner 12",
 		recipe = {
-			{ "", "", recipeitem },
-			{ "", recipeitem, "" },
-			{ recipeitem, "", "" }
+			{ "", "", "stairs:"..recipeitem },
+			{ "", "stairs:"..recipeitem, "" },
+			{ "stairs:"..recipeitem, "", "" }
 		}
 	})
+
+	if recipeitem ~= "slab_desert_cobble" then
+		minetest.register_craft( {
+			output = "angled_walls:"..angledname.."_corner 12",
+			recipe = {
+				{ "", "", "moreblocks:"..recipeitem },
+				{ "", "moreblocks:"..recipeitem, "" },
+				{ "moreblocks:"..recipeitem, "", "" }
+			}
+		})
+	end
 end
 
