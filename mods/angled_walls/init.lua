@@ -87,24 +87,26 @@ function angled_walls.rotate_to_45(pos, name)
 end
 
 local nodes_list = {
-	{ "default:brick",				"brick" },
-	{ "default:wood",				"wood" },
-	{ "default:junglewood",			"jungle_wood" },
-	{ "default:steelblock",			"steelblock" },
-	{ "default:sandstone",			"sandstone" },
-	{ "default:sandstonebrick",		"sandstone_brick" },
-	{ "default:cobble",				"cobble" },
-	{ "default:desert_cobble", 		"desert_cobble" },
-	{ "default:stone",				"stone" },
-	{ "default:stonebrick",			"stone_brick" },
-	{ "default:desert_stone",		"desert_stone" },
-	{ "default:desert_stonebrick",	"desert_stone_brick" }
+	{ "default:brick",				"brick",				"stairs:slab_brick" },
+	{ "default:wood",				"wood",					"stairs:slab_wood" },
+	{ "default:junglewood",			"jungle_wood",			"stairs:slab_junglewood" },
+	{ "default:steelblock",			"steelblock",			"stairs:slab_steelblock" },
+	{ "default:sandstone",			"sandstone",			"stairs:slab_sandstone" },
+	{ "default:sandstonebrick",		"sandstone_brick",		"stairs:slab_sandstonebrick" },
+	{ "default:cobble",				"cobble",				"stairs:slab_cobble"},
+	{ "default:desert_cobble", 		"desert_cobble",		"stairs:slab_desert_cobble" },
+	{ "default:stone",				"stone",				"stairs:slab_stone" },
+	{ "default:stonebrick",			"stone_brick",			"stairs:slab_stonebrick"},
+	{ "default:desert_stone",		"desert_stone",			"stairs:slab_desert_stone" },
+	{ "default:desert_stonebrick",	"desert_stone_brick",	"stairs:slab_desert_stonebrick" }
 }
 
 for i in ipairs(nodes_list) do
 
 	local nodename = nodes_list[i][1]
 	local angledname = nodes_list[i][2]
+	local recipeitem = nodes_list[i][3]
+
 	local newnode = angled_walls.clone_node(nodename)
 
 	newnode.drawtype = "torchlike"
@@ -233,5 +235,13 @@ for i in ipairs(nodes_list) do
 
 	minetest.register_alias("angled_walls:"..angledname.."_corner2", "angled_walls:"..angledname.."_corner_135")
 
+	minetest.register_craft( {
+	    output = "angled_walls:"..angledname.."_corner 12",
+		recipe = {
+			{ "", "", recipeitem },
+			{ "", recipeitem, "" },
+			{ recipeitem, "", "" }
+		}
+	})
 end
 
