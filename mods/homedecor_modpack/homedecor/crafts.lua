@@ -2636,5 +2636,46 @@ minetest.register_craft({
 	},
 })
 
+minetest.register_craft({
+	output = "homedecor:wall_shelf 2",
+	recipe = {
+		{ "homedecor:wood_table_small_square", "homedecor:curtainrod_wood", "homedecor:curtainrod_wood" },
+	},
+})
 
+minetest.register_craft({
+	output = "homedecor:trophy 3",
+	recipe = {
+		{ "default:gold_ingot","","default:gold_ingot" },
+		{ "","default:gold_ingot","" },
+		{ "default:gold_ingot","default:gold_ingot","default:gold_ingot" }
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:grandfather_clock_bottom",
+	recipe = {
+		{ "building_blocks:slab_hardwood","homedecor:analog_clock_wood","building_blocks:slab_hardwood" },
+		{ "building_blocks:slab_hardwood","technic:brass_ingot","building_blocks:slab_hardwood" },
+		{ "building_blocks:slab_hardwood","technic:brass_ingot","building_blocks:slab_hardwood" }
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:sportbench",
+	recipe = {
+		{ "stairs:slab_steelblock","homedecor:pole_wrought_iron","stairs:slab_steelblock" },
+		{ "default:steel_ingot","wool:black","default:steel_ingot" },
+		{ "default:steel_ingot","wool:black","default:steel_ingot" }
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:skateboard",
+	recipe = {
+		{ "dye:yellow","dye:green","dye:blue" },
+		{ "homedecor:wood_table_small_square","homedecor:wood_table_small_square","homedecor:wood_table_small_square" },
+		{ "default:steel_ingot","","default:steel_ingot" }
+	},
+})
 

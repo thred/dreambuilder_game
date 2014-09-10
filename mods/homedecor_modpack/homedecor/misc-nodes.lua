@@ -1354,4 +1354,106 @@ minetest.register_abm({
 	end
 })
 
+minetest.register_node("homedecor:trophy", {
+        description = "Trophy",
+	tiles = {
+		"default_gold_block.png"
+	},
+	inventory_image = "homedecor_trophy_inv.png",
+	drawtype = "nodebox",
+	paramtype = "light",
+	paramtype2 = "facedir",
+        groups = { snappy=3 },
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.125, -0.5, -0.125, 0.1875, -0.4375, 0.1875}, -- NodeBox1
+			{-0.0625, -0.4375, -0.0625, 0.125, -0.375, 0.125}, -- NodeBox2
+			{-0.02, -0.375, -0.02, 0.0825, -0.1875, 0.0825}, -- NodeBox3
+			{-0.0625, -0.1875, -0.0625, 0.125, -0.125, 0.125}, -- NodeBox4
+			{-0.125, -0.1875, -0.0625, -0.0625, 0.125, 0.125}, -- NodeBox5
+			{0.125, -0.1875, -0.0625, 0.1875, 0.125, 0.125}, -- NodeBox6
+			{-0.125, -0.1875, 0.125, 0.1875, 0.125, 0.1875}, -- NodeBox7
+			{-0.125, -0.1875, -0.125, 0.1875, 0.125, -0.0625}, -- NodeBox8
+			{-0.0625, -0.25, -0.0625, 0.125, -0.1875, 0.125}, -- NodeBox9
+			{0.1875, 0.05, 0, 0.23, 0.0925, 0.0625}, -- NodeBox10
+			{0.1875, -0.15, 0, 0.23, -0.11, 0.0625}, -- NodeBox11
+			{0.23, -0.15, 0, 0.2725, 0.0925, 0.0625}, -- NodeBox12
+			{-0.1675, -0.15, 0, -0.125, -0.11, 0.0625}, -- NodeBox13
+			{-0.1675, 0.05, 0, -0.125, 0.0925, 0.0625}, -- NodeBox14
+			{-0.21, -0.15, 0, -0.1675, 0.0925, 0.0625}, -- NodeBox15
+		}
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = { -0.21, -0.5, -0.125, 0.2725, 0.125, 0.1875 }
+	}
+})
+
+minetest.register_node("homedecor:sportbench", {
+	description = "Sport bench",
+	tiles = {
+		"homedecor_sportbench_top.png",
+		"wool_black.png",
+		"homedecor_sportbench_right.png", 
+		"homedecor_sportbench_left.png",
+		"homedecor_sportbench_bottom.png",
+		"homedecor_sportbench_front.png"
+	},
+	drawtype = "nodebox",
+	paramtype = "light",
+	paramtype2 = "facedir",
+	groups = { snappy=3 },
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.1875, -0.3125, -0.5, 0.1875, -0.25, 0.5}, -- NodeBox1
+			{-0.1875, -0.5, -0.5, -0.125, -0.3125, -0.4375}, -- NodeBox2
+			{0.125, -0.5, -0.5, 0.1875, -0.3125, -0.4375}, -- NodeBox3
+			{0.1875, -0.5, 0.375, 0.25, 0.375, 0.4375}, -- NodeBox4
+			{-0.25, -0.5, 0.375, -0.1875, 0.375, 0.4375}, -- NodeBox5
+			{-0.5, 0.125, 0.36, 0.5, 0.14, 0.375}, -- NodeBox6
+			{0.3125, 0, 0.225, 0.35, 0.285, 0.5}, -- NodeBox7
+			{-0.35, 0, 0.225, -0.3125, 0.285, 0.5}, -- NodeBox8
+			{-0.1875, -0.375, 0.375, 0.1875, -0.3125, 0.4375}, -- NodeBox9
+			{-0.23, 0.11, 0.33, -0.2075, 0.125, 0.375}, -- NodeBox10
+			{0.2075, 0.11, 0.33, 0.23, 0.125, 0.375}, -- NodeBox11
+		}
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = { -0.4, -0.5, -0.5, 0.4, 0.375, 0.5 }
+	}
+})
+
+minetest.register_node("homedecor:skateboard", {
+        description = "Skateboard",
+	tiles = {
+		"homedecor_skateboard_top.png",
+		"homedecor_skateboard_bottom.png",
+		"homedecor_skateboard_sides.png"
+	},
+	inventory_image = "homedecor_skateboard_inv.png",
+	drawtype = "nodebox",
+	paramtype = "light",
+	paramtype2 = "facedir",
+	groups = { snappy=3 },
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.4375, -0.4375, -0.1875, 0.4375, -0.415, 0.125}, -- NodeBox1
+			{-0.375, -0.5, 0.0625, -0.3125, -0.4375, 0.125}, -- NodeBox2
+			{-0.375, -0.5, -0.1875, -0.3125, -0.4375, -0.125}, -- NodeBox3
+			{0.3125, -0.5, 0.0625, 0.375, -0.4375, 0.125}, -- NodeBox4
+			{0.3125, -0.5, -0.1875, 0.375, -0.4375, -0.125}, -- NodeBox5
+			{-0.5, -0.4375, -0.16, -0.4375, -0.415, 0.0975}, -- NodeBox6
+			{0.4375, -0.4375, -0.16, 0.5, -0.415, 0.0975}, -- NodeBox7
+		}
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = { -0.5, -0.5, -0.2, 0.5, -0.40, 0.125 }
+	},
+	on_place = minetest.rotate_node
+})
 
