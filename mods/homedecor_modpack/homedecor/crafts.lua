@@ -2679,3 +2679,27 @@ minetest.register_craft({
 	},
 })
 
+minetest.register_craft({
+	output = "homedecor:copper_pans",
+	recipe = {
+		{ "homedecor:copper_strip","","homedecor:copper_strip" },
+		{ "default:copper_ingot","","default:copper_ingot" },
+		{ "default:copper_ingot","","default:copper_ingot" }
+	},
+})
+
+minetest.register_craft( {
+        output = "homedecor:window_flowerbox",
+        recipe = {
+                { "homedecor:roof_tile_terracotta", "default:dirt", "homedecor:roof_tile_terracotta" },
+                { "", "homedecor:roof_tile_terracotta", "" },
+        },
+})
+
+minetest.register_craft({
+    output = "homedecor:paper_towel",
+    recipe = {
+		{ "homedecor:toilet_paper", "homedecor:toilet_paper" }
+    },
+})
+
