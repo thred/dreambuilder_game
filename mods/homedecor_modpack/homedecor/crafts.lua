@@ -2703,3 +2703,49 @@ minetest.register_craft({
     },
 })
 
+minetest.register_craft({
+	output = "homedecor:stonepath 16",
+	recipe = {
+		{ "stairs:slab_stone","","stairs:slab_stone" },
+		{ "","stairs:slab_stone","" },
+		{ "stairs:slab_stone","","stairs:slab_stone" }
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:stonepath 16",
+	recipe = {
+		{ "moreblocks:slab_stone","","moreblocks:slab_stone" },
+		{ "","moreblocks:slab_stone","" },
+		{ "moreblocks:slab_stone","","moreblocks:slab_stone" }
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:stonepath 3",
+	recipe = {
+		{ "moreblocks:micro_stone_1","","moreblocks:micro_stone_1" },
+		{ "","moreblocks:micro_stone_1","" },
+		{ "moreblocks:micro_stone_1","","moreblocks:micro_stone_1" }
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:barbecue",
+	recipe = {
+		{ "","homedecor:fence_chainlink","" },
+		{ "default:steel_ingot","fake_fire:embers","default:steel_ingot" },
+		{ "homedecor:pole_wrought_iron","default:steel_ingot","homedecor:pole_wrought_iron" }
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:beer_tap",
+	recipe = {
+		{ "group:stick","default:steel_ingot","group:stick" },
+		{ "homedecor:kitchen_faucet","default:steel_ingot","homedecor:kitchen_faucet" },
+		{ "default:steel_ingot","default:steel_ingot","default:steel_ingot" }
+	},
+})
+
+
