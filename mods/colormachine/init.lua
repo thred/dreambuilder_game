@@ -20,9 +20,11 @@
 
 
 
--- Version 0.5
+-- Version 0.6
 
 -- Changelog: 
+-- 17.09.14 Added a modified version of Krocks paintroller from his paint_roller mod.
+--          Added additional storage area for dyes (works like a chest for now)
 -- 03.09.14 Added a second block type menu.
 --          Updated dependency list.
 --          Added support for homedecor kitchen chairs, beds and bathroom tiles. Changed sorting order of blocks.
@@ -340,16 +342,24 @@ colormachine.decode_color_name = function( meta, new_color )
    -- perhaps it's one of the grey colors?
    for i,v in ipairs( colormachine.grey_names ) do
       if( v == liste[1] ) then
-         meta:set_string('selected_shade',      -1 ); -- grey-shade
-         meta:set_string('selected_grey_shade',  i );
-         meta:set_string('selected_color',      -1 ); -- we selected grey
-         meta:set_string('selected_name',       new_color );
-         return new_color;
+         if( meta ) then
+            meta:set_string('selected_shade',      -1 ); -- grey-shade
+            meta:set_string('selected_grey_shade',  i );
+            meta:set_string('selected_color',      -1 ); -- we selected grey
+            meta:set_string('selected_name',       new_color );
+            return new_color;
+         else
+            return { s=-1, g=i, c=-1 };
+         end
       end
    end
 
    if( #liste < 1 ) then
-      return meta:get_string('selected_name');
+      if( meta ) then
+         return meta:get_string('selected_name');
+      else
+         return nil;
+      end
    end
 
    local selected_shade = 2; -- if no other shade is selected, use plain color
@@ -362,7 +372,11 @@ colormachine.decode_color_name = function( meta, new_color )
    end
 
    if( #liste < 1 ) then
-      return meta:get_string('selected_name');
+      if( meta ) then
+         return meta:get_string('selected_name');
+      else
+         return nil;
+      end
    end
 
    local selected_color = -1;
@@ -375,7 +389,11 @@ colormachine.decode_color_name = function( meta, new_color )
  
    -- the color was not found! error! keep the old color
    if( selected_color == -1 ) then
-      return meta:get_string('selected_name');
+      if( meta ) then
+         return meta:get_string('selected_name');
+      else
+         return nil;
+      end
    end
 
    if( #liste > 0 and liste[1]=='s50') then
@@ -384,11 +402,15 @@ colormachine.decode_color_name = function( meta, new_color )
       selected_shade = selected_shade * 2 - 1;
    end
 
-   meta:set_string('selected_shade',      selected_shade ); -- grey-shade
-   meta:set_string('selected_grey_shade', -1 );
-   meta:set_string('selected_color',      selected_color ); -- we selected grey
-   meta:set_string('selected_name',       new_color );
-   return new_color;
+   if( meta ) then
+      meta:set_string('selected_shade',      selected_shade ); -- grey-shade
+      meta:set_string('selected_grey_shade', -1 );
+      meta:set_string('selected_color',      selected_color ); -- we selected grey
+      meta:set_string('selected_name',       new_color );
+      return new_color;
+   else
+      return { s=selected_shade, g=-1, c= selected_color };
+   end
 end
 
 
@@ -666,7 +688,6 @@ end
 colormachine.get_color_from_blockname = function( mod_name, block_name )
 
    local bname = mod_name..":"..block_name;
-
    local found = {};
    for k,v in pairs( colormachine.data ) do
       if( mod_name == v.modname ) then
@@ -964,7 +985,7 @@ colormachine.main_menu_formspec = function( pos, option )
    local k = 0;
    local v = 0;
 
-   local form = "size[14,9]"..
+   local form = "size[14.5,9]"..
                 "list[current_player;main;1,5;8,4;]"..
 -- TODO
 --                "label[3,0.2;Spray booth main menu]"..
@@ -972,7 +993,10 @@ colormachine.main_menu_formspec = function( pos, option )
                 "button[6.5,0.75;3,1;blocktype_menu;Show supported blocks]"..
 
                 "label[3,0.0;1. Input - Insert material to paint:]"..
-                "list[current_name;input;4.5,0.5;1,1;]";
+                "list[current_name;input;4.5,0.5;1,1;]"..
+		
+		"label[9.3,-0.5;Additional storage for dyes:]"..
+		"list[current_name;extrastore;9.3,0;5,9]";
 
    if( minetest.setting_getbool("creative_mode") ) then
       form = form.."label[0.5,0.25;CREATIVE MODE:]".."label[0.5,0.75;no dyes or input consumed]";
@@ -1127,6 +1151,83 @@ colormachine.main_menu_formspec = function( pos, option )
 end
 
 
+-- returns a list of all blocks that can be created by applying dye_node_name to the basic node of old_node_name
+colormachine.get_node_name_painted = function( old_node_name, dye_node_name )
+	local possible_blocks = {};
+	local unpainted_block = "";
+	local old_dye         = "";
+	for k,v in pairs( colormachine.data ) do
+		if( old_node_name == v.block and colormachine.data[ k ].installed==1) then
+			table.insert( possible_blocks, k );
+			unpainted_block = old_node_name;
+		end
+	end 
+
+	if( unpainted_block == "" ) then
+		local parts = string.split(old_node_name,":");
+		if( #parts < 2 ) then
+			return;
+		end
+		found_color_data_block = colormachine.get_color_from_blockname( parts[1], parts[2] );
+		if( found_color_data_block.error_code ~= nil ) then
+			return;
+		end
+		unpainted_block = colormachine.data[ found_color_data_block.blocktype ].block;
+		old_dye         = found_color_data_block.found_name;
+
+		-- figure out how the dye this block was painted with was called
+		local cdata = colormachine.decode_color_name( nil, old_dye );
+		if( cdata ) then
+			old_dye = colormachine.translate_color_name( nil, 'unifieddyes_', old_dye, cdata.c, cdata.s, cdata.g, 1 );
+			if( not( old_dye ) or old_dye == '' ) then
+				old_dye = colormachine.translate_color_name( nil, 'dye_', old_dye, cdata.c, cdata.s, cdata.g, 1 );
+			end
+		else
+			old_dye = '';
+		end
+	end
+	if( unpainted_block ~= "" and #possible_blocks < 1 ) then
+		for k,v in pairs( colormachine.data ) do
+			if( unpainted_block == v.block and colormachine.data[ k ].installed==1) then
+				table.insert( possible_blocks, k );
+			end
+		end
+	end 
+
+	-- remove paint
+	if( not( dye_node_name ) or dye_node_name == "") then
+		return {possible={unpainted_block},old_dye = old_dye};
+	end
+
+	-- decode dye name
+	parts = string.split(dye_node_name,":");
+	if( #parts < 2 ) then
+		return;
+	end
+	local found_color_data_color = colormachine.get_color_from_blockname( parts[1], parts[2] );
+
+	if( found_color_data_color.error_code ~= nil ) then
+		return;
+	end
+	local dye_name = found_color_data_color.found_name;
+
+	local cdata = colormachine.decode_color_name( nil, dye_name );
+	if( not( cdata )) then
+		return;
+	end
+
+	-- find out for which block types/patterns this unpainted block is the basic one
+	local found = {};
+	for _,k in ipairs( possible_blocks ) do
+
+		local new_block_name = colormachine.translate_color_name( nil, k, dye_name, cdata.c, cdata.s, cdata.g, 1 );
+		table.insert( found, new_block_name );
+	end 
+	if( #found < 1 ) then
+		return;
+	end
+	return { possible=found, old_dye = old_dye };
+end
 
 
 colormachine.check_owner = function( pos, player )
@@ -1148,6 +1249,13 @@ colormachine.allow_inventory_access = function(pos, listname, index, stack, play
    -- only specific slots accept input or output
    if(  (mode=="put"  and listname ~= "input" and listname ~= "refill" and listname ~= "dyes" )
      or (mode=="take" and listname ~= "input" and listname ~= "refill" and listname ~= "dyes" and listname ~= "output" and listname ~= "paintless" )) then
+
+      if( listname == "extrastore" ) then
+         local parts = string.split(stack:get_name(),":");
+         if( #parts > 1 and (parts[1]=='unifieddyes' or parts[1]=='dye')) then
+            return stack:get_count();
+         end
+      end
       return 0;
    end
 
@@ -1665,6 +1773,7 @@ minetest.register_node("colormachine:colormachine", {
            inv:set_size("output",   14);  -- output slot for painted blocks - up to 8 alternate coloring schems supported (blox has 8 for stone!)
            inv:set_size("paintless", 1);  -- output slot for blocks with paint scratched off
            inv:set_size("dyes",     18);  -- internal storage for the dye powders
+           inv:set_size("extrastore",5*9); -- additional storage for dyes
 
            --meta:set_string( 'formspec', colormachine.blocktype_menu( meta, 'white' ));
            meta:set_string( 'formspec', colormachine.main_menu_formspec(pos, "analyze") );
@@ -1802,3 +1911,5 @@ minetest.register_craft({
                 { 'default:steel_ingot', 'default:steel_ingot', 'default:steel_ingot' }
         }
 })
+
+dofile( minetest.get_modpath('colormachine')..'/paint_roller.lua');
