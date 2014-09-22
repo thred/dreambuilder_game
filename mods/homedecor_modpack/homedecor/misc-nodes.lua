@@ -1036,17 +1036,17 @@ minetest.register_node("homedecor:kitchen_faucet", {
 		type = "fixed",
 		fixed = {
 			{0, -0.5, 0.375, 0.0625, -0.1875, 0.4375}, -- NodeBox1
-			{0, -0.1875, 0.352697, 0.0625, -0.147303, 0.4375}, -- NodeBox2
-			{0, -0.109959, 0.319502, 0.0625, -0.147303, 0.406639}, -- NodeBox3
-			{0.0070, -0.119556, 0.17, 0.0550,-0.109959, 0.1285}, -- NodeBox4
-			{0, -0.109959, 0.125, 0.0625, -0.0726142, 0.352697}, -- NodeBox5
-			{-0.06, -0.479253, 0.385892, 0.125, -0.454357, 0.427386}, -- NodeBox6
-			{-0.06, -0.490701, 0.394191, 0.125, -0.444357, 0.419087}, -- NodeBox7
+			{0, -0.1875, 0.35, 0.0625, -0.15, 0.4375}, -- NodeBox2
+			{0, -0.15, 0.32, 0.0625, -0.11, 0.41}, -- NodeBox3
+			{0.007, -0.12, 0.17, 0.055, -0.11, 0.1285}, -- NodeBox4
+			{0, -0.11, 0.125, 0.0625, -0.07, 0.37}, -- NodeBox5
+			{-0.05, -0.48, 0.385, 0.115, -0.455, 0.43}, -- NodeBox6
+			{-0.05, -0.49, 0.395, 0.115, -0.445, 0.42}, -- NodeBox7
 		}
 	},
 	selection_box = {
 		type = "fixed",
-		fixed = { -0.0625, -0.5, 0.125, 0.125, -0.0625, 0.4375 }
+		fixed = { -0.055, -0.5, 0.125, 0.12, -0.065, 0.4375 }
 	},
 })
 
@@ -1875,4 +1875,86 @@ minetest.register_node("homedecor:swing_rope", {
 		type = "fixed",
 		fixed = { 0, 0, 0, 0, 0, 0 }
 	}
+})
+
+local bookcolors = {
+	"red",
+	"green",
+	"blue"
+}
+
+for c in ipairs(bookcolors) do
+	local color = bookcolors[c]
+	local color_d = S(bookcolors[c])
+
+minetest.register_node("homedecor:book_"..color, {
+	description = S("Book (%s)"):format(color_d),
+	tiles = {
+		"homedecor_book_"..color.."_top.png",
+		"homedecor_book_"..color.."_bottom.png",
+		"homedecor_book_right.png",
+		"homedecor_book_"..color.."_left.png",
+		"homedecor_book_back.png",
+		"homedecor_book_front.png"
+	},
+	drawtype = "nodebox",
+	paramtype = "light",
+	paramtype2 = "facedir",
+	groups = { snappy=3, oddly_breakable_by_hand=3 },
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{0, -0.5, -0.375, 0.3125, -0.4375, 0.0625}, -- NodeBox1
+		}
+	},
+	on_punch = function(pos, node, puncher, pointed_thing)
+		local fdir = node.param2
+		minetest.set_node(pos, { name = "homedecor:book_open_"..color, param2 = fdir })
+	end,
+})
+
+minetest.register_node("homedecor:book_open_"..color, {
+	tiles = {
+		"homedecor_book_open_top.png",
+		"homedecor_book_open_"..color.."_bottom.png",
+		"homedecor_book_open_sides.png",
+		"homedecor_book_open_sides.png",
+		"homedecor_book_open_sides.png",
+		"homedecor_book_open_sides.png"
+	},
+	drawtype = "nodebox",
+	paramtype = "light",
+	paramtype2 = "facedir",
+	groups = { snappy=3, oddly_breakable_by_hand=3, not_in_creative_inventory=1 },
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.3125, -0.5, -0.375, 0.3125, -0.47, 0.0625}, -- NodeBox1
+		}
+	},
+	drop = "homedecor:book_"..color,
+	on_punch = function(pos, node, puncher, pointed_thing)
+		local fdir = node.param2
+		minetest.set_node(pos, { name = "homedecor:book_"..color, param2 = fdir })
+	end,
+})
+
+end
+
+minetest.register_node("homedecor:calendar", {
+	description = "Calendar",
+	drawtype = "signlike",
+	tiles = {"homedecor_calendar.png"},
+	inventory_image = "homedecor_calendar.png",
+	wield_image = "homedecor_calendar.png",
+	paramtype = "light",
+	paramtype2 = "wallmounted",
+	sunlight_propagates = true,
+	walkable = false,
+	selection_box = {
+		type = "wallmounted",
+	},
+	groups = {choppy=2,dig_immediate=2,attached_node=1},
+	legacy_wallmounted = true,
+	sounds = default.node_sound_defaults(),
 })
