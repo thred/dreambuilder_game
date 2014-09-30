@@ -976,14 +976,14 @@ minetest.register_node("homedecor:coatrack_wallmount", {
 	},
 })
 
-
 minetest.register_node("homedecor:coat_tree", {
 	tiles = { "homedecor_coatrack_wood.png" },
+	inventory_image = "homedecor_coatrack_inv.png",
 	description = "Coat tree",
 	drawtype = "nodebox",
 	paramtype = "light",
-        paramtype2 = "facedir",
-        groups = {snappy=3},
+	paramtype2 = "facedir",
+	groups = {snappy=3},
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -1897,6 +1897,7 @@ minetest.register_node("homedecor:book_"..color, {
 		"homedecor_book_back.png",
 		"homedecor_book_front.png"
 	},
+	inventory_image = "homedecor_book_"..color.."_inv.png",
 	drawtype = "nodebox",
 	paramtype = "light",
 	paramtype2 = "facedir",
