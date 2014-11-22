@@ -55,7 +55,8 @@ minetest.register_node("mesecons_detector:object_detector_off", {
 	groups = {cracky=3},
 	description="Player Detector",
 	mesecons = {receptor = {
-		state = mesecon.state.off
+		state = mesecon.state.off,
+		rules = mesecon.rules.pplate
 	}},
 	on_construct = object_detector_make_formspec,
 	on_receive_fields = object_detector_on_receive_fields,
@@ -70,7 +71,8 @@ minetest.register_node("mesecons_detector:object_detector_on", {
 	groups = {cracky=3,not_in_creative_inventory=1},
 	drop = 'mesecons_detector:object_detector_off',
 	mesecons = {receptor = {
-		state = mesecon.state.on
+		state = mesecon.state.on,
+		rules = mesecon.rules.pplate
 	}},
 	on_construct = object_detector_make_formspec,
 	on_receive_fields = object_detector_on_receive_fields,
@@ -94,7 +96,7 @@ minetest.register_abm(
 	action = function(pos)
 		if object_detector_scan(pos) then
 			minetest.swap_node(pos, {name = "mesecons_detector:object_detector_on"})
-			mesecon:receptor_on(pos)
+			mesecon.receptor_on(pos, mesecon.rules.pplate)
 		end
 	end,
 })
@@ -106,7 +108,7 @@ minetest.register_abm(
 	action = function(pos)
 		if not object_detector_scan(pos) then
 			minetest.swap_node(pos, {name = "mesecons_detector:object_detector_off"})
-			mesecon:receptor_off(pos)
+			mesecon.receptor_off(pos, mesecon.rules.pplate)
 		end
 	end,
 })
@@ -248,7 +250,7 @@ minetest.register_abm(
 	action = function(pos, node)
 		if node_detector_scan(pos) then
 			minetest.swap_node(pos, {name = "mesecons_detector:node_detector_on", param2 = node.param2})
-			mesecon:receptor_on(pos)
+			mesecon.receptor_on(pos)
 		end
 	end,
 })
@@ -260,7 +262,7 @@ minetest.register_abm(
 	action = function(pos, node)
 		if not node_detector_scan(pos) then
 			minetest.swap_node(pos, {name = "mesecons_detector:node_detector_off", param2 = node.param2})
-			mesecon:receptor_off(pos)
+			mesecon.receptor_off(pos)
 		end
 	end,
 })
