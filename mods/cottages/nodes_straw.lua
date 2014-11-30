@@ -106,7 +106,7 @@ minetest.register_node("cottages:threshing_floor", {
 	},
 	on_construct = function(pos)
 
-               	local meta = minetest.env:get_meta(pos);
+               	local meta = minetest.get_meta(pos);
                	meta:set_string("infotext", S("Threshing floor"));
                	local inv = meta:get_inventory();
                	inv:set_size("harvest", 2);
@@ -195,7 +195,7 @@ minetest.register_node("cottages:threshing_floor", {
 		end
 		local name = puncher:get_player_name();
 
-               	local meta = minetest.env:get_meta(pos);
+               	local meta = minetest.get_meta(pos);
                	local inv = meta:get_inventory();
 
 		local input = inv:get_list('harvest');
@@ -288,7 +288,7 @@ minetest.register_node("cottages:handmill", {
 	},
 	on_construct = function(pos)
 
-               	local meta = minetest.env:get_meta(pos);
+               	local meta = minetest.get_meta(pos);
                	meta:set_string("infotext", S("Mill, powered by punching"));
                	local inv = meta:get_inventory();
                	inv:set_size("seeds", 1);
@@ -367,7 +367,7 @@ minetest.register_node("cottages:handmill", {
 		end
 		local name = puncher:get_player_name();
 
-               	local meta = minetest.env:get_meta(pos);
+               	local meta = minetest.get_meta(pos);
                	local inv = meta:get_inventory();
 
 		local input = inv:get_list('seeds');

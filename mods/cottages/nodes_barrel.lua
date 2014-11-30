@@ -99,7 +99,7 @@ end
 -- prepare formspec
 barrel.on_construct = function( pos )
 
-   local meta = minetest.env:get_meta(pos);
+   local meta = minetest.get_meta(pos);
    local percent = math.random( 1, 100 ); -- TODO: show real filling
 
    meta:set_string( 'formspec', 
@@ -125,7 +125,7 @@ end
 -- can only be digged if there are no more vessels/buckets in any of the slots
 -- TODO: allow digging of a filled barrel? this would disallow stacking of them
 barrel.can_dig = function( pos, player )
-   local  meta = minetest.env:get_meta(pos);
+   local  meta = minetest.get_meta(pos);
    local  inv = meta:get_inventory()
 
    return ( inv:is_empty('input')
@@ -155,11 +155,11 @@ end
                 },
 		drop = "cottages:barrel",
 --                on_rightclick = function(pos, node, puncher)
---                    minetest.env:add_node(pos, {name = "cottages:barrel_open", param2 = node.param2})
+--                    minetest.add_node(pos, {name = "cottages:barrel_open", param2 = node.param2})
 --                end,
 -- TODO: on_rightclick is no longer available - maybe open if empty and closed if full?
                 on_punch      = function(pos, node, puncher)
-                    minetest.env:add_node(pos, {name = "cottages:barrel_lying", param2 = node.param2})
+                    minetest.add_node(pos, {name = "cottages:barrel_lying", param2 = node.param2})
                 end,
 
                 on_construct = function( pos )
@@ -192,10 +192,10 @@ end
                 },
 		drop = "cottages:barrel",
 --                on_rightclick = function(pos, node, puncher)
---                    minetest.env:add_node(pos, {name = "cottages:barrel", param2 = node.param2})
+--                    minetest.add_node(pos, {name = "cottages:barrel", param2 = node.param2})
 --                end,
                 on_punch      = function(pos, node, puncher)
-                    minetest.env:add_node(pos, {name = "cottages:barrel_lying_open", param2 = node.param2})
+                    minetest.add_node(pos, {name = "cottages:barrel_lying_open", param2 = node.param2})
                 end,
 		is_ground_content = false,
         })
@@ -218,13 +218,13 @@ end
                 },
 		drop = "cottages:barrel",
                 on_rightclick = function(pos, node, puncher)
-                    minetest.env:add_node(pos, {name = "cottages:barrel_lying_open", param2 = node.param2})
+                    minetest.add_node(pos, {name = "cottages:barrel_lying_open", param2 = node.param2})
                 end,
                 on_punch      = function(pos, node, puncher)
                     if( node.param2 < 4 ) then
-                       minetest.env:add_node(pos, {name = "cottages:barrel_lying", param2 = (node.param2+1)})
+                       minetest.add_node(pos, {name = "cottages:barrel_lying", param2 = (node.param2+1)})
                     else
-                       minetest.env:add_node(pos, {name = "cottages:barrel", param2 = 0})
+                       minetest.add_node(pos, {name = "cottages:barrel", param2 = 0})
                     end
                 end,
 		is_ground_content = false,
@@ -248,13 +248,13 @@ end
                 },
 		drop = "cottages:barrel",
                 on_rightclick = function(pos, node, puncher)
-                    minetest.env:add_node(pos, {name = "cottages:barrel_lying", param2 = node.param2})
+                    minetest.add_node(pos, {name = "cottages:barrel_lying", param2 = node.param2})
                 end,
                 on_punch      = function(pos, node, puncher)
                     if( node.param2 < 4 ) then
-                       minetest.env:add_node(pos, {name = "cottages:barrel_lying_open", param2 = (node.param2+1)})
+                       minetest.add_node(pos, {name = "cottages:barrel_lying_open", param2 = (node.param2+1)})
                     else
-                       minetest.env:add_node(pos, {name = "cottages:barrel_open", param2 = 0})
+                       minetest.add_node(pos, {name = "cottages:barrel_open", param2 = 0})
                     end
                 end,
 		is_ground_content = false,
