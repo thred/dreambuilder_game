@@ -81,11 +81,11 @@ minetest.register_abm(
 		local i = math.random(1,2)
         
 			if i== 1 then
-				minetest.env:add_node(pos,{name="titanium:titanium_tv_1"})
+				minetest.add_node(pos,{name="titanium:titanium_tv_1"})
 			end
 		
 			if i== 2 then
-				minetest.env:add_node(pos,{name="titanium:titanium_tv_2"})
+				minetest.add_node(pos,{name="titanium:titanium_tv_2"})
 			end
 			
        end 
@@ -268,8 +268,8 @@ local function generate_ore(name, wherein, minp, maxp, seed, chunks_per_volume, 
 					local y2 = y0+y1
 					local z2 = z0+z1
 					local p2 = {x=x2, y=y2, z=z2}
-					if minetest.env:get_node(p2).name == wherein then
-						minetest.env:set_node(p2, {name=name})
+					if minetest.get_node(p2).name == wherein then
+						minetest.set_node(p2, {name=name})
 					end
 				end
 			end
