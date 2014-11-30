@@ -44,7 +44,7 @@ function disp(base, name, light, rec, rp)
 			pos.y = pos.y + 1
 			local n = minetest.get_node(pos)
 			if n and n.name == "air" then
-				minetest.env:add_node(pos, {name="display_blocks:"..base.."_crystal"})
+				minetest.add_node(pos, {name="display_blocks:"..base.."_crystal"})
 			end
 		end
 	})
@@ -54,7 +54,7 @@ function disp(base, name, light, rec, rp)
 			pos.y = pos.y + 1
 			local n = minetest.get_node(pos)
 			if n and n.name == "display_blocks:"..base.."_crystal" then
-				minetest.env:remove_node(pos)
+				minetest.remove_node(pos)
 			end
 		end
 	end
@@ -122,7 +122,7 @@ minetest.register_abm({
 	chance = 1.0,
 	action = function(pos, node, active_object_count, active_object_count_wider)
 		pos.y = pos.y + 1
-		minetest.env:add_node(pos, {name="display_blocks:universia_crystal"})
+		minetest.add_node(pos, {name="display_blocks:universia_crystal"})
 	end
 })
 
@@ -131,7 +131,7 @@ function remove_crystal(pos, node, active_object_count, active_object_count_wide
 	  node.name == "display_blocks:universia_base"
 	then
 	  pos.y = pos.y + 1
-	  minetest.env:remove_node(pos, {name="display_blocks:universia_crystal"})
+	  minetest.remove_node(pos, {name="display_blocks:universia_crystal"})
   end
 end
 minetest.register_on_dignode(remove_crystal)
