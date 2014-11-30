@@ -50,7 +50,7 @@ minetest.register_node("memorandum:letter_empty", {
 		fields.signed = fields.signed
 		--[[print((sender:get_player_name() or "").." wrote \""..fields.text..
 				"\" to paper at "..minetest.pos_to_string(pos))]]
-		local direction = minetest.env:get_node(pos).param2
+		local direction = minetest.get_node(pos).param2
 		if fields.text ~= "" then
 			minetest.add_node(pos, {name="memorandum:letter_written", param2=direction})
 		end
@@ -117,7 +117,7 @@ minetest.register_craftitem("memorandum:letter", {
 			mssg = string.sub (text, 1, -scnt -3)
 			sgnd = string.sub (text, -scnt-2, -3)
 		end
-		if minetest.env:get_node(there).name == "air" then
+		if minetest.get_node(there).name == "air" then
 			minetest.add_node(there, {name="memorandum:letter_written", param2=direction})
 			if scnt == "00" or tonumber(scnt) == nil then
 				meta:set_string("infotext", info..mssg..'" Unsigned')
@@ -150,7 +150,7 @@ minetest.register_node("memorandum:letter_written", {
 			fields.signed = fields.signed
 			--[[print((sender:get_player_name() or "").." wrote \""..fields.text..
 				"\" to paper at "..minetest.pos_to_string(pos))]]
-			local direction = minetest.env:get_node(pos).param2
+			local direction = minetest.get_node(pos).param2
 			if fields.text == "" then
 				minetest.add_node(pos, {name="memorandum:letter_empty", param2=direction})
 			end
