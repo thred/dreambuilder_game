@@ -82,40 +82,11 @@ minetest.register_node('homedecor:rug_large', {
                         },
 	})
 
-local flower_pot_model = {
-	type = "fixed",
-	fixed = {
-		{-0.1875, -0.5, -0.1875, 0.1875, -0.3125, 0.1875},
-		{-0.25, -0.5, -0.0625, 0.25, -0.3125, 0.0625},
-		{-0.0625, -0.5, -0.25, 0.0625, -0.25, 0.25},
-		{-0.25, -0.3125, -0.25, 0.25, -0.125, 0.25},
-		{-0.125, -0.3125, -0.3125, 0.125, -0.125, 0.3125},
-		{-0.3125, -0.3125, -0.125, 0.3125, -0.125, 0.125},
-		{-0.3125, -0.125, -0.25, 0.3125, 0.0625, 0.25},
-		{-0.125, -0.125, -0.375, 0.125, 0.0625, 0.375},
-		{-0.375, -0.125, -0.125, 0.375, 0.0625, 0.125},
-		{-0.25, -0.125, -0.3125, 0.25, 0.0625, 0.3125},
-		{-0.4375, 0.0625, -0.1875, 0.4375, 0.25, 0.1875},
-		{-0.1875, 0.0625, -0.4375, 0.1875, 0.25, 0.4375},
-		{-0.3125, 0.0625, -0.375, 0.3125, 0.25, 0.375},
-		{-0.375, 0.0625, -0.3125, 0.375, 0.25, 0.3125},
-		{-0.1875, 0.25, -0.5, 0.1875, 0.5, 0.5},
-		{-0.5, 0.25, -0.1875, 0.5, 0.5, 0.1875},
-		{-0.4375, 0.25, -0.3125, 0.4375, 0.5, 0.3125},
-		{-0.3125, 0.25, -0.4375, 0.3125, 0.5, 0.4375},
-		{-0.375, 0.25, -0.375, 0.375, 0.5, 0.375},
-	}
-}
-
 minetest.register_node('homedecor:flower_pot_terracotta', {
-	drawtype = "nodebox",
 	description = S("Terracotta Flower Pot"),
-	tiles = { 'homedecor_flower_pot_terracotta_top.png',
-			'homedecor_flower_pot_terracotta_bottom.png',
-			'homedecor_flower_pot_terracotta_sides.png',
-			'homedecor_flower_pot_terracotta_sides.png',
-			'homedecor_flower_pot_terracotta_sides.png',
-			'homedecor_flower_pot_terracotta_sides.png'},
+	drawtype = "mesh",
+	mesh = "homedecor_flowerpot.obj",
+	tiles = { "homedecor_flower_pot_terracotta.png" },
 	sunlight_propagates = false,
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -126,14 +97,10 @@ minetest.register_node('homedecor:flower_pot_terracotta', {
 })
 
 minetest.register_node('homedecor:flower_pot_black', {
-	drawtype = "nodebox",
 	description = S("Black Plastic Flower Pot"),
-	tiles = { 'homedecor_flower_pot_black_top.png',
-			'homedecor_flower_pot_black_bottom.png',
-			'homedecor_flower_pot_black_sides.png',
-			'homedecor_flower_pot_black_sides.png',
-			'homedecor_flower_pot_black_sides.png',
-			'homedecor_flower_pot_black_sides.png'},
+	drawtype = "mesh",
+	mesh = "homedecor_flowerpot.obj",
+	tiles = { "homedecor_flower_pot_black.png" },
 	sunlight_propagates = false,
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -144,14 +111,10 @@ minetest.register_node('homedecor:flower_pot_black', {
 })
 
 minetest.register_node('homedecor:flower_pot_green', {
-	drawtype = "nodebox",
 	description = S("Green Plastic Flower Pot"),
-	tiles = { 'homedecor_flower_pot_green_top.png',
-			'homedecor_flower_pot_green_bottom.png',
-			'homedecor_flower_pot_green_sides.png',
-			'homedecor_flower_pot_green_sides.png',
-			'homedecor_flower_pot_green_sides.png',
-			'homedecor_flower_pot_green_sides.png'},
+	drawtype = "mesh",
+	mesh = "homedecor_flowerpot.obj",
+	tiles = { "homedecor_flower_pot_green.png" },
 	sunlight_propagates = false,
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -161,46 +124,35 @@ minetest.register_node('homedecor:flower_pot_green', {
 	sounds = default.node_sound_leaves_defaults(),
 })
 
--- cylinder-shaped objects courtesy Jeija
-
-local cylbox = {}
-local detail = 50
-local sehne
-local size = 0.2
-
-for i = 1, detail-1 do
-        sehne = math.sqrt(0.25 - (((i/detail)-0.5)^2))
-        cylbox[i]={((i/detail)-0.5)*size, -0.5, -sehne*size, ((i/detail)+(1/detail)-0.5)*size, 0.5, sehne*size}
-end
-
 minetest.register_node("homedecor:pole_brass", {
     description = S("Brass Pole"),
-    drawtype = "nodebox",
+    drawtype = "mesh",
+	mesh = "homedecor_round_pole.obj",
     tiles = {"homedecor_tile_brass2.png"},
-    inventory_image = "homedecor_pole_brass2.png",
-    wield_image = "homedecor_pole_brass2.png",
+    inventory_image = "homedecor_pole_brass_inv.png",
+    wield_image = "homedecor_pole_brass_inv.png",
     paramtype = "light",
 	paramtype2 = "facedir",
     is_ground_content = true,
     selection_box = {
             type = "fixed",
-            fixed = {-size/2, -0.5, -size/2, size/2, 0.5, size/2},
+            fixed = { -0.125, -0.5, -0.125, 0.125, 0.5, 0.125 },
+    },
+    collision_box = {
+            type = "fixed",
+            fixed = { -0.125, -0.5, -0.125, 0.125, 0.5, 0.125 },
     },
     groups = {snappy=3},
     sounds = default.node_sound_wood_defaults(),
 	walkable = true,
-	node_box = {
-		type = "fixed",
-		fixed = cylbox,
-	}
 })
 	
 minetest.register_node("homedecor:pole_wrought_iron", {
     description = S("Wrought Iron Pole"),
     drawtype = "nodebox",
     tiles = {"homedecor_tile_wrought_iron2.png"},
-    inventory_image = "homedecor_pole_wrought_iron.png",
-    wield_image = "homedecor_pole_wrought_iron.png",
+    inventory_image = "homedecor_pole_wrought_iron_inv.png",
+    wield_image = "homedecor_pole_wrought_iron_inv.png",
     paramtype = "light",
 	paramtype2 = "facedir",
     is_ground_content = true,
@@ -1218,10 +1170,11 @@ minetest.register_abm({
 
 minetest.register_node("homedecor:dartboard", {
 	description = "Dartboard",
-	drawtype = "signlike",
-	tiles = {"homedecor_dartboard.png"},
-	inventory_image = "homedecor_dartboard.png",
-	wield_image = "homedecor_dartboard.png",
+	drawtype = "mesh",
+	mesh = "homedecor_dartboard.obj",
+	tiles = { "homedecor_dartboard.png" },
+	inventory_image = "homedecor_dartboard_inv.png",
+	wield_image = "homedecor_dartboard_inv.png",
 	paramtype = "light",
 	paramtype2 = "wallmounted",
 	sunlight_propagates = true,
@@ -1526,31 +1479,22 @@ minetest.register_node("homedecor:copper_pans", {
 })
 
 minetest.register_node("homedecor:paper_towel", {
-	tiles = {
-		"homedecor_paper_towel_sides.png",
-		"homedecor_paper_towel_sides.png",
-		"homedecor_paper_towel_ends.png",
-		"homedecor_paper_towel_ends.png",
-		"homedecor_paper_towel_sides.png",
-		"homedecor_paper_towel_sides.png"
-	},
+	drawtype = "mesh",
+	mesh = "homedecor_paper_towel.obj",
+	tiles = { "homedecor_paper_towel.png" },
 	inventory_image = "homedecor_paper_towel_inv.png",
 	description = "Paper towels",
-	drawtype = "nodebox",
 	paramtype = "light",
 	paramtype2 = "facedir",
-	node_box = {
+	groups = { snappy=3 },
+	selection_box = { 
 		type = "fixed",
-		fixed = {
-			{-0.4375, 0.1875, 0.4375, -0.375, 0.375, 0.5}, -- NodeBox1
-			{0.375, 0.1875, 0.4375, 0.4375, 0.375, 0.5}, -- NodeBox2
-			{-0.4375, 0.25, 0.1875, -0.375, 0.3125, 0.5}, -- NodeBox3
-			{0.375, 0.25, 0.1875, 0.4375, 0.3125, 0.5}, -- NodeBox4
-			{-0.375, 0.125, 0.125, 0.375, 0.4375, 0.3125}, -- NodeBox5
-			{-0.375, 0.1875, 0.0625, 0.375, 0.375, 0.375}, -- NodeBox6
-		}
+		fixed = { -0.4375, 0.125, 0.0625, 0.4375, 0.4375, 0.5 }
 	},
-	groups = { snappy=3 }
+	collision_box = {
+		type = "fixed",
+		fixed = { -0.4375, 0.125, 0.0625, 0.4375, 0.4375, 0.5 }
+	}
 })
 
 minetest.register_node("homedecor:stonepath", {
