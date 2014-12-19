@@ -7,10 +7,10 @@ by Sanchez
 
 -- Remove Blox from creative inventory if colormachine mod is installed
 
+local creative = 0
+
 if (minetest.get_modpath("colormachine")) then
-	local creative = 1
-else
-    local creative = 0
+	creative = 1
 end
 
 -- Uncomment the line below to remove most nodes from creative inventory regardless of colormachine mod.
