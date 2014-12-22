@@ -1225,9 +1225,9 @@ minetest.register_node("default:sapling", {
 
 minetest.register_node("default:apple", {
 	description = "Apple",
-	drawtype = "plantlike",
-	visual_scale = 1.0,
-	tiles = {"default_apple.png"},
+	drawtype = "mesh",
+	mesh = "default_apple_3d.obj",
+	tiles = {"default_apple_3d.png"},
 	inventory_image = "default_apple.png",
 	paramtype = "light",
 	sunlight_propagates = true,
