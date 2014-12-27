@@ -3,7 +3,13 @@
 
 ilights = {}
 
-ilights.intllib_modpath = minetest.get_modpath("intllib")
+-- Boilerplate to support localized strings if intllib mod is installed.
+local S
+if minetest.get_modpath("intllib") then
+	S = intllib.Getter()
+else
+	S = function(s) return s end
+end
 
 if minetest.get_modpath("unified_inventory") or not minetest.setting_getbool("creative_mode") then
 	ilights.expect_infinite_stacks = false
