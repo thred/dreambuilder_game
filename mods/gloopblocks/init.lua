@@ -5,16 +5,14 @@ Licensed under WTFPL.
 
 Maintained by VanessaE.
 
-2013-12-15
-
 --]]
+
 -- Boilerplate to support localized strings if intllib mod is installed.
 local S
-if (minetest.get_modpath("intllib")) then
-	dofile(minetest.get_modpath("intllib").."/intllib.lua")
-	S = intllib.Getter(minetest.get_current_modname())
+if minetest.get_modpath("intllib") then
+	S = intllib.Getter()
 else
-	S = function ( s ) return s end
+	S = function(s) return s end
 end
 
 -- Nodes
@@ -86,34 +84,12 @@ minetest.register_node("gloopblocks:evil_block", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
-minetest.register_node("gloopblocks:obsidian_cooled", {
-	description = S("Obsidian"),
-	tiles = {"default_obsidian.png"},
-	is_ground_content = true,
-	sounds = default.node_sound_stone_defaults(),
-	groups = {cracky=1, level=2, not_in_creative_inventory=1},
-	drop = "default:obsidian",
-	after_place_node = function(pos, placer, itemstack, pointed_thing)
-		minetest.add_node(pos, {name = "default:obsidian"})
-	end
-})
 
 minetest.register_node("gloopblocks:basalt", {
 	description = S("Basalt"),
 	tiles = {"gloopblocks_basalt.png"},
 	groups = {cracky=2},
 	sounds = default.node_sound_stone_defaults(),
-})
-
-minetest.register_node("gloopblocks:basalt_cooled", {
-	description = S("Basalt"),
-	tiles = {"gloopblocks_basalt.png"},
-	groups = {cracky=2, not_in_creative_inventory=1},
-	sounds = default.node_sound_stone_defaults(),
-	drop = "gloopblocks:basalt",
-	after_place_node = function(pos, placer, itemstack, pointed_thing)
-		minetest.add_node(pos, {name = "gloopblocks:basalt"})
-	end
 })
 
 minetest.register_node("gloopblocks:pumice", {
@@ -123,16 +99,6 @@ minetest.register_node("gloopblocks:pumice", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
-minetest.register_node("gloopblocks:pumice_cooled", {
-	description = S("Pumice"),
-	tiles = {"gloopblocks_pumice.png"},
-	groups = {cracky=3, not_in_creative_inventory=1},
-	sounds = default.node_sound_stone_defaults(),
-	drop = "gloopblocks:pumice",
-	after_place_node = function(pos, placer, itemstack, pointed_thing)
-		minetest.add_node(pos, {name = "gloopblocks:pumice"})
-	end
-})
 
 minetest.register_node("gloopblocks:pavement", {
 	description = S("Pavement"),
@@ -667,29 +633,68 @@ minetest.register_craftitem("gloopblocks:evil_stick", {
 	inventory_image = "gloopblocks_evil_stick.png",
 })
 
--- Hook into the default lavacooling function to generate basalt and pumice
-local gloopblocks_search_nearby_nodes = function(pos, node)
-	if minetest.get_node({x=pos.x-1, y=pos.y, z=pos.z}).name == node then return true end
-	if minetest.get_node({x=pos.x+1, y=pos.y, z=pos.z}).name == node then return true end
-	if minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name == node then return true end
-	if minetest.get_node({x=pos.x, y=pos.y+1, z=pos.z}).name == node then return true end
-	if minetest.get_node({x=pos.x, y=pos.y, z=pos.z-1}).name == node then return true end
-	if minetest.get_node({x=pos.x, y=pos.y, z=pos.z+1}).name == node then return true end
-	return false
-end
+-- define lava-cooling-based nodes and hook into the default lavacooling
+-- functions to generate basalt, pumice, and obsidian
 
-default.cool_lava_source = function(pos)
-	if gloopblocks_search_nearby_nodes(pos,"default:water_source")
-	or gloopblocks_search_nearby_nodes(pos,"default:water_flowing") then
-		minetest.set_node(pos, {name="gloopblocks:obsidian_cooled"})
+if minetest.setting_getbool("gloopblocks_lavacooling") ~= false then
+
+	minetest.register_node("gloopblocks:obsidian_cooled", {
+		description = S("Obsidian"),
+		tiles = {"default_obsidian.png"},
+		is_ground_content = true,
+		sounds = default.node_sound_stone_defaults(),
+		groups = {cracky=1, level=2, not_in_creative_inventory=1},
+		drop = "default:obsidian",
+		after_place_node = function(pos, placer, itemstack, pointed_thing)
+			minetest.add_node(pos, {name = "default:obsidian"})
+		end
+	})
+
+	minetest.register_node("gloopblocks:basalt_cooled", {
+		description = S("Basalt"),
+		tiles = {"gloopblocks_basalt.png"},
+		groups = {cracky=2, not_in_creative_inventory=1},
+		sounds = default.node_sound_stone_defaults(),
+		drop = "gloopblocks:basalt",
+		after_place_node = function(pos, placer, itemstack, pointed_thing)
+			minetest.add_node(pos, {name = "gloopblocks:basalt"})
+		end
+	})
+
+	minetest.register_node("gloopblocks:pumice_cooled", {
+		description = S("Pumice"),
+		tiles = {"gloopblocks_pumice.png"},
+		groups = {cracky=3, not_in_creative_inventory=1},
+		sounds = default.node_sound_stone_defaults(),
+		drop = "gloopblocks:pumice",
+		after_place_node = function(pos, placer, itemstack, pointed_thing)
+			minetest.add_node(pos, {name = "gloopblocks:pumice"})
+		end
+	})
+
+	local gloopblocks_search_nearby_nodes = function(pos, node)
+		if minetest.get_node({x=pos.x-1, y=pos.y, z=pos.z}).name == node then return true end
+		if minetest.get_node({x=pos.x+1, y=pos.y, z=pos.z}).name == node then return true end
+		if minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name == node then return true end
+		if minetest.get_node({x=pos.x, y=pos.y+1, z=pos.z}).name == node then return true end
+		if minetest.get_node({x=pos.x, y=pos.y, z=pos.z-1}).name == node then return true end
+		if minetest.get_node({x=pos.x, y=pos.y, z=pos.z+1}).name == node then return true end
+		return false
 	end
-end
 
-default.cool_lava_flowing = function(pos)
-	if gloopblocks_search_nearby_nodes(pos,"default:water_source") then
-		minetest.set_node(pos, {name="gloopblocks:basalt_cooled"})
-	elseif gloopblocks_search_nearby_nodes(pos,"default:water_flowing") then
-		minetest.set_node(pos, {name="gloopblocks:pumice_cooled"})
+	default.cool_lava_source = function(pos)
+		if gloopblocks_search_nearby_nodes(pos,"default:water_source")
+		or gloopblocks_search_nearby_nodes(pos,"default:water_flowing") then
+			minetest.set_node(pos, {name="gloopblocks:obsidian_cooled"})
+		end
+	end
+
+	default.cool_lava_flowing = function(pos)
+		if gloopblocks_search_nearby_nodes(pos,"default:water_source") then
+			minetest.set_node(pos, {name="gloopblocks:basalt_cooled"})
+		elseif gloopblocks_search_nearby_nodes(pos,"default:water_flowing") then
+			minetest.set_node(pos, {name="gloopblocks:pumice_cooled"})
+		end
 	end
 end
 
