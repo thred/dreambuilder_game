@@ -158,21 +158,23 @@ function worldedit.load_schematic(value)
 			-- This is broken for larger tables in the current version of LuaJIT
 			nodes = minetest.deserialize(content)
 		else
-			-- XXX: This is a filthy hack that works surprisingly well
+			-- XXX: This is a filthy hack that works surprisingly well - in LuaJIT, `minetest.deserialize` will fail due to the register limit
 			nodes = {}
-			value = value:gsub("return%s*{", "", 1):gsub("}%s*$", "", 1)
+			value = value:gsub("return%s*{", "", 1):gsub("}%s*$", "", 1) -- remove the starting and ending values to leave only the node data
 			local escaped = value:gsub("\\\\", "@@"):gsub("\\\"", "@@"):gsub("(\"[^\"]*\")", function(s) return string.rep("@", #s) end)
 			local startpos, startpos1, endpos = 1, 1
-			while true do
+			while true do -- go through each individual node entry (except the last)
 				startpos, endpos = escaped:find("},%s*{", startpos)
 				if not startpos then
 					break
 				end
 				local current = value:sub(startpos1, startpos)
-				table.insert(nodes, minetest.deserialize("return " .. current))
+				local entry = minetest.deserialize("return " .. current)
+				table.insert(nodes, entry)
 				startpos, startpos1 = endpos, endpos
 			end
-			table.insert(nodes, minetest.deserialize("return " .. value:sub(startpos1)))
+			local entry = minetest.deserialize("return " .. value:sub(startpos1)) -- process the last entry
+			table.insert(nodes, entry)
 		end
 	else
 		return nil
@@ -199,7 +201,7 @@ worldedit.allocate_with_nodes = function(origin_pos, nodes)
 	local pos2x, pos2y, pos2z = -huge, -huge, -huge
 	local origin_x, origin_y, origin_z = origin_pos.x, origin_pos.y, origin_pos.z
 	for i, entry in ipairs(nodes) do
-		x, y, z = origin_x + entry.x, origin_y + entry.y, origin_z + entry.z
+		local x, y, z = origin_x + entry.x, origin_y + entry.y, origin_z + entry.z
 		if x < pos1x then pos1x = x end
 		if y < pos1y then pos1y = y end
 		if z < pos1z then pos1z = z end
