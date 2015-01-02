@@ -1078,6 +1078,57 @@ minetest.register_node("homedecor:bottle_green", {
 	selection_box = bottle_cbox
 })
 
+-- 4-bottle sets
+
+local fbottle_cbox = {
+	type = "fixed",
+	fixed = {
+		{ -0.375, -0.5, -0.3125, 0.375, 0, 0.3125 }
+	}
+}
+
+minetest.register_node("homedecor:4_bottles_brown", {
+	tiles = { "homedecor_bottle_brown.png" },
+	inventory_image = "homedecor_4_bottles_brown_inv.png",
+	description = "Four brown bottles",
+	drawtype = "mesh",
+	mesh = "homedecor_4_bottles.obj",
+	paramtype = "light",
+	paramtype2 = "facedir",
+	sunlight_propagates = true,
+	groups = {snappy=3},
+	collision_box = fbottle_cbox,
+	selection_box = fbottle_cbox
+})
+
+minetest.register_node("homedecor:4_bottles_green", {
+	tiles = { "homedecor_bottle_green.png" },
+	inventory_image = "homedecor_4_bottles_green_inv.png",
+	description = "Four green bottles",
+	drawtype = "mesh",
+	mesh = "homedecor_4_bottles.obj",
+	paramtype = "light",
+	paramtype2 = "facedir",
+	sunlight_propagates = true,
+	groups = {snappy=3},
+	collision_box = fbottle_cbox,
+	selection_box = fbottle_cbox
+})
+
+minetest.register_node("homedecor:4_bottles_multi", {
+	tiles = { "homedecor_4_bottles_multi.png" },
+	inventory_image = "homedecor_4_bottles_multi_inv.png",
+	description = "Four misc brown/green bottles",
+	drawtype = "mesh",
+	mesh = "homedecor_4_bottles_multi.obj",
+	paramtype = "light",
+	paramtype2 = "facedir",
+	sunlight_propagates = true,
+	groups = {snappy=3},
+	collision_box = fbottle_cbox,
+	selection_box = fbottle_cbox
+})
+
 minetest.register_node("homedecor:coffee_maker", {
 	tiles = {
 		"homedecor_coffeemaker_top.png",
@@ -1926,6 +1977,11 @@ minetest.register_node("homedecor:calendar", {
 	sounds = default.node_sound_defaults(),
 })
 
+local globe_cbox = {
+	type = "fixed",
+	fixed = { -0.4, -0.5, -0.3, 0.3, 0.3, 0.3 }
+}
+
 minetest.register_node("homedecor:desk_globe", {
 	description = "Desk globe",
 	drawtype = "mesh",
@@ -1934,17 +1990,16 @@ minetest.register_node("homedecor:desk_globe", {
 	inventory_image = "homedecor_desk_globe_inv.png",
 	paramtype = "light",
 	paramtype2 = "facedir",
-	selection_box = {
-		type = "fixed",
-		fixed = { -0.4, -0.5, -0.3, 0.3, 0.3, 0.3 }
-	},
-	collision_box = {
-		type = "fixed",
-		fixed = { -0.4, -0.5, -0.3, 0.3, 0.3, 0.3 }
-	},
+	selection_box = globe_cbox,
+	collision_box = globe_cbox,
 	groups = {choppy=2},
 	sounds = default.node_sound_defaults(),
 })
+
+local wine_cbox = {
+	type = "fixed",
+	fixed = { -0.5, -0.5, -0.25, 0.5, 0.5, 0.5 }
+}
 
 minetest.register_node("homedecor:wine_rack", {
 	description = "Wine Rack",
@@ -1955,6 +2010,8 @@ minetest.register_node("homedecor:wine_rack", {
 	paramtype = "light",
 	paramtype2 = "facedir",
 	groups = {choppy=2},
+	selection_box = wine_cbox,
+	collision_box = wine_cbox,
 	sounds = default.node_sound_defaults(),
 })
 
