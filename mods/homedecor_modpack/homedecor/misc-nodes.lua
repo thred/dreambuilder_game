@@ -1043,48 +1043,39 @@ minetest.register_node("homedecor:cutlery_set", {
 	}
 })
 
+local bottle_cbox = {
+	type = "fixed",
+	fixed = {
+		{ -0.125, -0.5, -0.125, 0.125, 0, 0.125}
+	}
+}
+
 minetest.register_node("homedecor:bottle_brown", {
-	tiles = {
-		"homedecor_bottle_brown_top.png",
-		"homedecor_bottle_brown_sides.png"
-	},
+	tiles = { "homedecor_bottle_brown.png" },
 	inventory_image = "homedecor_bottle_brown_inv.png",
 	description = "Brown bottle",
-	drawtype = "nodebox",
+	drawtype = "mesh",
+	mesh = "homedecor_bottle.obj",
 	paramtype = "light",
 	paramtype2 = "facedir",
 	sunlight_propagates = true,
-	use_texture_alpha = true,
 	groups = {snappy=3},
-	node_box = {
-		type = "fixed",
-		fixed = {
-			{-0.032, -0.50, -0.11, 0.032, -0.3, -0.046}, -- NodeBox1
-			{-0.016, -0.30, -0.094, 0.016, -0.2, -0.062}, -- NodeBox2
-		}
-	}
+	collision_box = bottle_cbox,
+	selection_box = bottle_cbox
 })
 
 minetest.register_node("homedecor:bottle_green", {
-	tiles = {
-		"homedecor_bottle_green_top.png",
-		"homedecor_bottle_green_sides.png"
-	},
+	tiles = { "homedecor_bottle_green.png" },
 	inventory_image = "homedecor_bottle_green_inv.png",
 	description = "Green bottle",
-	drawtype = "nodebox",
+	drawtype = "mesh",
+	mesh = "homedecor_bottle.obj",
 	paramtype = "light",
 	paramtype2 = "facedir",
 	sunlight_propagates = true,
-	use_texture_alpha = true,
 	groups = {snappy=3},
-	node_box = {
-		type = "fixed",
-		fixed = {
-			{-0.032, -0.50, -0.11, 0.032, -0.3, -0.046}, -- NodeBox1
-			{-0.016, -0.30, -0.094, 0.016, -0.2, -0.062}, -- NodeBox2
-		}
-	}
+	collision_box = bottle_cbox,
+	selection_box = bottle_cbox
 })
 
 minetest.register_node("homedecor:coffee_maker", {
@@ -1934,3 +1925,36 @@ minetest.register_node("homedecor:calendar", {
 	legacy_wallmounted = true,
 	sounds = default.node_sound_defaults(),
 })
+
+minetest.register_node("homedecor:desk_globe", {
+	description = "Desk globe",
+	drawtype = "mesh",
+	mesh = "homedecor_desk_globe.obj",
+	tiles = {"homedecor_desk_globe.png"},
+	inventory_image = "homedecor_desk_globe_inv.png",
+	paramtype = "light",
+	paramtype2 = "facedir",
+	selection_box = {
+		type = "fixed",
+		fixed = { -0.4, -0.5, -0.3, 0.3, 0.3, 0.3 }
+	},
+	collision_box = {
+		type = "fixed",
+		fixed = { -0.4, -0.5, -0.3, 0.3, 0.3, 0.3 }
+	},
+	groups = {choppy=2},
+	sounds = default.node_sound_defaults(),
+})
+
+minetest.register_node("homedecor:wine_rack", {
+	description = "Wine Rack",
+	drawtype = "mesh",
+	mesh = "homedecor_wine_rack.obj",
+	tiles = {"homedecor_wine_rack.png"},
+	inventory_image = "homedecor_wine_rack_inv.png",
+	paramtype = "light",
+	paramtype2 = "facedir",
+	groups = {choppy=2},
+	sounds = default.node_sound_defaults(),
+})
+
