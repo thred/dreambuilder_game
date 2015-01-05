@@ -116,6 +116,7 @@ for i in ipairs(nodes_list) do
 	newnode.paramtype = "light"
 	newnode.paramtype2 = "wallmounted"
 	newnode.visual_scale = 1.414
+	newnode.drop = "angled_walls:"..angledname.."_corner"
 	newnode.after_place_node = function(pos, placer, itemstack, pointed_thing)
 		angled_walls.rotate_to_45(pos, "angled_walls:"..angledname.."_corner")
 	end
