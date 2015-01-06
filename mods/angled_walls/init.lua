@@ -6,23 +6,6 @@
 
 angled_walls = {}
 
--- functions to clone tables/existing nodes
-
-function angled_walls.copy_table(original)
-	local copy = {}
-	for k, v in pairs(original) do
-		if type(v) == 'table' then
-			v = angled_walls.copy_table(v)
-		end
-		copy[k] = v
-	end
-	return copy
-end
-
-function angled_walls.clone_node(name)
-	return angled_walls.copy_table(minetest.registered_nodes[name])
-end
-
 -- helper function to rotate the object after it's placed
 
 function angled_walls.rotate_to_45(pos, name)
@@ -87,40 +70,28 @@ function angled_walls.rotate_to_45(pos, name)
 end
 
 local nodes_list = {
-	{ "default:brick",				"brick",				"slab_brick" },
-	{ "default:wood",				"wood",					"slab_wood" },
-	{ "default:junglewood",			"jungle_wood",			"slab_junglewood" },
-	{ "default:steelblock",			"steelblock",			"slab_steelblock" },
-	{ "default:sandstone",			"sandstone",			"slab_sandstone" },
-	{ "default:sandstonebrick",		"sandstone_brick",		"slab_sandstonebrick" },
-	{ "default:cobble",				"cobble",				"slab_cobble"},
-	{ "default:desert_cobble", 		"desert_cobble",		"slab_desert_cobble" },
-	{ "default:stone",				"stone",				"slab_stone" },
-	{ "default:stonebrick",			"stone_brick",			"slab_stonebrick"},
-	{ "default:desert_stone",		"desert_stone",			"slab_desert_stone" },
-	{ "default:desert_stonebrick",	"desert_stone_brick",	"slab_desert_stonebrick" }
+	{ "default:brick",				"brick",				"slab_brick",				"default_brick.png" },
+	{ "default:wood",				"wood",					"slab_wood",				"default_wood.png" },
+	{ "default:junglewood",			"jungle_wood",			"slab_junglewood",			"default_junglewood.png" },
+	{ "default:steelblock",			"steelblock",			"slab_steelblock",			"default_steel_block.png" },
+	{ "default:sandstone",			"sandstone",			"slab_sandstone",			"default_sandstone.png" },
+	{ "default:sandstonebrick",		"sandstone_brick",		"slab_sandstonebrick",		"default_sandstone_brick.png" },
+	{ "default:cobble",				"cobble",				"slab_cobble",				"default_cobble.png" },
+	{ "default:desert_cobble", 		"desert_cobble",		"slab_desert_cobble",		"default_desert_cobble.png" },
+	{ "default:stone",				"stone",				"slab_stone",				"default_stone.png" },
+	{ "default:stonebrick",			"stone_brick",			"slab_stonebrick",			"default_stone_brick.png" },
+	{ "default:desert_stone",		"desert_stone",			"slab_desert_stone",		"default_desert_stone.png" },
+	{ "default:desert_stonebrick",	"desert_stone_brick",	"slab_desert_stonebrick",	"default_desert_stone_brick.png" }
 }
 
 for i in ipairs(nodes_list) do
 
-	local nodename = nodes_list[i][1]
-	local angledname = nodes_list[i][2]
-	local recipeitem = nodes_list[i][3]
+	local nodename =	nodes_list[i][1]
+	local angledname =	nodes_list[i][2]
+	local recipeitem =	nodes_list[i][3]
+	local invtexture =	nodes_list[i][4]
 
-	local newnode = angled_walls.clone_node(nodename)
-
-	newnode.drawtype = "torchlike"
-	newnode.inventory_image = newnode.tiles[1]
-	newnode.tiles = { "angled_walls_"..angledname..".png" }
-	newnode.description = newnode.description.." (angled wall)"
-	newnode.paramtype = "light"
-	newnode.paramtype2 = "wallmounted"
-	newnode.visual_scale = 1.414
-	newnode.drop = "angled_walls:"..angledname.."_corner"
-	newnode.after_place_node = function(pos, placer, itemstack, pointed_thing)
-		angled_walls.rotate_to_45(pos, "angled_walls:"..angledname.."_corner")
-	end
-	newnode.node_box = {
+	local cbox = {
 		type = "fixed",
 		fixed = {
 			{-0.5, -0.5, 0.4375, -0.4375, 0.5, 0.5},
@@ -141,16 +112,26 @@ for i in ipairs(nodes_list) do
 			{0.4375, -0.5, -0.5, 0.5, 0.5, -0.4375}
 		}
 	}
-	newnode.selection_box = newnode.node_box
 
-	minetest.register_node("angled_walls:"..angledname.."_corner", newnode)
+	minetest.register_node("angled_walls:"..angledname.."_corner", {
+		description = angledname.." (angled wall)",
+		tiles = { "angled_walls_"..angledname..".png" },
+		drawtype = "torchlike",
+		inventory_image = invtexture,
+		paramtype = "light",
+		paramtype2 = "wallmounted",
+		visual_scale = 1.414,
+		drop = "angled_walls:"..angledname.."_corner",
+		groups = { snappy=1 },
+		collision_box = cbox,
+		selection_box = cbox,
+		after_place_node = function(pos, placer, itemstack, pointed_thing)
+			angled_walls.rotate_to_45(pos, "angled_walls:"..angledname.."_corner")
+		end,
 
-	local newnode2 = angled_walls.clone_node("angled_walls:"..angledname.."_corner")
-	newnode2.tiles = { "angled_walls_"..angledname..".png^[transformFX" }
-	newnode2.description = newnode.description.." (angled wall, 135 degrees)"
-	newnode2.groups.not_in_creative_inventory = 1
-	newnode2.drop = "angled_walls:"..angledname.."_corner"
-	newnode2.node_box = {
+	})
+
+	local cbox = {
 		type = "fixed",
 		fixed = {
 			{0.4375, -0.5, 0.4375, 0.5, 0.5, 0.5},
@@ -171,16 +152,21 @@ for i in ipairs(nodes_list) do
 			{-0.5, -0.5, -0.5, -0.4375, 0.5, -0.4375}
 		}
 	}
-	newnode2.selection_box = newnode2.node_box
 
-	minetest.register_node("angled_walls:"..angledname.."_corner_135", newnode2)
+	minetest.register_node("angled_walls:"..angledname.."_corner_135", {
+		description = angledname.." (angled wall, 135 degrees)",
+		tiles = { "angled_walls_"..angledname..".png^[transformFX" },
+		drawtype = "torchlike",
+		paramtype = "light",
+		paramtype2 = "wallmounted",
+		visual_scale = 1.414,
+		drop = "angled_walls:"..angledname.."_corner",
+		groups = { snappy=1, not_in_creative_inventory = 1 },
+		collision_box = cbox,
+		selection_box = cbox,
+	})
 
-	local newnode3 = angled_walls.clone_node("angled_walls:"..angledname.."_corner")
-	newnode3.description = newnode.description.." (angled wall, 225 degrees)"
-	newnode3.tiles = { "angled_walls_"..angledname..".png^[transformFX" }
-	newnode3.groups.not_in_creative_inventory = 1
-	newnode3.drop = "angled_walls:"..angledname.."_corner"
-	newnode3.node_box = {
+	local cbox = {
 		type = "fixed",
 		fixed = {
 			{-0.5, -0.5, 0.4375, -0.4375, 0.5, 0.5},
@@ -201,15 +187,21 @@ for i in ipairs(nodes_list) do
 			{0.4375, -0.5, -0.5, 0.5, 0.5, -0.4375}
 		}
 	}
-	newnode3.selection_box = newnode3.node_box
 
-	minetest.register_node("angled_walls:"..angledname.."_corner_225", newnode3)
+	minetest.register_node("angled_walls:"..angledname.."_corner_225", {
+		description = angledname.." (angled wall, 225 degrees)",
+		tiles = { "angled_walls_"..angledname..".png^[transformFX" },
+		drawtype = "torchlike",
+		paramtype = "light",
+		paramtype2 = "wallmounted",
+		visual_scale = 1.414,
+		drop = "angled_walls:"..angledname.."_corner",
+		groups = { snappy=1, not_in_creative_inventory = 1 },
+		collision_box = cbox,
+		selection_box = cbox,
+	})
 
-	local newnode4 = angled_walls.clone_node("angled_walls:"..angledname.."_corner")
-	newnode4.description = newnode.description.." (angled wall, 315 degrees)"
-	newnode4.groups.not_in_creative_inventory = 1
-	newnode4.drop = "angled_walls:"..angledname.."_corner"
-	newnode4.node_box = {
+	local cbox = {
 		type = "fixed",
 		fixed = {
 			{0.4375, -0.5, 0.4375, 0.5, 0.5, 0.5},
@@ -230,9 +222,19 @@ for i in ipairs(nodes_list) do
 			{-0.5, -0.5, -0.5, -0.4375, 0.5, -0.4375}
 		}
 	}
-	newnode4.selection_box = newnode4.node_box
 
-	minetest.register_node("angled_walls:"..angledname.."_corner_315", newnode4)
+	minetest.register_node("angled_walls:"..angledname.."_corner_315", {
+		description = angledname.." (angled wall, 315 degrees)",
+		tiles = { "angled_walls_"..angledname..".png^[transformFX" },
+		drawtype = "torchlike",
+		paramtype = "light",
+		paramtype2 = "wallmounted",
+		visual_scale = 1.414,
+		drop = "angled_walls:"..angledname.."_corner",
+		groups = { snappy=1, not_in_creative_inventory = 1 },
+		collision_box = cbox,
+		selection_box = cbox,
+	})
 
 	minetest.register_alias("angled_walls:"..angledname.."_corner2", "angled_walls:"..angledname.."_corner_135")
 
