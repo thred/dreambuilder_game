@@ -12,8 +12,8 @@ LIGHT_MAX = 14
 default = {}
 
 -- GUI related stuff
-default.gui_bg = "bgcolor[#08080899;false]"
-default.gui_bg_img = "background[5,5;1,1;ui_form_bg.png;true]"
+default.gui_bg = "bgcolor[#080808BB;true]"
+default.gui_bg_img = "background[5,5;1,1;gui_formbg.png;true]"
 default.gui_slots = "listcolors[#00000069;#5A5A5A;#141318;#30434C;#FFF]"
 
 function default.get_hotbar_bg(x,y)
@@ -45,14 +45,4 @@ dofile(minetest.get_modpath("default").."/crafting.lua")
 dofile(minetest.get_modpath("default").."/mapgen.lua")
 dofile(minetest.get_modpath("default").."/player.lua")
 dofile(minetest.get_modpath("default").."/trees.lua")
-dofile(minetest.get_modpath("default").."/commands.lua")
-
-hotbar_size = minetest.setting_get("hotbar_size") or 16
-
-minetest.register_on_joinplayer(function(player)
-	player:hud_set_hotbar_itemcount(hotbar_size)
-	minetest.after(0.5,function()
---		player:hud_set_hotbar_image("dreambuilder_hotbar.png")
-		player:hud_set_hotbar_selected_image("dreambuilder_hotbar_selected.png")
-	end)
-end)
+dofile(minetest.get_modpath("default").."/aliases.lua")
