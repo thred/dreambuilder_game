@@ -1,19 +1,22 @@
-dofile(minetest.get_modpath("mobs").."/api.lua")
+dofile(minetest.get_modpath("carbone_mobs").."/api.lua")
 
-mobs:register_mob("mobs:dirt_monster", {
+-- Ensure the correct active_block_range value is used (for performance and spawning):
+minetest.setting_set("active_block_range", 1)
+
+carbone_mobs:register_mob("carbone_mobs:dirt_monster", {
 	type = "monster",
-	hp_max = 25,
+	hp_max = 18,
 	collisionbox = {-0.4, -0.01, -0.4, 0.4, 1.9, 0.4},
 	visual = "mesh",
 	mesh = "mobs_stone_monster.x",
 	textures = {"mobs_dirt_monster.png"},
 	visual_size = {x = 3, y = 2.6},
 	makes_footstep_sound = true,
-	view_range = 12,
+	view_range = 16,
 	walk_velocity = 1.1,
-	run_velocity = 2.6,
+	run_velocity = 2.2,
 	on_rightclick = nil,
-	damage = 4,
+	damage = 3,
 	drops = {
 		name = "default:dirt",
 		chance = 1,
@@ -43,7 +46,7 @@ mobs:register_mob("mobs:dirt_monster", {
 	},
 })
 
-minetest.register_craftitem("mobs:dirt_monster", {
+minetest.register_craftitem("carbone_mobs:dirt_monster", {
 	description = "Dirt Monster",
 	inventory_image = "mobs_dirt_monster.png",
 	wield_scale = {x = 1.25, y = 1.25, z = 2.5},
@@ -51,7 +54,7 @@ minetest.register_craftitem("mobs:dirt_monster", {
 	
 	on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.above then
-			minetest.add_entity(pointed_thing.above, "mobs:dirt_monster")
+			minetest.add_entity(pointed_thing.above, "carbone_mobs:dirt_monster")
 			if not minetest.setting_getbool("creative_mode") then itemstack:take_item() end
 			minetest.log("action", placer:get_player_name() .. " placed a dirt monster at " .. minetest.pos_to_string(pointed_thing.above) .. ".")
 		end
@@ -59,9 +62,9 @@ minetest.register_craftitem("mobs:dirt_monster", {
 	end,
 })
 
-mobs:register_mob("mobs:stone_monster", {
+carbone_mobs:register_mob("carbone_mobs:stone_monster", {
 	type = "monster",
-	hp_max = 30,
+	hp_max = 24,
 	collisionbox = {-0.4, -0.01, -0.4, 0.4, 1.9, 0.4},
 	visual = "mesh",
 	mesh = "mobs_stone_monster.x",
@@ -70,8 +73,8 @@ mobs:register_mob("mobs:stone_monster", {
 	makes_footstep_sound = true,
 	view_range = 16,
 	walk_velocity = 0.4,
-	run_velocity = 1.8,
-	damage = 6,
+	run_velocity = 1.7,
+	damage = 4,
 	drops = {
 		{name = "default:stone",
 		chance = 1,
@@ -100,7 +103,7 @@ mobs:register_mob("mobs:stone_monster", {
 	}
 })
 
-minetest.register_craftitem("mobs:stone_monster", {
+minetest.register_craftitem("carbone_mobs:stone_monster", {
 	description = "Stone Monster",
 	inventory_image = "mobs_stone_monster.png",
 	wield_scale = {x = 1.25, y = 1.25, z = 2.5},
@@ -108,7 +111,7 @@ minetest.register_craftitem("mobs:stone_monster", {
 	
 	on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.above then
-			minetest.add_entity(pointed_thing.above, "mobs:stone_monster")
+			minetest.add_entity(pointed_thing.above, "carbone_mobs:stone_monster")
 			if not minetest.setting_getbool("creative_mode") then itemstack:take_item() end
 			minetest.log("action", placer:get_player_name() .. " placed a stone monster at " .. minetest.pos_to_string(pointed_thing.above) .. ".")
 		end
@@ -116,18 +119,18 @@ minetest.register_craftitem("mobs:stone_monster", {
 	end,
 })
 
-mobs:register_mob("mobs:sand_monster", {
+carbone_mobs:register_mob("carbone_mobs:sand_monster", {
 	type = "monster",
-	hp_max = 15,
+	hp_max = 12,
 	collisionbox = {-0.4, -0.01, -0.4, 0.4, 1.9, 0.4},
 	visual = "mesh",
 	mesh = "mobs_sand_monster.x",
 	textures = {"mobs_sand_monster.png"},
 	visual_size = {x =8,y =8},
 	makes_footstep_sound = true,
-	view_range = 20,
+	view_range = 16,
 	walk_velocity = 1.8,
-	run_velocity = 3.6,
+	run_velocity = 3.4,
 	damage = 2,
 	drops = {
 		{name = "default:sand",
@@ -158,7 +161,7 @@ mobs:register_mob("mobs:sand_monster", {
 	},
 })
 
-minetest.register_craftitem("mobs:sand_monster", {
+minetest.register_craftitem("carbone_mobs:sand_monster", {
 	description = "Sand Monster",
 	inventory_image = "mobs_sand_monster.png",
 	wield_scale = {x = 1.25, y = 1.25, z = 2.5},
@@ -166,7 +169,7 @@ minetest.register_craftitem("mobs:sand_monster", {
 	
 	on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.above then
-			minetest.add_entity(pointed_thing.above, "mobs:sand_monster")
+			minetest.add_entity(pointed_thing.above, "carbone_mobs:sand_monster")
 			if not minetest.setting_getbool("creative_mode") then itemstack:take_item() end
 			minetest.log("action", placer:get_player_name() .. " placed a sand monster at " .. minetest.pos_to_string(pointed_thing.above) .. ".")
 		end
@@ -174,9 +177,9 @@ minetest.register_craftitem("mobs:sand_monster", {
 	end,
 })
 
-mobs:register_mob("mobs:sheep", {
+carbone_mobs:register_mob("carbone_mobs:sheep", {
 	type = "animal",
-	hp_max = 15,
+	hp_max = 10,
 	collisionbox = {-0.4, -0.01, -0.4, 0.4, 1, 0.4},
 	textures = {"mobs_sheep.png"},
 	visual = "mesh",
@@ -185,7 +188,7 @@ mobs:register_mob("mobs:sheep", {
 	walk_velocity = 1,
 	armor = 100,
 	drops = {
-		{name = "mobs:meat_raw",
+		{name = "carbone_mobs:meat_raw",
 		chance = 1,
 		min = 2,
 		max = 2,},
@@ -205,7 +208,7 @@ mobs:register_mob("mobs:sheep", {
 		walk_end = 100,
 	},
 	follow = "farming:wheat",
-	view_range = 6,
+	view_range = 8,
 	on_rightclick = function(self, clicker)
 		local item = clicker:get_wielded_item()
 		if item:get_name() == "farming:wheat" then
@@ -245,7 +248,7 @@ mobs:register_mob("mobs:sheep", {
 			if minetest.registered_items["wool:white"] then
 				clicker:get_inventory():add_item("main", ItemStack("wool:white 2"))
 --				clicker:get_inventory():add_item("main", ItemStack("maptools:copper_coin"))
-				minetest.sound_play("default_snow_footstep", {object = self.object, gain = 0.5,})
+				minetest.sound_play("default_snow_footstep", {object = self.object, gain = 0.3,})
 			end
 			self.object:set_properties({
 				textures = {"mobs_sheep_shaved.png"},
@@ -255,7 +258,7 @@ mobs:register_mob("mobs:sheep", {
 	end,
 })
 
-minetest.register_craftitem("mobs:sheep", {
+minetest.register_craftitem("carbone_mobs:sheep", {
 	description = "Sheep",
 	inventory_image = "mobs_sheep.png",
 	wield_scale = {x = 1.25, y = 1.25, z = 2.5},
@@ -263,7 +266,7 @@ minetest.register_craftitem("mobs:sheep", {
 	
 	on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.above then
-			minetest.add_entity(pointed_thing.above, "mobs:sheep")
+			minetest.add_entity(pointed_thing.above, "carbone_mobs:sheep")
 			if not minetest.setting_getbool("creative_mode") then itemstack:take_item() end
 			minetest.log("action", placer:get_player_name() .. " placed a sheep at " .. minetest.pos_to_string(pointed_thing.above) .. ".")
 		end
@@ -271,12 +274,12 @@ minetest.register_craftitem("mobs:sheep", {
 	end,
 })
 
-minetest.register_craftitem("mobs:meat_raw", {
+minetest.register_craftitem("carbone_mobs:meat_raw", {
 	description = "Raw Meat",
 	inventory_image = "mobs_meat_raw.png",
 })
 
-minetest.register_craftitem("mobs:meat", {
+minetest.register_craftitem("carbone_mobs:meat", {
 	description = "Meat",
 	inventory_image = "mobs_meat.png",
 	on_use = minetest.item_eat(6),
@@ -284,12 +287,12 @@ minetest.register_craftitem("mobs:meat", {
 
 minetest.register_craft({
 	type = "cooking",
-	output = "mobs:meat",
-	recipe = "mobs:meat_raw",
+	output = "carbone_mobs:meat",
+	recipe = "carbone_mobs:meat_raw",
 	cooktime = 25,
 })
 
-mobs:register_mob("mobs:rat", {
+carbone_mobs:register_mob("carbone_mobs:rat", {
 	type = "animal",
 	hp_max = 1,
 	collisionbox = {-0.25, -0.01, -0.25, 0.25, 0.35, 0.25},
@@ -301,7 +304,7 @@ mobs:register_mob("mobs:rat", {
 	walk_velocity = 0.8,
 	armor = 200,
 	drops = {
-		{name = "mobs:rat",
+		{name = "carbone_mobs:rat",
 		chance = 1,
 		min = 1,
 		max = 1,},
@@ -310,10 +313,10 @@ mobs:register_mob("mobs:rat", {
 	water_damage = 1,
 	lava_damage = 8,
 	follow = "default:scorched_stuff",
-	view_range = 4,
+	view_range = 5,
 })
 
-minetest.register_craftitem("mobs:rat", {
+minetest.register_craftitem("carbone_mobs:rat", {
 	description = "Rat",
 	inventory_image = "mobs_rat_inventory.png",
 	wield_scale = {x = 1.25, y = 1.25, z = 2.5},
@@ -321,7 +324,7 @@ minetest.register_craftitem("mobs:rat", {
 	
 	on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.above then
-			minetest.add_entity(pointed_thing.above, "mobs:rat")
+			minetest.add_entity(pointed_thing.above, "carbone_mobs:rat")
 			if not minetest.setting_getbool("creative_mode") then itemstack:take_item() end
 			minetest.log("action", placer:get_player_name() .. " placed a rat at " .. minetest.pos_to_string(pointed_thing.above) .. ".")
 		end
@@ -329,7 +332,7 @@ minetest.register_craftitem("mobs:rat", {
 	end,
 })
 	
-minetest.register_craftitem("mobs:rat_cooked", {
+minetest.register_craftitem("carbone_mobs:rat_cooked", {
 	description = "Cooked Rat",
 	inventory_image = "mobs_cooked_rat.png",
 	on_use = minetest.item_eat(3),
@@ -337,15 +340,15 @@ minetest.register_craftitem("mobs:rat_cooked", {
 
 minetest.register_craft({
 	type = "cooking",
-	output = "mobs:rat_cooked",
-	recipe = "mobs:rat",
+	output = "carbone_mobs:rat_cooked",
+	recipe = "carbone_mobs:rat",
 	cooktime = 15,
 })
 
 minetest.register_craft({
 	type = "cooking",
 	output = "default:scorched_stuff",
-	recipe = "mobs:rat_cooked",
+	recipe = "carbone_mobs:rat_cooked",
 	cooktime = 10,
 })
 
@@ -355,9 +358,9 @@ minetest.register_craft({
 	recipe = {"default:scorched_stuff"},
 })
 
-mobs:register_mob("mobs:oerkki", {
+carbone_mobs:register_mob("carbone_mobs:oerkki", {
 	type = "monster",
-	hp_max = 45,
+	hp_max = 35,
 	collisionbox = {-0.4, -0.01, -0.4, 0.4, 1.9, 0.4},
 	visual = "mesh",
 	mesh = "mobs_oerkki.x",
@@ -366,8 +369,8 @@ mobs:register_mob("mobs:oerkki", {
 	makes_footstep_sound = false,
 	view_range = 16,
 	walk_velocity = 0.5,
-	run_velocity = 3,
-	damage = 5,
+	run_velocity = 2.5,
+	damage = 4,
 	drops = {
 		{name = "default:obsidian",
 		chance = 1,
@@ -397,7 +400,7 @@ mobs:register_mob("mobs:oerkki", {
 	},
 })
 
-minetest.register_craftitem("mobs:oerkki", {
+minetest.register_craftitem("carbone_mobs:oerkki", {
 	description = "Oerkki",
 	inventory_image = "mobs_oerkki.png",
 	wield_scale = {x = 1.25, y = 1.25, z = 2.5},
@@ -405,7 +408,7 @@ minetest.register_craftitem("mobs:oerkki", {
 	
 	on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.above then
-			minetest.add_entity(pointed_thing.above, "mobs:oerkki")
+			minetest.add_entity(pointed_thing.above, "carbone_mobs:oerkki")
 			if not minetest.setting_getbool("creative_mode") then itemstack:take_item() end
 			minetest.log("action", placer:get_player_name() .. " placed an oerkki at " .. minetest.pos_to_string(pointed_thing.above) .. ".")
 		end
@@ -413,19 +416,19 @@ minetest.register_craftitem("mobs:oerkki", {
 	end,
 })
 
-mobs:register_mob("mobs:tree_monster", {
+carbone_mobs:register_mob("carbone_mobs:tree_monster", {
 	type = "monster",
-	hp_max = 60,
+	hp_max = 50,
 	collisionbox = {-0.4, -0.01, -0.4, 0.4, 1.9, 0.4},
 	visual = "mesh",
 	mesh = "mobs_tree_monster.x",
 	textures = {"mobs_tree_monster.png"},
 	visual_size = {x = 4.5,y = 4.5},
 	makes_footstep_sound = true,
-	view_range = 32,
+	view_range = 16,
 	walk_velocity = 0,
 	run_velocity = 1.6,
-	damage = 6,
+	damage = 5,
 	drops = {
 		{name = "default:sapling",
 		chance = 1,
@@ -460,7 +463,7 @@ mobs:register_mob("mobs:tree_monster", {
 	},
 })
 
-minetest.register_craftitem("mobs:tree_monster", {
+minetest.register_craftitem("carbone_mobs:tree_monster", {
 	description = "Tree Monster",
 	inventory_image = "mobs_tree_monster.png",
 	wield_scale = {x = 1.25, y = 1.25, z = 2.5},
@@ -468,7 +471,7 @@ minetest.register_craftitem("mobs:tree_monster", {
 	
 	on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.above then
-			minetest.add_entity(pointed_thing.above, "mobs:tree_monster")
+			minetest.add_entity(pointed_thing.above, "carbone_mobs:tree_monster")
 			if not minetest.setting_getbool("creative_mode") then itemstack:take_item() end
 			minetest.log("action", placer:get_player_name() .. " placed a tree monster at " .. minetest.pos_to_string(pointed_thing.above) .. ".")
 		end
@@ -476,9 +479,63 @@ minetest.register_craftitem("mobs:tree_monster", {
 	end,
 })
 
-mobs:register_mob("mobs:dungeon_master", {
+carbone_mobs:register_mob("carbone_mobs:trooper", {
 	type = "monster",
-	hp_max = 50,
+	hp_max = 20,
+	collisionbox = {-0.3, -1.0, -0.3, 0.3, 0.8, 0.3},
+	visual = "mesh",
+	mesh = "character.x",
+	textures = {"character.png"},
+	visual_size = {x = 1, y = 1},
+	makes_footstep_sound = true,
+	view_range = 8,
+	lava_damage = 8,
+	walk_velocity = 1,
+	run_velocity = 3,
+	damage = 1,
+	drops = {
+		{name = "carbone_mobs:trooper",
+		chance = 1,
+		min = 1,
+		max = 1,},
+	},
+	armor = 100,
+	drawtype = "front",
+	attack_type = "dogfight",
+	animation = {
+		speed_normal = 15,
+		speed_run = 30,
+		stand_start = 0,
+		stand_end = 40,
+		walk_start = 168,
+		walk_end = 187,
+		run_start = 168,
+		run_end = 187,
+		punch_start = 189,
+		punch_end = 198,
+	}
+})
+
+minetest.register_craftitem("carbone_mobs:trooper", {
+	description = "Trooper",
+	inventory_image = "player.png",
+	wield_scale = {x = 1.25, y = 1.25, z = 2.5},
+	groups = {not_in_creative_inventory = 1},
+	
+	on_place = function(itemstack, placer, pointed_thing)
+		if pointed_thing.above then
+			pointed_thing.above.y = pointed_thing.above.y + 0.5
+			minetest.add_entity(pointed_thing.above, "carbone_mobs:trooper")
+			if not minetest.setting_getbool("creative_mode") then itemstack:take_item() end
+			minetest.log("action", placer:get_player_name() .. " placed a trooper at " .. minetest.pos_to_string(pointed_thing.above) .. ".")
+		end
+		return itemstack
+	end,
+})
+
+carbone_mobs:register_mob("carbone_mobs:dungeon_master", {
+	type = "monster",
+	hp_max = 45,
 	collisionbox = {-0.7, -0.01, -0.7, 0.7, 2.6, 0.7},
 	visual = "mesh",
 	mesh = "mobs_dungeon_master.x",
@@ -488,7 +545,7 @@ mobs:register_mob("mobs:dungeon_master", {
 	view_range = 12,
 	walk_velocity = 0.4,
 	run_velocity = 2,
-	damage = 10,
+	damage = 8,
 	drops = {
 		{name = "default:mese_crystal",
 		chance = 1,
@@ -505,7 +562,7 @@ mobs:register_mob("mobs:dungeon_master", {
 	light_damage = 200,
 	on_rightclick = nil,
 	attack_type = "shoot",
-	arrow = "mobs:fireball",
+	arrow = "carbone_mobs:fireball",
 	shoot_interval = 2.5,
 	sounds = {
 		attack = "mobs_fireball",
@@ -522,7 +579,7 @@ mobs:register_mob("mobs:dungeon_master", {
 	},
 })
 
-minetest.register_craftitem("mobs:dungeon_master", {
+minetest.register_craftitem("carbone_mobs:dungeon_master", {
 	description = "Dungeon Master",
 	inventory_image = "mobs_dungeon_master.png",
 	wield_scale = {x = 1.25, y = 1.25, z = 2.5},
@@ -530,7 +587,7 @@ minetest.register_craftitem("mobs:dungeon_master", {
 	
 	on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.above then
-			minetest.add_entity(pointed_thing.above, "mobs:dungeon_master")
+			minetest.add_entity(pointed_thing.above, "carbone_mobs:dungeon_master")
 			if not minetest.setting_getbool("creative_mode") then itemstack:take_item() end
 			minetest.log("action", placer:get_player_name() .. " placed a dungeon master at " .. minetest.pos_to_string(pointed_thing.above) .. ".")
 		end
@@ -538,18 +595,18 @@ minetest.register_craftitem("mobs:dungeon_master", {
 	end,
 })
 
-mobs:register_arrow("mobs:fireball", {
+carbone_mobs:register_arrow("carbone_mobs:fireball", {
 	visual = "sprite",
 	visual_size = {x = 1, y = 1},
 	textures = {"mobs_fireball.png"},
-	velocity = 9,
+	velocity = 8,
 	hit_player = function(self, player)
 		local s = self.object:getpos()
 		local p = player:getpos()
 		local vec = {x = s.x - p.x, y = s.y - p.y, z = s.z - p.z}
 		player:punch(self.object, 1.0,  {
 			full_punch_interval = 1.0,
-			damage_groups = {fleshy = 10},
+			damage_groups = {fleshy = 8},
 		}, vec)
 		local pos = self.object:getpos()
 		for dx = -1, 1 do
@@ -565,7 +622,7 @@ mobs:register_arrow("mobs:fireball", {
 						minetest.dig_node(p)
 					end
 						minetest.sound_play("mobs_fireball_explode", {
-						pos = s,
+						pos = pos,
 						gain = 0.1,
 						max_hear_distance = 48})
 				end
@@ -586,7 +643,7 @@ mobs:register_arrow("mobs:fireball", {
 						minetest.dig_node(p)
 					end
 						minetest.sound_play("mobs_fireball_explode", {
-						pos = s,
+						pos = pos,
 						gain = 0.1,
 						max_hear_distance = 48})
 				end
@@ -595,18 +652,18 @@ mobs:register_arrow("mobs:fireball", {
 	end
 })
 
-mobs:register_mob("mobs:rhino", {
+carbone_mobs:register_mob("carbone_mobs:rhino", {
 	type = "monster",
-	hp_max = 25,
+	hp_max = 22,
 	collisionbox = {-0.4, -0.01, -0.4, 0.4, 1.9, 0.4},
 	visual = "mesh",
 	mesh = "mobs_sand_monster.x",
 	textures = {"mobs_rhino.png"},
 	visual_size = {x = 8, y = 8},
 	makes_footstep_sound = true,
-	view_range = 10,
+	view_range = 12,
 	walk_velocity = 1.2,
-	run_velocity = 2.4,
+	run_velocity = 2,
 	damage = 2,
 	drops = {
 		{name = "default:steel_ingot",
@@ -624,7 +681,7 @@ mobs:register_mob("mobs:rhino", {
 	light_damage = 1,
 	on_rightclick = nil,
 	attack_type = "shoot",
-	arrow = "mobs:bullet",
+	arrow = "carbone_mobs:bullet",
 	shoot_interval = 0.5,
 	sounds = {
 		attack = "mobs_bullet",
@@ -643,7 +700,7 @@ mobs:register_mob("mobs:rhino", {
 	},
 })
 
-minetest.register_craftitem("mobs:rhino", {
+minetest.register_craftitem("carbone_mobs:rhino", {
 	description = "Rhino",
 	inventory_image = "mobs_rhino.png",
 	wield_scale = {x = 1.25, y = 1.25, z = 2.5},
@@ -651,7 +708,7 @@ minetest.register_craftitem("mobs:rhino", {
 	
 	on_place = function(itemstack, placer, pointed_thing)
 		if pointed_thing.above then
-			minetest.add_entity(pointed_thing.above, "mobs:rhino")
+			minetest.add_entity(pointed_thing.above, "carbone_mobs:rhino")
 			if not minetest.setting_getbool("creative_mode") then itemstack:take_item() end
 			minetest.log("action", placer:get_player_name() .. " placed a rhino at " .. minetest.pos_to_string(pointed_thing.above) .. ".")
 		end
@@ -659,11 +716,11 @@ minetest.register_craftitem("mobs:rhino", {
 	end,
 })
 
-mobs:register_arrow("mobs:bullet", {
+carbone_mobs:register_arrow("carbone_mobs:bullet", {
 	visual = "sprite",
 	visual_size = {x = 0.75, y = 0.75},
 	textures = {"mobs_bullet.png"},
-	velocity = 18,
+	velocity = 15,
 	hit_player = function(self, player)
 		local s = self.object:getpos()
 		local p = player:getpos()
@@ -694,21 +751,45 @@ mobs:register_arrow("mobs:bullet", {
 	end
 })
 
-if not minetest.setting_getbool("creative_mode") then
-	if minetest.setting_getbool("spawn_friendly_mobs") ~= false then -- “If not defined or set to true then”
-		mobs:register_spawn("mobs:rat", "two rats", {"default:stone", "default:leaves", "default:jungleleaves", "default:cactus"}, 16, -1, 8000, 6, 100)
-		mobs:register_spawn("mobs:sheep", "a sheep", {"default:dirt_with_grass"},                                                  16, 8, 20000, 2, 100)
+-- carbone_mobs:register_spawn(name, description, nodes, max_light, min_light, chance, active_object_count, max_height)
+
+if not minetest.setting_getbool("creative_mode") then -- Disable all mob spawning in creative mode.
+	if minetest.setting_getbool("spawn_friendly_mobs") ~= false then -- “If nil or true then”
+		local rn = {"default:stone", "default:leaves", "default:jungleleaves", "default:cactus"}
+		local sn = {"default:dirt_with_grass"}
+		
+		carbone_mobs:register_spawn("carbone_mobs:rat", "two rats",                    rn, 16, -1, 7500, 6, 100)
+		carbone_mobs:register_spawn("carbone_mobs:sheep", "a sheep",                   sn, 16, 8, 20000, 2, 100)
 	end
-	if minetest.setting_getbool("spawn_hostile_mobs") ~= false then -- “If not defined or set to true then”
-		mobs:register_spawn("mobs:dirt_monster", "a dirt monster",     {"default:stone", "default:desert_stone"}, 1, -1, 15000, 6, 0)
-		mobs:register_spawn("mobs:stone_monster", "a stone monster",   {"default:stone", "default:desert_stone"}, 1, -1, 15000, 4, 0)
-		mobs:register_spawn("mobs:sand_monster", "a sand monster",     {"default:stone", "default:desert_stone"}, 1, -1, 15000, 4, 0)
-		mobs:register_spawn("mobs:oerkki", "an oerkki",                {"default:stone", "default:desert_stone"}, 1, -1, 20000, 4, 0)
-		mobs:register_spawn("mobs:tree_monster", "a tree monster",     {"default:stone", "default:desert_stone"}, 1, -1, 25000, 2, 0)
-		mobs:register_spawn("mobs:dungeon_master", "a dungeon master", {"default:stone", "default:desert_stone"}, 1, -1, 25000, 2, -50)
-		mobs:register_spawn("mobs:rhino", "a rhino",                   {"default:stone", "default:desert_stone"}, 1, -1, 25000, 2, 0)
+	if minetest.setting_getbool("spawn_hostile_mobs") ~= false then -- “If nil or true then”
+		local mn = {"default:stone", "default:desert_stone", "default:cobble", "default:mossycobble"}
+		
+		carbone_mobs:register_spawn("carbone_mobs:dirt_monster", "a dirt monster",     mn, 1, -1, 15000, 6, 0)
+		carbone_mobs:register_spawn("carbone_mobs:stone_monster", "a stone monster",   mn, 1, -1, 15000, 4, 0)
+		carbone_mobs:register_spawn("carbone_mobs:sand_monster", "a sand monster",     mn, 1, -1, 15000, 4, 0)
+		carbone_mobs:register_spawn("carbone_mobs:oerkki", "an oerkki",                mn, 1, -1, 20000, 4, 0)
+		carbone_mobs:register_spawn("carbone_mobs:tree_monster", "a tree monster",     mn, 1, -1, 25000, 2, 0)
+		carbone_mobs:register_spawn("carbone_mobs:trooper", "a trooper",               mn, 1, -1, 25000, 2, 0)
+		
+		carbone_mobs:register_spawn("carbone_mobs:dungeon_master", "a dungeon master", mn, 1, -1, 25000, 2, -50)
+		carbone_mobs:register_spawn("carbone_mobs:rhino", "a rhino",                   mn, 1, -1, 25000, 2, 0)
 	end
 end
+
+minetest.register_alias("mobs:dirt_monster", "carbone_mobs:dirt_monster")
+minetest.register_alias("mobs:stone_monster", "carbone_mobs:stone_monster")
+minetest.register_alias("mobs:sand_monster", "carbone_mobs:sand_monster")
+minetest.register_alias("mobs:tree_monster", "carbone_mobs:tree_monster")
+minetest.register_alias("mobs:oerkki", "carbone_mobs:oerkki")
+minetest.register_alias("mobs:dungeon_master", "carbone_mobs:dungeon_master")
+minetest.register_alias("mobs:rhino", "carbone_mobs:rhino")
+minetest.register_alias("mobs:trooper", "carbone_mobs:trooper")
+
+minetest.register_alias("mobs:sheep", "carbone_mobs:sheep")
+minetest.register_alias("mobs:rat", "carbone_mobs:rat")
+minetest.register_alias("mobs:rat_cooked", "carbone_mobs:rat_cooked")
+minetest.register_alias("mobs:meat_raw", "carbone_mobs:meat_raw")
+minetest.register_alias("mobs:meat", "carbone_mobs:meat")
 
 if minetest.setting_getbool("log_mods") then
 	minetest.log("action", "Carbone: [mobs] loaded.")
