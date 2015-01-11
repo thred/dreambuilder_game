@@ -122,7 +122,7 @@ for i in ipairs(nodes_list) do
 		paramtype2 = "wallmounted",
 		visual_scale = 1.414,
 		drop = "angled_walls:"..angledname.."_corner",
-		groups = { snappy=1 },
+		groups = { cracky=1 },
 		collision_box = cbox,
 		selection_box = cbox,
 		after_place_node = function(pos, placer, itemstack, pointed_thing)
@@ -161,7 +161,7 @@ for i in ipairs(nodes_list) do
 		paramtype2 = "wallmounted",
 		visual_scale = 1.414,
 		drop = "angled_walls:"..angledname.."_corner",
-		groups = { snappy=1, not_in_creative_inventory = 1 },
+		groups = { cracky=1, not_in_creative_inventory = 1 },
 		collision_box = cbox,
 		selection_box = cbox,
 	})
@@ -196,7 +196,7 @@ for i in ipairs(nodes_list) do
 		paramtype2 = "wallmounted",
 		visual_scale = 1.414,
 		drop = "angled_walls:"..angledname.."_corner",
-		groups = { snappy=1, not_in_creative_inventory = 1 },
+		groups = { cracky=1, not_in_creative_inventory = 1 },
 		collision_box = cbox,
 		selection_box = cbox,
 	})
@@ -231,7 +231,7 @@ for i in ipairs(nodes_list) do
 		paramtype2 = "wallmounted",
 		visual_scale = 1.414,
 		drop = "angled_walls:"..angledname.."_corner",
-		groups = { snappy=1, not_in_creative_inventory = 1 },
+		groups = { cracky=1, not_in_creative_inventory = 1 },
 		collision_box = cbox,
 		selection_box = cbox,
 	})
