@@ -700,10 +700,11 @@ end
 
 --
 -- Detect mapgen and select suitable biome code
+-- default to mapgen v6
 --
 
-local mg_params = minetest.get_mapgen_params()
-if mg_params.mgname == "v6" then
+local mg_params = (minetest.get_mapgen_params == nil) or minetest.get_mapgen_params()
+if mg_params == true or mg_params.mgname == "v6" then
 	minetest.register_on_generated(default.mgv6_ongen)
 else
 	default.register_biomes()
