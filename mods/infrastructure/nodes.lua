@@ -275,7 +275,7 @@
 			local node = minetest.env:get_node(pos)
 			if (node.name == "default:dirt_with_grass") then
 				pos.y = pos.y + 1
-				mesecon:swap_node(pos, "infrastructure:precast_concrete_grid_paver_with_grass")
+				minetest.swap_node(pos, "infrastructure:precast_concrete_grid_paver_with_grass")
 			end
 		end
 	})
@@ -331,7 +331,7 @@
 		},
 
 		on_punch = function(pos, node)
-			mesecon:swap_node(pos, "infrastructure:precast_concrete_grid_paver")
+			minetest.swap_node(pos, "infrastructure:precast_concrete_grid_paver")
 		end
 	})
 
