@@ -1,7 +1,7 @@
 
--- Amiga 500 lookalike
+-- Amiga 500 lookalike 
 -- Fun fact: "Amiga" is spanish for "female friend" ("Amigo" is for male);
---  that's why this computer was named "She Friend". 
+-- that's why this computer was named "She Friend". 
 computer.register("computer:shefriendSOO", {
     description = "SheFriendSOO";
     tiles_off = { front=true; };
@@ -13,9 +13,7 @@ computer.register("computer:shefriendSOO", {
     });
 });
 
--- Some generic laptop. Sony VAIO came to mind when thinking about a name :)
--- Fun fact: "Vanio" sounds like "baño" ("bathroom" in spanish, pronounced
---  as something like "bah-nee-oh")
+-- Some generic laptop
 computer.register("computer:vanio", {
     description = "Pony Vanio";
     tiles_off = { front=true; top=true; left=true; right=true; back=true; };
@@ -32,8 +30,6 @@ computer.register("computer:vanio", {
 });
 
 -- Sony PlayStation lookalike
--- Fun fact: Swapping the first letters gives valid words :)
--- Pony SureiSutteshun!!!
 computer.register("computer:slaystation", {
     description = "Pony SlayStation";
     tiles_off = { top=true; };
@@ -50,8 +46,6 @@ computer.register("computer:slaystation", {
 });
 
 -- Sony PlayStation 2 lookalike
--- Fun fact: Swapping the first letters gives valid words :)
--- Pony SureiSutteshun!!!
 computer.register("computer:slaystation2", {
     description = "Pony SlayStation 2";
     tiles_off = { front=true; };
@@ -79,7 +73,7 @@ computer.register("computer:specter", {
     });
 });
 
--- Nintendo Wii lookalike.
+-- Nintendo Wii lookalike
 computer.register("computer:wee", {
     description = "Nientiendo Wee";
     tiles_off = { front=true; };
@@ -90,7 +84,7 @@ computer.register("computer:wee", {
     });
 });
 
--- Apple iPad lookalike.
+-- Apple iPad lookalike
 minetest.register_node("computer:piepad", {
     description = "Snapple Piepad",
     drawtype = "signlike",
@@ -131,22 +125,19 @@ computer.register("computer:admiral128", {
 ----------------------------added by crazyginger72-------------------------------
 ---------------------------------------------------------------------------------
 
-
-
 -- Generic Flat Screen LCD (16x9) with keyboard
-  minetest.register_node("computer:monitor_on", {
+minetest.register_node("computer:monitor_on", {
 	description = "Monitor and keyboard",
 	tiles = {"computer_monitor_t.png","computer_monitor_bt.png",
            "computer_monitor_l.png","computer_monitor_r.png",
-           "computer_monitor_b.png","computer_monitor_f_desktop.png"},              --"computer_monitor_f_on.png"},  --till i get a boot abm inplace  
-	--inventory_image =
+           "computer_monitor_b.png","computer_monitor_f_desktop.png"}, --"computer_monitor_f_on.png"}, --till i get a boot abm inplace
 	paramtype = "light",
 	light_source = 4,
 	paramtype2 = "facedir",
 	walkable = false,
 	is_ground_content = true,
-	groups = {crumbly=3,not_in_creative_inventory=1},
-	--sounds = default.node_sound_dirt_defaults(),
+	groups = {snappy=3,not_in_creative_inventory=1},
+	sounds = default.node_sound_wood_defaults(),
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
@@ -159,18 +150,7 @@ computer.register("computer:admiral128", {
 			{-0.1875, -0.5, 0.25, 0.1875, -0.410377, 0.375},
 			},
 		},
-	selection_box = {
-		type = "fixed",
-		fixed = {
-						{-0.5, -0.3125, 0.1875, 0.5, 0.375, 0.223116}, 
-			{-0.25, -0.5, 0.125, 0.25, -0.466981, 0.5}, 
-			{-0.125, -0.5, 0.3125, 0.125, 0.0283019, 0.346698}, 
-			{-0.375, -0.3125, 0.208965, 0.375, 0.240566, 0.3125}, 
-			{-0.4375, -0.5, -0.4375, 0.4375, -0.4375, -0.125}, 
-			{-0.1875, -0.5, 0.25, 0.1875, -0.410377, 0.375},
-			},
-		},
-	drop = 'computer:monitor'	,
+	drop = 'computer:monitor',
 	on_rightclick = function ( pos, node, clicker, itemstack) 
 	node.name = "computer:monitor";
             minetest.set_node(pos, node);
@@ -178,17 +158,17 @@ computer.register("computer:admiral128", {
 	end
 })
   
-  minetest.register_node("computer:monitor_bios", {
+minetest.register_node("computer:monitor_bios", {
 	description = "Monitor and keyboard",
-	tiles = {"computer_monitor_t.png","computer_monitor_bt.png","computer_monitor_l.png","computer_monitor_r.png","computer_monitor_b.png","computer_monitor_f_bios.png"},
-	--inventory_image =
+	tiles = {"computer_monitor_t.png","computer_monitor_bt.png","computer_monitor_l.png",
+			"computer_monitor_r.png","computer_monitor_b.png","computer_monitor_f_bios.png"},
 	paramtype = "light",
 	light_source = 4,
 	paramtype2 = "facedir",
 	walkable = false,
 	is_ground_content = true,
-	groups = {crumbly=3,not_in_creative_inventory=1},
-	--sounds = default.node_sound_dirt_defaults(),
+	groups = {snappy=3,not_in_creative_inventory=1},
+	sounds = default.node_sound_wood_defaults(),
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
@@ -201,31 +181,20 @@ computer.register("computer:admiral128", {
 			{-0.1875, -0.5, 0.25, 0.1875, -0.410377, 0.375},
 			},
 		},
-	selection_box = {
-		type = "fixed",
-		fixed = {
-						{-0.5, -0.3125, 0.1875, 0.5, 0.375, 0.223116}, 
-			{-0.25, -0.5, 0.125, 0.25, -0.466981, 0.5}, 
-			{-0.125, -0.5, 0.3125, 0.125, 0.0283019, 0.346698}, 
-			{-0.375, -0.3125, 0.208965, 0.375, 0.240566, 0.3125}, 
-			{-0.4375, -0.5, -0.4375, 0.4375, -0.4375, -0.125}, 
-			{-0.1875, -0.5, 0.25, 0.1875, -0.410377, 0.375},
-			},
-		},
-	drop = 'computer:monitor'	,
+	drop = 'computer:monitor',
 })  
   
-  minetest.register_node("computer:monitor_loading", {
+minetest.register_node("computer:monitor_loading", {
 	description = "Monitor and keyboard",
-	tiles = {"computer_monitor_t.png","computer_monitor_bt.png","computer_monitor_l.png","computer_monitor_r.png","computer_monitor_b.png","computer_monitor_f_loading.png"},
-	--inventory_image =
+	tiles = {"computer_monitor_t.png","computer_monitor_bt.png","computer_monitor_l.png",
+			"computer_monitor_r.png","computer_monitor_b.png","computer_monitor_f_loading.png"},
 	paramtype = "light",
 	light_source = 4,
 	paramtype2 = "facedir",
 	walkable = false,
 	is_ground_content = true,
-	groups = {crumbly=3,not_in_creative_inventory=1},
-	--sounds = default.node_sound_dirt_defaults(),
+	groups = {snappy=3,not_in_creative_inventory=1},
+	sounds = default.node_sound_wood_defaults(),
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
@@ -238,31 +207,20 @@ computer.register("computer:admiral128", {
 			{-0.1875, -0.5, 0.25, 0.1875, -0.410377, 0.375},
 			},
 		},
-	selection_box = {
-		type = "fixed",
-		fixed = {
-						{-0.5, -0.3125, 0.1875, 0.5, 0.375, 0.223116}, 
-			{-0.25, -0.5, 0.125, 0.25, -0.466981, 0.5}, 
-			{-0.125, -0.5, 0.3125, 0.125, 0.0283019, 0.346698}, 
-			{-0.375, -0.3125, 0.208965, 0.375, 0.240566, 0.3125}, 
-			{-0.4375, -0.5, -0.4375, 0.4375, -0.4375, -0.125}, 
-			{-0.1875, -0.5, 0.25, 0.1875, -0.410377, 0.375},
-			},
-		},
-	drop = 'computer:monitor'	,
+	drop = 'computer:monitor',
 })  
 
-  minetest.register_node("computer:monitor_login", {
+minetest.register_node("computer:monitor_login", {
 	description = "Monitor and keyboard",
-	tiles = {"computer_monitor_t.png","computer_monitor_bt.png","computer_monitor_l.png","computer_monitor_r.png","computer_monitor_b.png","computer_monitor_f_login.png"},
-	--inventory_image =
+	tiles = {"computer_monitor_t.png","computer_monitor_bt.png","computer_monitor_l.png",
+			"computer_monitor_r.png","computer_monitor_b.png","computer_monitor_f_login.png"},
 	paramtype = "light",
 	light_source = 4,
 	paramtype2 = "facedir",
 	walkable = false,
 	is_ground_content = true,
-	groups = {crumbly=3,not_in_creative_inventory=1},
-	--sounds = default.node_sound_dirt_defaults(),
+	groups = {snappy=3,not_in_creative_inventory=1},
+	sounds = default.node_sound_wood_defaults(),
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
@@ -275,31 +233,20 @@ computer.register("computer:admiral128", {
 			{-0.1875, -0.5, 0.25, 0.1875, -0.410377, 0.375},
 			},
 		},
-	selection_box = {
-		type = "fixed",
-		fixed = {
-						{-0.5, -0.3125, 0.1875, 0.5, 0.375, 0.223116}, 
-			{-0.25, -0.5, 0.125, 0.25, -0.466981, 0.5}, 
-			{-0.125, -0.5, 0.3125, 0.125, 0.0283019, 0.346698}, 
-			{-0.375, -0.3125, 0.208965, 0.375, 0.240566, 0.3125}, 
-			{-0.4375, -0.5, -0.4375, 0.4375, -0.4375, -0.125}, 
-			{-0.1875, -0.5, 0.25, 0.1875, -0.410377, 0.375},
-			},
-		},
-	drop = 'computer:monitor'	,
+	drop = 'computer:monitor',
 })
 
-  minetest.register_node("computer:monitor_desktop", {
+minetest.register_node("computer:monitor_desktop", {
 	description = "Monitor and keyboard",
-	tiles = {"computer_monitor_t.png","computer_monitor_bt.png","computer_monitor_l.png","computer_monitor_r.png","computer_monitor_b.png","computer_monitor_f_desktop.png"},
-	--inventory_image =
+	tiles = {"computer_monitor_t.png","computer_monitor_bt.png","computer_monitor_l.png",
+			"computer_monitor_r.png","computer_monitor_b.png","computer_monitor_f_desktop.png"},
 	paramtype = "light",
 	light_source = 4,
 	paramtype2 = "facedir",
 	walkable = false,
 	is_ground_content = true,
-	groups = {crumbly=3,not_in_creative_inventory=1},
-	--sounds = default.node_sound_dirt_defaults(),
+	groups = {snappy=3,not_in_creative_inventory=1},
+	sounds = default.node_sound_wood_defaults(),
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
@@ -312,31 +259,20 @@ computer.register("computer:admiral128", {
 			{-0.1875, -0.5, 0.25, 0.1875, -0.410377, 0.375},
 			},
 		},
-	selection_box = {
-		type = "fixed",
-		fixed = {
-						{-0.5, -0.3125, 0.1875, 0.5, 0.375, 0.223116}, 
-			{-0.25, -0.5, 0.125, 0.25, -0.466981, 0.5}, 
-			{-0.125, -0.5, 0.3125, 0.125, 0.0283019, 0.346698}, 
-			{-0.375, -0.3125, 0.208965, 0.375, 0.240566, 0.3125}, 
-			{-0.4375, -0.5, -0.4375, 0.4375, -0.4375, -0.125}, 
-			{-0.1875, -0.5, 0.25, 0.1875, -0.410377, 0.375},
-			},
-		},
-	drop = 'computer:monitor'	,
+	drop = 'computer:monitor',
 })
 
-  minetest.register_node("computer:monitor", {
+minetest.register_node("computer:monitor", {
 	description = "Monitor and keyboard",
-	tiles = {"computer_monitor_t_off.png","computer_monitor_bt.png","computer_monitor_l.png","computer_monitor_r.png","computer_monitor_b.png","computer_monitor_f_off.png"},
-	--inventory_image =
+	tiles = {"computer_monitor_t_off.png","computer_monitor_bt.png","computer_monitor_l.png",
+			"computer_monitor_r.png","computer_monitor_b.png","computer_monitor_f_off.png"},
 	paramtype = "light",
 	light_source = 4,
 	paramtype2 = "facedir",
 	walkable = false,
 	is_ground_content = true,
-	groups = {crumbly=3},
-	--sounds = default.node_sound_dirt_defaults(),
+	groups = {snappy=3},
+	sound = default.node_sound_wood_defaults(),
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
@@ -349,39 +285,24 @@ computer.register("computer:admiral128", {
 			{-0.1875, -0.5, 0.25, 0.1875, -0.410377, 0.375},
 			},
 		},
-	selection_box = {
-		type = "fixed",
-		fixed = {
-						{-0.5, -0.3125, 0.1875, 0.5, 0.375, 0.223116}, 
-			{-0.25, -0.5, 0.125, 0.25, -0.466981, 0.5}, 
-			{-0.125, -0.5, 0.3125, 0.125, 0.0283019, 0.346698}, 
-			{-0.375, -0.3125, 0.208965, 0.375, 0.240566, 0.3125}, 
-			{-0.4375, -0.5, -0.4375, 0.4375, -0.4375, -0.125}, 
-			{-0.1875, -0.5, 0.25, 0.1875, -0.410377, 0.375},
-			},
-		},
-	drop = 'computer:monitor'	,
-	
 	on_rightclick = function ( pos, node, clicker, itemstack)
     node.name = "computer:monitor_on";
             minetest.set_node(pos, node);
             nodeupdate(pos)
 	end
-
 })
 
 --WIFI Router (linksys look-a-like)
-
-  minetest.register_node("computer:router", {
+minetest.register_node("computer:router", {
 	description = "WIFI Router",
-	tiles = {"computer_router_t.png","computer_router_bt.png","computer_router_l.png","computer_router_r.png","computer_router_b.png",{name="computer_router_f_animated.png", animation={type="vertical_frames", aspect_w=32, aspect_h=32, length=1.0}},}, --"computer_router_f.png"},
-	--inventory_image =
+	tiles = {"computer_router_t.png","computer_router_bt.png","computer_router_l.png","computer_router_r.png","computer_router_b.png",
+			{name="computer_router_f_animated.png", animation={type="vertical_frames", aspect_w=32, aspect_h=32, length=1.0}},}, --"computer_router_f.png"},
 	paramtype = "light",
 	paramtype2 = "facedir",
 	walkable = false,
 	is_ground_content = true,
-	groups = {crumbly=3},
-	--sounds = default.node_sound_dirt_defaults(),
+	groups = {snappy=3},
+	sound = default.node_sound_wood_defaults(),
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
@@ -392,29 +313,19 @@ computer.register("computer:admiral128", {
 			{-0.0625, -0.4375, 0.3125, 0.0625, -0.25, 0.375},	
 			},
 		},
-	selection_box = {
-		type = "fixed",
-		fixed = {
-			{-0.25, -0.5, -0.0625, 0.25, -0.375, 0.3125},
-			{-0.1875, -0.4375, 0.3125, -0.125, -0.1875, 0.375}, 
-			{0.125, -0.4375, 0.3125, 0.1875, -0.1875, 0.375},
-			{-0.0625, -0.4375, 0.3125, 0.0625, -0.25, 0.375},
-			},
-		},
 })
 
 --Modern PC Tower
-
-  minetest.register_node("computer:tower_on", {
+minetest.register_node("computer:tower_on", {
 	description = "Computer Tower",
-	tiles = {"computer_tower_t.png","computer_tower_bt.png","computer_tower_l.png","computer_tower_r.png","computer_tower_b.png","computer_tower_f_on.png"},  
-	--inventory_image =
+	tiles = {"computer_tower_t.png","computer_tower_bt.png","computer_tower_l.png",
+			"computer_tower_r.png","computer_tower_b.png","computer_tower_f_on.png"},  
 	paramtype = "light",
 	paramtype2 = "facedir",
 	walkable = true,
 	is_ground_content = true,
-	groups = {crumbly=3,not_in_creative_inventory=1},
-	--sounds = default.node_sound_dirt_defaults(),
+	groups = {snappy=3,not_in_creative_inventory=1},
+	sound = default.node_sound_wood_defaults(),
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
@@ -430,25 +341,24 @@ computer.register("computer:admiral128", {
 			{-0.1875, -0.5, -0.3125, 0.1875, 0.3125, 0.4375}, 
 			},
 		},
-	drop = 'computer:tower'	,
-	
+	drop = 'computer:tower',
 	on_rightclick = function ( pos, node, clicker, itemstack)
 	node.name = "computer:tower";
             minetest.set_node(pos, node);
             nodeupdate(pos)
-		end
+	end
 })
 
-  minetest.register_node("computer:tower", {
+minetest.register_node("computer:tower", {
 	description = "Computer Tower",
-	tiles = {"computer_tower_t.png","computer_tower_bt.png","computer_tower_l.png","computer_tower_r.png","computer_tower_b.png","computer_tower_f_off.png"},
-	--inventory_image =
+	tiles = {"computer_tower_t.png","computer_tower_bt.png","computer_tower_l.png","computer_tower_r.png",
+			"computer_tower_b.png","computer_tower_f_off.png"},
 	paramtype = "light",
 	paramtype2 = "facedir",
 	walkable = true,
 	is_ground_content = true,
-	groups = {crumbly=3},
-	--sounds = default.node_sound_dirt_defaults(),
+	groups = {snappy=3},
+	sound = default.node_sound_wood_defaults(),
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
@@ -468,21 +378,20 @@ computer.register("computer:admiral128", {
 	node.name = "computer:tower_on";
             minetest.set_node(pos, node);
             nodeupdate(pos)
-		end
+	end
 })
 
 -- Printer/scaner combo
-
 minetest.register_node("computer:printer", {
 	description = "Printer Scaner Combo",
-	tiles = {"computer_printer_t.png","computer_printer_bt.png","computer_printer_l.png","computer_printer_r.png","computer_printer_b.png","computer_printer_f.png"},
-	--inventory_image =
+	tiles = {"computer_printer_t.png","computer_printer_bt.png","computer_printer_l.png",
+			"computer_printer_r.png","computer_printer_b.png","computer_printer_f.png"},
 	paramtype = "light",
 	paramtype2 = "facedir",
 	walkable = true,
 	is_ground_content = true,
-	groups = {crumbly=3},
-	--sounds = default.node_sound_dirt_defaults(),
+	groups = {snappy=3},
+	sound = default.node_sound_wood_defaults(),
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
@@ -497,23 +406,9 @@ minetest.register_node("computer:printer", {
 			{-0.25, -0.481132, -0.3125, 0.25, -0.4375, 0}, 
 			},
 		},
-	selection_box = {
-		type = "fixed",
-		fixed = {
-			{-0.4375, -0.3125, -0.125, 0.4375, -0.0625, 0.375}, 
-			{-0.4375, -0.5, -0.125, 0.4375, -0.4375, 0.375}, 
-			{-0.4375, -0.5, -0.125, -0.25, -0.0625, 0.375}, 
-			{0.25, -0.5, -0.125, 0.4375, -0.0625, 0.375}, 
-			{-0.4375, -0.5, -0.0625, 0.4375, -0.0625, 0.375}, 
-			{-0.375, -0.4375, 0.25, 0.375, -0.0625, 0.4375}, 
-			{-0.25, -0.25, 0.4375, 0.25, 0.0625, 0.5}, 
-			{-0.25, -0.481132, -0.3125, 0.25, -0.4375, 0}, 
-			},
-		},
 })
 
 --Rack Server
-
 minetest.register_node("computer:server", {
     drawtype = "nodebox",
     description = "Rack Server",
@@ -530,8 +425,7 @@ minetest.register_node("computer:server", {
     paramtype = "light",
     paramtype2 = "facedir",
     walkable = true,
-    groups = { snappy = 3 },
-
+    groups = {snappy=3},
         selection_box = {
                 type = "fixed",
                 fixed = {-0.5, -0.5, -0.25, 0.5, 1.125, 0.4375}, 
@@ -540,13 +434,12 @@ minetest.register_node("computer:server", {
                 type = "fixed",
                 fixed = {-0.5, -0.5, -0.25, 0.5, 1.125, 0.4375}, 
         },
-	--drop = 'computer:server',
     sounds = default.node_sound_wood_defaults(),
     on_rightclick = function ( pos, node, clicker, itemstack)
 	node.name = "computer:server_on";
             minetest.set_node(pos, node);
             nodeupdate(pos)
-		end,
+	end,
     on_place = function(itemstack, placer, pointed_thing)
         local pos = pointed_thing.above
         if minetest.get_node({x=pos.x, y=pos.y+1, z=pos.z}).name ~= "air" then
@@ -554,10 +447,7 @@ minetest.register_node("computer:server", {
             return
         end
         return minetest.item_place(itemstack, placer, pointed_thing)
-    end,
-    
-    	
-
+    end
 })
 
 minetest.register_node("computer:server_on", {
@@ -576,8 +466,7 @@ minetest.register_node("computer:server_on", {
     paramtype = "light",
     paramtype2 = "facedir",
     walkable = true,
-    groups = { snappy = 3,not_in_creative_inventory=1 },
-
+    groups = {snappy=3,not_in_creative_inventory=1},
         selection_box = {
                 type = "fixed",
                 fixed = {-0.5, -0.5, -0.25, 0.5, 1.125, 0.4375}, 
@@ -586,15 +475,11 @@ minetest.register_node("computer:server_on", {
                 type = "fixed",
                 fixed = {-0.5, -0.5, -0.25, 0.5, 1.125, 0.4375}, 
         },
-
     sounds = default.node_sound_wood_defaults(),
 	drop = 'computer:server',
 	on_rightclick = function ( pos, node, clicker, itemstack)
 	node.name = "computer:server";
             minetest.set_node(pos, node);
             nodeupdate(pos)
-		end	,
-   	
+	end	
 })
-  
-  
