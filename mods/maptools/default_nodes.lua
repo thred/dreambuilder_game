@@ -1,10 +1,8 @@
 --[[
-======================================================================
-This file is part of Map Tools.
+Map Tools: unbreakable default nodes
 
 Copyright (c) 2012-2015 Calinou and contributors.
 Licensed under the zlib license. See LICENSE.md for more information.
-======================================================================
 --]]
 
 local S = maptools.intllib
@@ -362,7 +360,7 @@ minetest.register_node("maptools:diamondblock", {
 	description = S("Unbreakable Diamond Block"),
 	range = 12,
 	stack_max = 10000,
-	tiles = {"default_steel_block.png"},
+	tiles = {"default_diamond_block.png"},
 	drop = "",
 	groups = {unbreakable = 1, not_in_creative_inventory = maptools.creative},
 	sounds = default.node_sound_stone_defaults(),
