@@ -78,7 +78,7 @@ minetest.register_node("homedecor:blinds_thick", {
 	paramtype2 = "facedir",
 	walkable = false,
 	groups = {snappy=3},
-	sounds = default.node_sound_glass_defaults(),
+	sounds = default.node_sound_wood_defaults(),
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
@@ -118,7 +118,7 @@ minetest.register_node("homedecor:blinds_thin", {
 	paramtype2 = "facedir",
 	walkable = false,
 	groups = {snappy=3},
-	sounds = default.node_sound_glass_defaults(),
+	sounds = default.node_sound_wood_defaults(),
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
@@ -184,7 +184,7 @@ for c in ipairs(curtaincolors) do
 	-- Open the curtains
 		on_rightclick = function(pos, node, clicker, itemstack)
 			local topnode = minetest.get_node({x=pos.x, y=pos.y+1.0, z=pos.z})
-			if string.find(topnode.name, "homedecor:curtainrod") then 
+			if string.find(topnode.name, "homedecor:curtainrod") then
 				local fdir = node.param2
 				minetest.set_node(pos, { name = "homedecor:curtain_open_"..color, param2 = fdir })
 			end
@@ -211,7 +211,7 @@ for c in ipairs(curtaincolors) do
 	-- Close the curtains
 		on_rightclick = function(pos, node, clicker, itemstack)
 			local topnode = minetest.get_node({x=pos.x, y=pos.y+1.0, z=pos.z})
-			if string.find(topnode.name, "homedecor:curtainrod") then 
+			if string.find(topnode.name, "homedecor:curtainrod") then
 				local fdir = node.param2
 				minetest.set_node(pos, { name = "homedecor:curtain_"..color, param2 = fdir })
 			end
