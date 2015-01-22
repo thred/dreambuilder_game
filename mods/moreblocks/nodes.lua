@@ -136,7 +136,7 @@ local nodes = {
 	},
 	["iron_glass"] = {
 		description = S("Iron Glass"),
-		drawtype = "glasslike_framed",
+		drawtype = "glasslike_framed_optional",
 		paramtype = "light",
 		sunlight_propagates = true,
 		groups = {snappy = 2, cracky = 3, oddly_breakable_by_hand = 3},
@@ -144,7 +144,7 @@ local nodes = {
 	},
 	["coal_glass"] = {
 		description = S("Coal Glass"),
-		drawtype = "glasslike_framed",
+		drawtype = "glasslike_framed_optional",
 		paramtype = "light",
 		sunlight_propagates = true,
 		groups = {snappy = 2, cracky = 3, oddly_breakable_by_hand = 3},
@@ -152,7 +152,7 @@ local nodes = {
 	},
 	["clean_glass"] = {
 		description = S("Clean Glass"),
-		drawtype = "glasslike_framed",
+		drawtype = "glasslike_framed_optional",
 		paramtype = "light",
 		sunlight_propagates = true,
 		groups = {snappy = 2, cracky = 3, oddly_breakable_by_hand = 3},
@@ -223,7 +223,7 @@ local nodes = {
 	},
 	["trap_glass"] = {
 		description = S("Trap Glass"),
-		drawtype = "glasslike_framed",
+		drawtype = "glasslike_framed_optional",
 		paramtype = "light",
 		sunlight_propagates = true,
 		walkable = false,
@@ -262,7 +262,7 @@ local nodes = {
 	},
 	["glow_glass"] = {
 		description = S("Glow Glass"),
-		drawtype = "glasslike_framed",
+		drawtype = "glasslike_framed_optional",
 		paramtype = "light",
 		sunlight_propagates = true,
 		light_source = 11,
@@ -271,7 +271,7 @@ local nodes = {
 	},
 	["trap_glow_glass"] = {
 		description = S("Trap Glow Glass"),
-		drawtype = "glasslike_framed",
+		drawtype = "glasslike_framed_optional",
 		paramtype = "light",
 		sunlight_propagates = true,
 		light_source = 11,
@@ -282,7 +282,7 @@ local nodes = {
 	},
 	["super_glow_glass"] = {
 		description = S("Super Glow Glass"),
-		drawtype = "glasslike_framed",
+		drawtype = "glasslike_framed_optional",
 		paramtype = "light",
 		sunlight_propagates = true,
 		light_source = 15,
@@ -291,7 +291,7 @@ local nodes = {
 	},
 	["trap_super_glow_glass"] = {
 		description = S("Trap Super Glow Glass"),
-		drawtype = "glasslike_framed",
+		drawtype = "glasslike_framed_optional",
 		paramtype = "light",
 		sunlight_propagates = true,
 		light_source = 15,

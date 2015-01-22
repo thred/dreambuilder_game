@@ -50,11 +50,11 @@ minetest.register_craft({
 
 -- Make glass and obsidian glass framed, like the More Blocks glasses:
 minetest.override_item("default:glass", {
-	drawtype = "glasslike_framed",
+	drawtype = "glasslike_framed_optional",
 })
 
 minetest.override_item("default:obsidian_glass", {
-	drawtype = "glasslike_framed",
+	drawtype = "glasslike_framed_optional",
 })
 
 -- Let there be light. This makes some nodes let light pass through:
