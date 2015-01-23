@@ -163,7 +163,7 @@ minetest.register_node('homedecor:utility_table_top', {
 		wall_top =    { -0.5,  0.4375, -0.5,  0.5,    0.5,    0.5 },
 		wall_side =   { -0.5, -0.5,    -0.5, -0.4375, 0.5,    0.5 },
 	},
-        selection_box = {
+	selection_box = {
 		type = "wallmounted",
 		wall_bottom = { -0.5, -0.5,    -0.5,  0.5,   -0.4375, 0.5 },
 		wall_top =    { -0.5,  0.4375, -0.5,  0.5,    0.5,    0.5 },
@@ -174,34 +174,34 @@ minetest.register_node('homedecor:utility_table_top', {
 -- Various kinds of table legs
 
 minetest.register_node("homedecor:table_legs_brass", {
-        description = S("Brass Table Legs"),
-        drawtype = "plantlike",
-        tiles = {"homedecor_table_legs_brass.png"},
-        inventory_image = "homedecor_table_legs_brass.png",
-        wield_image = "homedecor_table_legs_brass.png",
-        paramtype = "light",
-        walkable = false,
-        groups = {snappy=3},
-        sounds = default.node_sound_leaves_defaults(),
+	description = S("Brass Table Legs"),
+	drawtype = "plantlike",
+	tiles = {"homedecor_table_legs_brass.png"},
+	inventory_image = "homedecor_table_legs_brass.png",
+	wield_image = "homedecor_table_legs_brass.png",
+	paramtype = "light",
+	walkable = false,
+	groups = {snappy=3},
+	sounds = default.node_sound_leaves_defaults(),
 	walkable = true,
-        selection_box = {
+	selection_box = {
 		type = "fixed",
 		fixed = { -0.37, -0.5, -0.37, 0.37, 0.5, 0.37 }
 	},
 })
 
 minetest.register_node("homedecor:table_legs_wrought_iron", {
-        description = S("Wrought Iron Table Legs"),
-        drawtype = "plantlike",
-        tiles = {"homedecor_table_legs_wrought_iron.png"},
-        inventory_image = "homedecor_table_legs_wrought_iron.png",
-        wield_image = "homedecor_table_legs_wrought_iron.png",
-        paramtype = "light",
-        walkable = false,
-        groups = {snappy=3},
-        sounds = default.node_sound_leaves_defaults(),
+	description = S("Wrought Iron Table Legs"),
+	drawtype = "plantlike",
+	tiles = {"homedecor_table_legs_wrought_iron.png"},
+	inventory_image = "homedecor_table_legs_wrought_iron.png",
+	wield_image = "homedecor_table_legs_wrought_iron.png",
+	paramtype = "light",
+	walkable = false,
+	groups = {snappy=3},
+	sounds = default.node_sound_leaves_defaults(),
 	walkable = true,
-        selection_box = {
+	selection_box = {
 		type = "fixed",
 		fixed = { -0.37, -0.5, -0.37, 0.37, 0.5, 0.37 }
 	},
@@ -218,14 +218,13 @@ minetest.register_node('homedecor:utility_table_legs', {
 	walkable = false,
 	groups = { snappy = 3 },
 	sounds = default.node_sound_wood_defaults(),
-        selection_box = {
+	selection_box = {
 		type = "fixed",
 		fixed = { -0.37, -0.5, -0.37, 0.37, 0.5, 0.37 }
 	},
 })
 
-minetest.register_node("homedecor:desk", {
-	drawtype = "nodebox",
+homedecor.register("desk", {
 	description = "Desk",
 	tiles = {
 		"forniture_wood.png",
@@ -236,8 +235,6 @@ minetest.register_node("homedecor:desk", {
 		"homedecor_desk_front_l.png"
 	},
 	inventory_image = "homedecor_desk_inv.png",
-	paramtype = "light",
-	paramtype2 = "facedir",
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -253,22 +250,12 @@ minetest.register_node("homedecor:desk", {
 		fixed = { -0.5, -0.5, -0.5, 1.5, 0.5, 0.5 }
 	},
 	groups = { snappy = 3 },
-	on_place = function(itemstack, placer, pointed_thing)
-		return homedecor.stack_sideways(itemstack, placer, pointed_thing,
-			"homedecor:desk", "homedecor:desk_r", true)
-	end,
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		local fdir = oldnode.param2
-		if not fdir or fdir > 3 then return end
-		local pos2 = { x = pos.x + homedecor.fdir_to_right[fdir+1][1], y=pos.y, z = pos.z + homedecor.fdir_to_right[fdir+1][2] }
-		if minetest.get_node(pos2).name == "homedecor:desk_r" then
-			minetest.remove_node(pos2)
-		end
-	end
+	expand = {
+		right="homedecor:desk_r"
+	},
 })
 
-minetest.register_node("homedecor:desk_r", {
-	drawtype = "nodebox",
+homedecor.register("desk_r", {
 	tiles = {
 		"forniture_wood.png",
 		"forniture_wood.png",
@@ -277,8 +264,6 @@ minetest.register_node("homedecor:desk_r", {
 		"homedecor_desk_back_r.png",
 		"homedecor_desk_front_r.png"
 	},
-	paramtype = "light",
-	paramtype2 = "facedir",
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -289,10 +274,7 @@ minetest.register_node("homedecor:desk_r", {
 			{-0.5, -0.375, 0.4375, 0.4375, 0.25, 0.5},
 		}
 	},
-	selection_box = {
-		type = "fixed",
-		fixed = { 0,0,0,0,0,0 }
-	},
+	selection_box = homedecor.nodebox.null,
 	groups = { snappy = 3, not_in_creative_inventory=1 }
 })
 
