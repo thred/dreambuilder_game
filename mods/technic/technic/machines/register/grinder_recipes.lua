@@ -23,7 +23,20 @@ local recipes = {
 	{"default:cobble",          "default:gravel"},
 	{"default:gravel",          "default:dirt"},
 	{"default:stone",           "default:sand"},
+	{"default:sandstone",       "default:sand 2"}, -- reverse recipe can be found in the compressor
 }
+
+-- defuse the sandstone -> 4 sand recipe to avoid infinite sand bugs (also consult the inverse compressor recipe)
+minetest.register_craft({
+	output = "default:sandstone",
+	recipe = {
+		{'default:sandstone'}
+	},
+})
+
+if minetest.get_modpath("farming") then
+	table.insert(recipes, {"farming:seed_wheat",   "farming:flour 1"})
+end
 
 if minetest.get_modpath("moreores") then
 	table.insert(recipes, {"moreores:mithril_lump",   "technic:mithril_dust 2"})
@@ -47,6 +60,13 @@ for _, data in pairs(recipes) do
 	technic.register_grinder_recipe({input = {data[1]}, output = data[2]})
 end
 
+-- defuse common grinder unfriendly recipes
+if minetest.get_modpath("fake_fire") then -- from homedecor_modpack
+	minetest.register_craft({ output='default:cobble', recipe={{'default:cobble'}}})
+	minetest.register_craft({ output='default:gravel', recipe={{'default:gravel'}}})
+end
+
+-- dusts
 local function register_dust(name, ingot)
 	local lname = string.lower(name)
 	lname = string.gsub(lname, ' ', '_')

@@ -7,47 +7,65 @@ if intllib then
 else
 	S = function(s) return s end
 end
---register stairslike nodes 
-register_stair_slab_panel_micro("technic", "marble", "technic:marble",
-	{cracky=2, not_in_creative_inventory=1},
-	{"technic_marble.png"},
-	S("Marble"),
-	"marble",
-	"facedir",
-	0)
 
-register_stair_slab_panel_micro("technic", "marble_bricks", "technic:marble_bricks",
-	{cracky=2, not_in_creative_inventory=1},
-	{"technic_marble_bricks.png"},
-	S("Marble Bricks"),
-	"marble_bricks",
-	"facedir",
-	0)
+-- register stairsplus/circular_saw nodes
+-- we skip blast resistant concrete and uranium intentionally
+-- chrome seems to be too hard of a metal to be actually sawable
 
-register_stair_slab_panel_micro("technic", "granite", "technic:granite",
-	{cracky=1, not_in_creative_inventory=1},
-	{"technic_granite.png"},
-	S("Granite"),
-	"granite",
-	"facedir",
-	0)
+stairsplus:register_all("technic", "marble", "technic:marble", {
+	description=S("Marble"),
+	groups={cracky=3, not_in_creative_inventory=1},
+	tiles={"technic_marble.png"},
+})
 
-register_stair_slab_panel_micro("technic", "concrete", "technic:concrete",
-	{cracky=3, not_in_creative_inventory=1},
-	{"technic_concrete_block.png"},
-	S("Concrete"),
-	"concrete",
-	"facedir",
-	0)
+stairsplus:register_all("technic", "marble_bricks", "technic:marble_bricks", {
+	description=S("Marble Bricks"),
+	groups={cracky=3, not_in_creative_inventory=1},
+	tiles={"technic_marble_bricks.png"},
+})
 
---register nodes in circular saw if aviable
-if circular_saw then 
-	for i,v in ipairs({"concrete",  "marble",  "marble_bricks",  "granite",  "default:obsidian"}) do
-		table.insert(circular_saw.known_stairs, "technic:" ..v);
-	end
-end
+stairsplus:register_all("technic", "granite", "technic:granite", {
+	description=S("Granite"),
+	groups={cracky=1, not_in_creative_inventory=1},
+	tiles={"technic_granite.png"},
+})
 
- 
+stairsplus:register_all("technic", "concrete", "technic:concrete", {
+	description=S("Concrete"),
+	groups={cracky=3, not_in_creative_inventory=1},
+	tiles={"technic_concrete_block.png"},
+})
+
+stairsplus:register_all("technic", "zinc_block", "technic:zinc_block", {
+	description=S("Zinc Block"),
+	groups={cracky=1, not_in_creative_inventory=1},
+	tiles={"technic_zinc_block.png"},
+})
+
+stairsplus:register_all("technic", "cast_iron_block", "technic:cast_iron_block", {
+	description=S("Cast Iron Block"),
+	groups={cracky=1, not_in_creative_inventory=1},
+	tiles={"technic_cast_iron_block.png"},
+})
+
+stairsplus:register_all("technic", "carbon_steel_block", "technic:carbon_steel_block", {
+	description=S("Carbon Steel Block"),
+	groups={cracky=1, not_in_creative_inventory=1},
+	tiles={"technic_carbon_steel_block.png"},
+})
+
+stairsplus:register_all("technic", "stainless_steel_block", "technic:stainless_steel_block", {
+	description=S("Stainless Steel Block"),
+	groups={cracky=1, not_in_creative_inventory=1},
+	tiles={"technic_stainless_steel_block.png"},
+})
+
+stairsplus:register_all("technic", "brass_block", "technic:brass_block", {
+	description=S("Brass Block"),
+	groups={cracky=1, not_in_creative_inventory=1},
+	tiles={"technic_brass_block.png"},
+})
+
 function register_technic_stairs_alias(modname, origname, newmod, newname)
 	minetest.register_alias(modname .. ":slab_" .. origname, newmod..":slab_" .. newname)
 	minetest.register_alias(modname .. ":slab_" .. origname .. "_inverted", newmod..":slab_" .. newname .. "_inverted")
