@@ -10,23 +10,20 @@ minetest.register_craft( {
 })
 
 if pipeworks.enable_accelerator_tube then
-	local accelerator_noctr_textures = {"pipeworks_accelerator_tube_noctr.png", "pipeworks_accelerator_tube_noctr.png", "pipeworks_accelerator_tube_noctr.png",
-					    "pipeworks_accelerator_tube_noctr.png", "pipeworks_accelerator_tube_noctr.png", "pipeworks_accelerator_tube_noctr.png"}
-	local accelerator_plain_textures = {"pipeworks_accelerator_tube_plain.png" ,"pipeworks_accelerator_tube_plain.png", "pipeworks_accelerator_tube_plain.png",
-					    "pipeworks_accelerator_tube_plain.png", "pipeworks_accelerator_tube_plain.png", "pipeworks_accelerator_tube_plain.png"}
-	local accelerator_end_textures = {"pipeworks_accelerator_tube_end.png", "pipeworks_accelerator_tube_end.png", "pipeworks_accelerator_tube_end.png",
-					  "pipeworks_accelerator_tube_end.png", "pipeworks_accelerator_tube_end.png", "pipeworks_accelerator_tube_end.png"}
-	local accelerator_short_texture = "pipeworks_accelerator_tube_short.png"
-	local accelerator_inv_texture = "pipeworks_accelerator_tube_inv.png"
-
-	pipeworks.register_tube("pipeworks:accelerator_tube", "Accelerating Pneumatic Tube Segment", accelerator_plain_textures,
-				accelerator_noctr_textures, accelerator_end_textures, accelerator_short_texture, accelerator_inv_texture,
-				{tube = {can_go = function(pos, node, velocity, stack)
+	pipeworks.register_tube("pipeworks:accelerator_tube", {
+			description = "Accelerating Pneumatic Tube Segment",
+			inventory_image = "pipeworks_accelerator_tube_inv.png",
+			plain = { "pipeworks_accelerator_tube_plain.png" },
+			noctr = { "pipeworks_accelerator_tube_noctr.png" },
+			ends = { "pipeworks_accelerator_tube_end.png" },
+			short = "pipeworks_accelerator_tube_short.png",
+			node_def = {
+				tube = {can_go = function(pos, node, velocity, stack)
 						 velocity.speed = velocity.speed+1
 						 return pipeworks.notvel(pipeworks.meseadjlist, velocity)
 					end}
+			},
 	})
-
 	minetest.register_craft( {
 		output = "pipeworks:accelerator_tube_1 2",
 		recipe = {
@@ -35,26 +32,20 @@ if pipeworks.enable_accelerator_tube then
 			{ "homedecor:plastic_sheeting", "homedecor:plastic_sheeting", "homedecor:plastic_sheeting" }
 		},
 	})
-
 end
 
 if pipeworks.enable_crossing_tube then
-	local crossing_noctr_textures = {"pipeworks_crossing_tube_noctr.png", "pipeworks_crossing_tube_noctr.png", "pipeworks_crossing_tube_noctr.png",
-					 "pipeworks_crossing_tube_noctr.png", "pipeworks_crossing_tube_noctr.png", "pipeworks_crossing_tube_noctr.png"}
-	local crossing_plain_textures = {"pipeworks_crossing_tube_plain.png" ,"pipeworks_crossing_tube_plain.png", "pipeworks_crossing_tube_plain.png",
-					 "pipeworks_crossing_tube_plain.png", "pipeworks_crossing_tube_plain.png", "pipeworks_crossing_tube_plain.png"}
-	local crossing_end_textures = {"pipeworks_crossing_tube_end.png", "pipeworks_crossing_tube_end.png", "pipeworks_crossing_tube_end.png",
-				       "pipeworks_crossing_tube_end.png", "pipeworks_crossing_tube_end.png", "pipeworks_crossing_tube_end.png"}
-	local crossing_short_texture = "pipeworks_crossing_tube_short.png"
-	local crossing_inv_texture = "pipeworks_crossing_tube_inv.png"
-
-	pipeworks.register_tube("pipeworks:crossing_tube", "Crossing Pneumatic Tube Segment", crossing_plain_textures,
-				crossing_noctr_textures, crossing_end_textures, crossing_short_texture, crossing_inv_texture,
-				{tube = {can_go = function(pos, node, velocity, stack)
-						 return {velocity}
-					end}
+	pipeworks.register_tube("pipeworks:crossing_tube", {
+			description = "Crossing Pneumatic Tube Segment",
+			inventory_image = "pipeworks_crossing_tube_inv.png",
+			plain = { "pipeworks_crossing_tube_plain.png" },
+			noctr = { "pipeworks_crossing_tube_noctr.png" },
+			ends = { "pipeworks_crossing_tube_end.png" },
+			short = "pipeworks_crossing_tube_short.png",
+			node_def = {
+				tube = {can_go = function(pos, node, velocity, stack) return {velocity} end }
+			},
 	})
-
 	minetest.register_craft( {
 		output = "pipeworks:crossing_tube_1 5",
 		recipe = {
@@ -76,7 +67,6 @@ if pipeworks.enable_one_way_tube then
 		node_box = {type = "fixed",
 			fixed = {{-1/2, -9/64, -9/64, 1/2, 9/64, 9/64}}},
 		groups = {snappy = 2, choppy = 2, oddly_breakable_by_hand = 2, tubedevice = 1},
-		legacy_facedir_simple = true,
 		sounds = default.node_sound_wood_defaults(),
 		tube = {
 			connect_sides = {left = 1, right = 1},

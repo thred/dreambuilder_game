@@ -1,6 +1,7 @@
 -- This file supplies the various kinds of pneumatic tubes
 
-pipeworks.tubenodes = {}
+local tubenodes = {}
+pipeworks.tubenodes = tubenodes
 
 minetest.register_alias("pipeworks:tube", "pipeworks:tube_000000")
 
@@ -10,23 +11,29 @@ local REGISTER_COMPATIBILITY = true
 
 local vti = {4, 3, 2, 1, 6, 5}
 
-local default_textures = {
-	noctrs = { "pipeworks_tube_noctr.png", "pipeworks_tube_noctr.png", "pipeworks_tube_noctr.png",
-			"pipeworks_tube_noctr.png", "pipeworks_tube_noctr.png", "pipeworks_tube_noctr.png"},
-	plain = { "pipeworks_tube_plain.png", "pipeworks_tube_plain.png", "pipeworks_tube_plain.png",
-			"pipeworks_tube_plain.png", "pipeworks_tube_plain.png", "pipeworks_tube_plain.png"},
-	ends = { "pipeworks_tube_end.png", "pipeworks_tube_end.png", "pipeworks_tube_end.png",
-			"pipeworks_tube_end.png", "pipeworks_tube_end.png", "pipeworks_tube_end.png"},
-	short = "pipeworks_tube_short.png",
-	inv = "pipeworks_tube_inv.png",
+local default_noctrs = { "pipeworks_tube_noctr.png" }
+local default_plain = { "pipeworks_tube_plain.png" }
+local default_ends = { "pipeworks_tube_end.png" }
+
+local texture_mt = {
+	__index = function(table, key)
+		local size, idx = #table, tonumber(key)
+		if size > 0 then -- avoid endless loops with empty tables
+			while idx > size do idx = idx - size end
+			return table[idx]
+		end
+	end
 }
 
 local register_one_tube = function(name, tname, dropname, desc, plain, noctrs, ends, short, inv, special, connects, style)
-	noctrs = noctrs or default_textures.noctrs
-	plain = plain or default_textures.plain
-	ends = ends or default_textures.ends
-	short = short or default_textures.short
-	inv = inv or default_textures.inv
+	noctrs = noctrs or default_noctrs
+	setmetatable(noctrs, texture_mt)
+	plain = plain or default_plain
+	setmetatable(plain, texture_mt)
+	ends = ends or default_ends
+	setmetatable(ends, texture_mt)
+	short = short or "pipeworks_tube_short.png"
+	inv = inv or "pipeworks_tube_inv.png"
 
 	local outboxes = {}
 	local outsel = {}
@@ -49,7 +56,7 @@ local register_one_tube = function(name, tname, dropname, desc, plain, noctrs, e
 	end
 
 	local tgroups = {snappy = 3, tube = 1, tubedevice = 1, not_in_creative_inventory = 1}
-	local tubedesc = desc.." "..dump(connects).."... You hacker, you."
+	local tubedesc = string.format("%s %s... You hacker, you.", desc, dump(connects))
 	local iimg = plain[1]
 	local wscale = {x = 1, y = 1, z = 1}
 
@@ -67,8 +74,8 @@ local register_one_tube = function(name, tname, dropname, desc, plain, noctrs, e
 		wscale = {x = 1, y = 1, z = 0.01}
 	end
 	
-	local rname = name.."_"..tname
-	table.insert(pipeworks.tubenodes, rname)
+	local rname = string.format("%s_%s", name, tname)
+	table.insert(tubenodes, rname)
 	
 	local nodedef = {
 		description = tubedesc,
@@ -93,7 +100,7 @@ local register_one_tube = function(name, tname, dropname, desc, plain, noctrs, e
 		stack_max = 99,
 		basename = name,
 		style = style,
-		drop = name.."_"..dropname,
+		drop = string.format("%s_%s", name, dropname),
 		tubelike = 1,
 		tube = {
 			connect_sides = {front = 1, back = 1, left = 1, right = 1, top = 1, bottom = 1},
@@ -137,7 +144,7 @@ local register_one_tube = function(name, tname, dropname, desc, plain, noctrs, e
 	minetest.register_node(rname, nodedef)
 end
 
-pipeworks.register_tube = function(name, desc, plain, noctrs, ends, short, inv, special, old_registration)
+local register_all_tubes = function(name, desc, plain, noctrs, ends, short, inv, special, old_registration)
 	if old_registration then
 		for xm = 0, 1 do
 		for xp = 0, 1 do
@@ -199,7 +206,7 @@ pipeworks.register_tube = function(name, desc, plain, noctrs, ends, short, inv, 
 				tube = {connect_sides = {front = 1, back = 1, left = 1, right = 1, top = 1, bottom = 1}},
 				drop = name.."_1",
 			})
-			table.insert(pipeworks.tubenodes, cname)
+			table.insert(tubenodes, cname)
 			for xm = 0, 1 do
 			for xp = 0, 1 do
 			for ym = 0, 1 do
@@ -217,6 +224,20 @@ pipeworks.register_tube = function(name, desc, plain, noctrs, ends, short, inv, 
 		end
 	end
 end
+
+pipeworks.register_tube = function(name, def, ...)
+	if type(def) == "table" then
+		register_all_tubes(name, def.description,
+				def.plain, def.noctr, def.ends, def.short,
+				def.inventory_image, def.node_def, def.no_facedir)
+	else
+		-- we assert to be the old function with the second parameter being the description
+		-- function(name, desc, plain, noctrs, ends, short, inv, special, old_registration)
+		assert(type(def) == "string", "invalid arguments to pipeworks.register_tube")
+		register_all_tubes(name, def, ...)
+	end
+end
+
 
 if REGISTER_COMPATIBILITY then
 	minetest.register_abm({
