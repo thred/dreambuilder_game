@@ -6,9 +6,9 @@ local function on_rightclick(pos, dir, check_name, replace, replace_dir, params)
 	end
 	local p2 = minetest.get_node(pos).param2
 	p2 = params[p2 + 1]
-		
+
 	minetest.swap_node(pos, {name = replace_dir, param2 = p2})
-		
+
 	pos.y = pos.y - dir
 	minetest.swap_node(pos, {name = replace, param2 = p2})
 
@@ -49,3 +49,32 @@ meseconify_door("doors:door_wood")
 meseconify_door("doors:door_steel")
 meseconify_door("doors:door_glass")
 meseconify_door("doors:door_obsidian_glass")
+
+-- Trapdoor
+local function trapdoor_switch(pos, node)
+	local state = minetest.get_meta(pos):get_int("state")
+
+	if state == 1 then
+		minetest.sound_play("doors_door_close", {pos = pos, gain = 0.3, max_hear_distance = 10})
+		minetest.set_node(pos, {name="doors:trapdoor", param2 = node.param2})
+	else
+		minetest.sound_play("doors_door_open", {pos = pos, gain = 0.3, max_hear_distance = 10})
+		minetest.set_node(pos, {name="doors:trapdoor_open", param2 = node.param2})
+	end
+
+	minetest.get_meta(pos):set_int("state", state == 1 and 0 or 1)
+end
+
+minetest.override_item("doors:trapdoor", {
+	mesecons = {effector = {
+		action_on = trapdoor_switch,
+		action_off = trapdoor_switch
+	}},
+})
+
+minetest.override_item("doors:trapdoor_open", {
+	mesecons = {effector = {
+		action_on = trapdoor_switch,
+		action_off = trapdoor_switch
+	}},
+})
