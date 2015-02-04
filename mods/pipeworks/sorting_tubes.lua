@@ -52,22 +52,29 @@ if pipeworks.enable_mese_tube then
 						 local inv = meta:get_inventory()
 						 local name = stack:get_name()
 						 for i, vect in ipairs(pipeworks.meseadjlist) do
-							 if meta:get_int("l"..i.."s") == 1 then
-								 local invname = "line"..i
-								 local is_empty = true
-								 for _, st in ipairs(inv:get_list(invname)) do
-									 if not st:is_empty() then
-										 is_empty = false
-										 if st:get_name() == name then
-											 foundn = foundn + 1
-											 found[foundn] = vect
-										 end
-									 end
-								 end
-								 if is_empty then
-									 tbln = tbln + 1
-									 tbl[tbln] = vect
-								 end
+							local npos = vector.add(pos, vect)
+							local node = minetest.get_node(npos)
+							local reg_node = minetest.registered_nodes[node.name]
+							if meta:get_int("l"..i.."s") == 1 and reg_node then
+								local tube_def = reg_node.tube
+								if not tube_def or not tube_def.can_insert or
+								tube_def.can_insert(npos, node, stack, vect) then
+									local invname = "line"..i
+									local is_empty = true
+									for _, st in ipairs(inv:get_list(invname)) do
+										if not st:is_empty() then
+											is_empty = false
+											if st:get_name() == name then
+												foundn = foundn + 1
+												found[foundn] = vect
+											end
+										end
+									end
+									if is_empty then
+										tbln = tbln + 1
+										tbl[tbln] = vect
+									end
+								end
 							 end
 						 end
 						 return (foundn > 0) and found or tbl
@@ -80,7 +87,7 @@ if pipeworks.enable_mese_tube then
 						inv:set_size("line"..tostring(i), 6*1)
 					end
 					update_formspec(pos)
-					meta:set_string("infotext", "Mese pneumatic tube")
+					meta:set_string("infotext", "Sorting pneumatic tube")
 				end,
 				on_punch = update_formspec,
 				on_receive_fields = function(pos, formname, fields, sender)
