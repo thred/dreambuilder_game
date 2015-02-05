@@ -2,7 +2,7 @@
 -- namespace: technic
 -- (c) 2012-2013 by RealBadAngel <mk@realbadangel.pl>
 
-technic = technic or {}
+technic = rawget(_G, "technic") or {}
 
 technic.tube_inject_item = pipeworks.tube_inject_item or function (pos, start_pos, velocity, item)
 	local tubed = pipeworks.tube_item(vector.new(pos), item)
@@ -16,12 +16,8 @@ local modpath = minetest.get_modpath("technic")
 technic.modpath = modpath
 
 -- Boilerplate to support intllib
-if intllib then
-	technic.getter = intllib.Getter()
-else
-	technic.getter = function(s) return s end
-end
-local S = technic.getter
+local S = rawget(_G, "intllib") and intllib.Getter() or function(s) return s end
+technic.getter = S
 
 -- Read configuration file
 dofile(modpath.."/config.lua")
