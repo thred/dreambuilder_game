@@ -14,7 +14,7 @@ local timber_nodenames = {
 	["default:cactus"]     = true,
 	["default:tree"]       = true,
 	["default:apple"]      = true,
-	["default:pine"]       = true,
+	["default:pinetree"]   = true,
 }
 
 if chainsaw_leaves then
@@ -145,6 +145,14 @@ end
 if minetest.get_modpath("vines") then
 	if chainsaw_leaves then
 		timber_nodenames["vines:vines"] = true
+	end
+end
+
+if minetest.get_modpath("trunks") then
+	if chainsaw_leaves then
+		timber_nodenames["trunks:moss"] = true
+		timber_nodenames["trunks:moss_fungus"] = true
+		timber_nodenames["trunks:treeroot"] = true
 	end
 end
 
