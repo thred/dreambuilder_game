@@ -229,7 +229,7 @@ function technic.chests:definition(name, data)
 		legacy_facedir_simple = true,
 		sounds = default.node_sound_wood_defaults(),
 		after_place_node = function(pos)
-			if locked_after_place then locked_after_place(pos, placer) end
+			if type(locked_after_place) ~= nil then locked_after_place(pos, placer) end
 			pipeworks.after_place(pos)
 		end,
 		after_dig_node = pipeworks.after_dig,
