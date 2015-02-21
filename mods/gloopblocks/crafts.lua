@@ -75,7 +75,7 @@ if minetest.get_modpath("glooptest") then
 			"glooptest:kalite_lump",
 			"default:gold_ingot",
 			"default:coal_lump",
-			"default:stick"
+			"group:stick"
 		}
 	})
 
@@ -88,7 +88,7 @@ elseif minetest.get_modpath("gloopores") then
 			"gloopores:kalite_lump",
 			"default:gold_ingot",
 			"default:coal_lump",
-			"default:stick"
+			"group:stick"
 		}
 	})
 else
@@ -99,7 +99,7 @@ else
 			"default:gold_ingot",
 			"default:gold_ingot",
 			"default:coal_lump",
-			"default:stick"
+			"group:stick"
 		}
 	})
 end
@@ -115,9 +115,9 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "gloopblocks:scaffolding 12",
 		recipe = {
-		{"default:stick", "group:wood", "default:stick"},
-		{"", "default:stick", ""},
-		{"default:stick", "group:wood", "default:stick"},
+		{"group:stick", "group:wood", "group:stick"},
+		{"", "group:stick", ""},
+		{"group:stick", "group:wood", "group:stick"},
 	}
 })
 
@@ -132,8 +132,8 @@ minetest.register_craft({
 	output = "gloopblocks:pick_cement",
 	recipe = {
 		{"gloopblocks:cement", "gloopblocks:cement", "gloopblocks:cement"},
-		{"", "default:stick", ""},
-		{"", "default:stick", ""},
+		{"", "group:stick", ""},
+		{"", "group:stick", ""},
 	}
 })
 
@@ -141,8 +141,8 @@ minetest.register_craft({
 	output = "gloopblocks:axe_cement",
 	recipe = {
 		{"gloopblocks:cement", "gloopblocks:cement"},
-		{"gloopblocks:cement", "default:stick"},
-		{"", "default:stick"},
+		{"gloopblocks:cement", "group:stick"},
+		{"", "group:stick"},
 	}
 })
 
@@ -150,8 +150,8 @@ minetest.register_craft({
 	output = "gloopblocks:axe_cement",
 	recipe = {
 		{"gloopblocks:cement", "gloopblocks:cement"},
-		{"default:stick", "gloopblocks:cement"},
-		{"default:stick", ""},
+		{"group:stick", "gloopblocks:cement"},
+		{"group:stick", ""},
 	}
 })
 
@@ -159,8 +159,8 @@ minetest.register_craft({
 	output = "gloopblocks:shovel_cement",
 	recipe = {
 		{"gloopblocks:cement"},
-		{"default:stick"},
-		{"default:stick"},
+		{"group:stick"},
+		{"group:stick"},
 	}
 })
 
@@ -169,7 +169,7 @@ minetest.register_craft({
 	recipe = {
 		{"gloopblocks:cement"},
 		{"gloopblocks:cement"},
-		{"default:stick"},
+		{"group:stick"},
 	}
 })
 
