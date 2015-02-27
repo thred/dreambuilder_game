@@ -267,21 +267,21 @@ homedecor.register("oil_lamp", {
 	sounds = default.node_sound_wood_defaults(),
 })
 
+local wl_cbox = {
+	type = "fixed",
+	fixed = { -0.25, -0.5, -0.25, 0.25, 0.45, 0.25 },
+}
+
 homedecor.register("wall_lantern", {
-	description = S("Wall lantern"),
-	drawtype = "plantlike",
-	tiles = { 'homedecor_wall_lantern.png' },
-	inventory_image = 'homedecor_wall_lantern.png',
-	sunlight_propagates = true,
-	selection_box = {
-		type = "fixed",
-		fixed = {
-			{ -0.3, -0.5, -0.3, 0.3, 0.5, 0.3 },
-		}
-	},
-	groups = { snappy = 3 },
-	light_source = LIGHT_MAX-4,
-	sounds = default.node_sound_wood_defaults(),
+	description = S("Wall Lantern"),
+	mesh = "homedecor_wall_lantern.obj",
+	tiles = {"homedecor_wall_lantern.png"},
+	inventory_image = "homedecor_wall_lantern_inv.png",
+	wield_image = "homedecor_wall_lantern_inv.png",
+	groups = {snappy=3},
+	light_source = 11,
+	selection_box = wl_cbox,
+	collision_box = wl_cbox,
 })
 
 homedecor.register("lattice_lantern_large", {
@@ -411,3 +411,20 @@ for _, color in ipairs(dlamp_colors) do
 		groups = {snappy=3},
 	})
 end
+
+local hl_cbox = {
+	type = "fixed",
+	fixed = { -0.25, -0.4, -0.2, 0.25, 0.5, 0.5 },
+}
+
+homedecor.register("hanging_lantern", {
+	description = S("Hanging Lantern"),
+	mesh = "homedecor_hanging_lantern.obj",
+	tiles = {"homedecor_hanging_lantern.png"},
+	inventory_image = "homedecor_hanging_lantern_inv.png",
+	wield_image = "homedecor_hanging_lantern_inv.png",
+	groups = {snappy=3},
+	light_source = 11,
+	selection_box = hl_cbox,
+	collision_box = hl_cbox,
+})
