@@ -125,6 +125,7 @@ local function vacuum(pos, radius)
 end
 
 minetest.register_abm({nodenames = {"group:vacuum_tube"},
+			label = "Vacuum tubes",
 			interval = 1,
 			chance = 1,
 			action = function(pos, node, active_object_count, active_object_count_wider)
