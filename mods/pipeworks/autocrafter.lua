@@ -266,7 +266,6 @@ minetest.register_node("pipeworks:autocrafter", {
 		update_meta(meta, false)
 	end,
 	on_receive_fields = function(pos, formname, fields, sender)
-		if not pipeworks.may_configure(pos, sender) then return end
 		local meta = minetest.get_meta(pos)
 		if fields.on then
 			update_meta(meta, false)
@@ -291,7 +290,6 @@ minetest.register_node("pipeworks:autocrafter", {
 		autocrafterCache[minetest.hash_node_position(pos)] = nil
 	end,
 	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-		if not pipeworks.may_configure(pos, player) then return 0 end
 		upgrade_autocrafter(pos)
 		local inv = minetest.get_meta(pos):get_inventory()
 		if listname == "recipe" then
@@ -307,7 +305,6 @@ minetest.register_node("pipeworks:autocrafter", {
 		return stack:get_count()
 	end,
 	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
-		if not pipeworks.may_configure(pos, player) then return 0 end
 		upgrade_autocrafter(pos)
 		local inv = minetest.get_meta(pos):get_inventory()
 		if listname == "recipe" then
@@ -322,7 +319,6 @@ minetest.register_node("pipeworks:autocrafter", {
 		return stack:get_count()
 	end,
 	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-		if not pipeworks.may_configure(pos, player) then return 0 end
 		upgrade_autocrafter(pos)
 		local inv = minetest.get_meta(pos):get_inventory()
 		local stack = inv:get_stack(from_list, from_index)
