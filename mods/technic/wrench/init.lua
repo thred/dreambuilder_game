@@ -36,14 +36,12 @@ end
 
 local function restore(pos, placer, itemstack)
 	local name = itemstack:get_name()
+	local node = minetest.get_node(pos)
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
 	local data = minetest.deserialize(itemstack:get_metadata())
-	minetest.set_node(pos, {name = data.name})
+	minetest.set_node(pos, {name = data.name, param2 = node.param2})
 	local lists = data.lists
-	for listname, list in pairs(lists) do
-		inv:set_list(listname, list)
-	end
 	for name, value in pairs(data.metas) do
 		local meta_type = get_meta_type(data.name, name)
 		if meta_type == wrench.META_TYPE_INT then
@@ -53,6 +51,9 @@ local function restore(pos, placer, itemstack)
 		elseif meta_type == wrench.META_TYPE_STRING then
 			meta:set_string(name, value)
 		end
+	end
+	for listname, list in pairs(lists) do
+		inv:set_list(listname, list)
 	end
 	itemstack:take_item()
 	return itemstack
