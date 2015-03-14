@@ -38,6 +38,12 @@ ilights.types = {
 	{"pink", "Pink", "pink"},
 	{"brown", "Brown", "brown"},
 }
+
+local lamp_cbox = {
+	type = "fixed",
+	fixed = { -11/32, -8/16, -11/32, 11/32, 4/16, 11/32 }
+}
+
 for _, row in ipairs(ilights.types) do
 	local name = row[1]
 	local desc = row[2]
@@ -45,35 +51,16 @@ for _, row in ipairs(ilights.types) do
 	-- Node Definition
 
 	minetest.register_node("ilights:light_"..name, {
-	    drawtype = "nodebox",
 		description = desc.." Industrial Light",
-		tiles = {"ilight_"..name..".png^ilight_top.png",
-		         "ilight_base.png",
-		         "ilight_"..name..".png^ilight_side.png"},
+	    drawtype = "mesh",
+		mesh = "ilights_lamp.obj",
+		tiles = {"ilights_lamp_"..name..".png"},
 		groups = {cracky=3},
 	    paramtype = "light",
 	    paramtype2 = "facedir",
 	    light_source = 15,
-	    node_box = {
-		    type = "fixed",
-		    fixed = {
-			    { -4/16, -7/16, -4/16,  4/16,  3/16,  4/16 }, -- Bulb
-			    { -6/16, -8/16, -6/16,  6/16, -7/16,  6/16 }, -- Base
-
-			    { -3/16, -7/16, -9/32, -2/16,  7/32,  9/32 }, -- Wire
-			    {  2/16, -7/16, -9/32,  3/16,  7/32,  9/32 }, -- Wire
-			    { -9/32, -7/16, -3/16,  9/32,  7/32, -2/16 }, -- Wire
-			    {  9/32, -7/16,  2/16, -9/32,  7/32,  3/16 }, -- Wire
-
-			    { -9/32,  0/16, -9/32,  9/32,  1/16,  9/32 }, -- Side Wire
-			    { -9/32, -5/16, -9/32,  9/32, -4/16,  9/32 }  -- Side Wire
-		    },
-	    },
-
-		selection_box = {
-			type = "fixed",
-			fixed = { -6/16, -8/16, -6/16, 6/16, 7/32, 6/16 }
-		},
+		selection_box = lamp_cbox,
+		collision_box = lamp_cbox,
 		on_place = minetest.rotate_node
 	})
 
