@@ -128,29 +128,13 @@ for i in ipairs(chaircolors) do
 	if color ~= "" then
 		homedecor.register("armchair"..color, {
 			description = S("Armchair (%s)"):format(name),
-			tiles = { "forniture_armchair_top"..color..".png" },
+			mesh = "forniture_armchair.obj",
+			tiles = {
+				"wool"..color..".png",
+				"wool_dark_grey.png",
+				"default_wood.png"
+			},
 			sunlight_propagates = true,
-			node_box = {
-			type = "fixed",
-			fixed = {
-				{ -0.50, -0.50, -0.45, -0.30,  0.05,  0.30 },
-				{ -0.45, -0.50, -0.50, -0.35,  0.05, -0.45 },
-				{ -0.45,  0.05, -0.45, -0.35,  0.10,  0.15 },
-				{  0.30, -0.50, -0.45,  0.50,  0.05,  0.30 },
-				{  0.35, -0.50, -0.50,  0.45,  0.05, -0.45 },
-				{  0.35,  0.05, -0.45,  0.45,  0.10,  0.15 },
-				{ -0.50, -0.50,  0.30,  0.50,  0.45,  0.50 },
-				{ -0.45,  0.45,  0.35,  0.45,  0.50,  0.45 },
-				{ -0.30, -0.45, -0.35,  0.30, -0.10,  0.30 },
-				{ -0.30, -0.45, -0.40,  0.30, -0.15, -0.35 },
-				{ -0.50,  0.05,  0.15, -0.30,  0.45,  0.30 },
-				{ -0.45,  0.10,  0.10, -0.35,  0.45,  0.15 },
-				{ -0.45,  0.45,  0.15, -0.35,  0.50,  0.35 },
-				{  0.30,  0.05,  0.15,  0.50,  0.45,  0.30 },
-				{  0.35,  0.10,  0.10,  0.45,  0.45,  0.15 },
-				{  0.35,  0.45,  0.15,  0.45,  0.50,  0.35 },
-			},
-			},
 			groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
 			on_rightclick = function(pos, node, clicker)
 				pos.y = pos.y-0.1 -- player's sit position.
@@ -334,56 +318,6 @@ homedecor.register("wall_shelf", {
 			{-0.5, 0.47, -0.1875, 0.5, 0.5, 0.5}
 		}
 	}
-})
-
-homedecor.register("grandfather_clock_bottom", {
-	description = "Grandfather Clock",
-	tiles = {
-		"homedecor_grandfather_clock_sides.png",
-		"homedecor_grandfather_clock_sides.png",
-		"homedecor_grandfather_clock_sides.png",
-		"homedecor_grandfather_clock_sides.png",
-		"homedecor_grandfather_clock_sides.png",
-		"homedecor_grandfather_clock_bottom.png"
-	},
-	inventory_image = "homedecor_grandfather_clock_inv.png",
-	groups = { snappy = 3 },
-	node_box = {
-		type = "fixed",
-		fixed = {
-			{-0.4, -0.5, -0.4, -0.3125, 0.5, 0.4}, -- NodeBox1
-			{-0.3125, -0.4375, -0.3125, 0.3125, 0.5, 0.4}, -- NodeBox2
-			{0.3125, -0.5, -0.4, 0.4, 0.5, 0.4}, -- NodeBox3
-			{-0.3125, -0.5, -0.4, 0.3125, -0.405, 0.4}, -- NodeBox4
-		}
-	},
-	selection_box = {
-		type = "fixed",
-		fixed = { -0.4, -0.5, -0.4, 0.4, 1.5, 0.4 }
-	},
-	expand = { top="homedecor:grandfather_clock_top" },
-})
-
-homedecor.register("grandfather_clock_top", {
-	tiles = {
-		"homedecor_grandfather_clock_sides.png",
-		"homedecor_grandfather_clock_sides.png",
-		"homedecor_grandfather_clock_sides.png",
-		"homedecor_grandfather_clock_sides.png",
-		"homedecor_grandfather_clock_sides.png",
-		"homedecor_grandfather_clock_top.png"
-	},
-	groups = { snappy = 3, not_in_creative_inventory=1 },
-	node_box = {
-		type = "fixed",
-		fixed = {
-			{-0.4, -0.5, -0.4, -0.3125, 0.5, 0.4}, -- NodeBox1
-			{-0.3125, -0.1875, -0.4, 0.3125, 0.5, 0.4}, -- NodeBox2
-			{0.3125, -0.5, -0.4, 0.4, 0.5, 0.4}, -- NodeBox3
-			{-0.3125, -0.5, -0.3125, 0.3125, 0.5, 0.4}, -- NodeBox4
-		}
-	},
-	selection_box = homedecor.nodebox.null,
 })
 
 local ofchairs_sbox = {
