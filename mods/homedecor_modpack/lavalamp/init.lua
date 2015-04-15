@@ -26,7 +26,8 @@ for i in ipairs(lavalamps_list) do
 	                length=6.0,
 	            },
 	        },
-	    },    
+	    },
+		inventory_image = "lavalamp_lamp_"..colour.."_inv.png",
 	    paramtype = "light",
 	    paramtype2 = "facedir",
 	    sunlight_propagates = true,
@@ -59,7 +60,7 @@ for i in ipairs(lavalamps_list) do
 	        type = "fixed",
 	        fixed = { -0.25, -0.5, -0.25, 0.25,0.5, 0.25 },
 	    },
-		groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3},
+		groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1},
 	    drop = "lavalamp:"..colour,
 		on_rightclick = function(pos, node, clicker)
 	        node.name = "lavalamp:"..colour
@@ -77,8 +78,4 @@ for i in ipairs(lavalamps_list) do
 	})
 	
 end
-
-
-
-
 
