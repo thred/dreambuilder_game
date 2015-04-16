@@ -343,22 +343,27 @@ homedecor.register("coatrack_wallmount", {
 })
 
 homedecor.register("coat_tree", {
-	tiles = { "forniture_wood.png" },
+	mesh = "homedecor_coatrack.obj",
+	tiles = {
+		"forniture_wood.png",
+		"homedecor_generic_wood.png"
+	},
 	inventory_image = "homedecor_coatrack_inv.png",
 	description = "Coat tree",
 	groups = {snappy=3},
-	node_box = {
+	expand = { top="air" },
+	selection_box = {
+		type = "fixed",
+		fixed = { -0.4, -0.5, -0.4, 0.4, 1.5, 0.4 }
+	},
+	node_box = {	-- this is used here to create a multi-part collision box.
 		type = "fixed",
 		fixed = {
-			{0, -0.5, 0, 0.0625, 1.5, 0.0625}, -- NodeBox1
-			{-0.125, -0.5, -0.125, 0.1875, -0.4375, 0.1875}, -- NodeBox2
-			{0.1875, -0.5, -0.0625, 0.22, -0.4375, 0.125}, -- NodeBox3
-			{-0.0625, -0.5, 0.188, 0.125, -0.4375, 0.22}, -- NodeBox4
-			{-0.16, -0.5, -0.0625, -0.125, -0.4375, 0.125}, -- NodeBox5
-			{-0.0625, -0.5, -0.16, 0.125, -0.4375, -0.125}, -- NodeBox6
-			{-0.25, 1.1875, 0, 0.3125, 1.25, 0.0625}, -- NodeBox7
-			{0, 1.1875, -0.25, 0.0625, 1.25, 0.3125}, -- NodeBox8
-			{-0.0207468, 1.4375, -0.0207468, 0.0829876, 1.5, 0.0829876}, -- NodeBox9
+			{  -8/16, 18/16,  -8/16,  8/16, 22/16,  8/16 },
+			{  -4/16, 12/16,  -4/16,  4/16, 18/16,  4/16 },
+			{ -10/32, 10/16, -10/32, 10/32, 12/16, 10/32 },
+			{  -1/16,  1/16,  -1/16,  1/16, 10/16,  1/16 },
+			{ -10/32, -8/16, -10/32, 10/32,  1/16, 10/32 }
 		}
 	},
 })
