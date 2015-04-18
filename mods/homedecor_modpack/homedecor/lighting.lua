@@ -161,12 +161,12 @@ homedecor.register("candle", {
 		'homedecor_candle_sides.png',
 		{name="homedecor_candle_flame.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=3.0}},
 	},
+	inventory_image = "homedecor_candle_inv.png",
 	selection_box = tc_cbox,
 	collision_box = tc_cbox,
 	sunlight_propagates = true,
 	groups = { snappy = 3 },
 	light_source = LIGHT_MAX-4,
-	sounds = default.node_sound_wood_defaults(),
 })
 
 local c_cbox = {
@@ -183,6 +183,7 @@ homedecor.register("candle_thin", {
 		'homedecor_candle_sides.png',
 		{name="homedecor_candle_flame.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=3.0}},
 	},
+	inventory_image = "homedecor_candle_thin_inv.png",
 	selection_box = c_cbox,
 	collision_box = c_cbox,
 	sunlight_propagates = true,
@@ -211,21 +212,30 @@ homedecor.register("wall_sconce", {
 	light_source = LIGHT_MAX-4,
 })
 
+local ol_cbox = {
+	type = "fixed",
+	fixed = {
+		{ -5/16, -8/16, -3/16, 5/16, 4/16, 3/16 },
+	}
+}
+
 homedecor.register("oil_lamp", {
 	description = S("Oil lamp"),
-	drawtype = "plantlike",
-	tiles = { 'homedecor_oil_lamp.png' },
-	inventory_image = 'homedecor_oil_lamp.png',
-	sunlight_propagates = true,
-	selection_box = {
-		type = "fixed",
-		fixed = {
-			{ -0.3, -0.5, -0.3, 0.3, 0.5, 0.3 },
-		}
+	mesh = "homedecor_oil_lamp.obj",
+	tiles = {
+		"homedecor_oil_lamp_handles.png",
+		"homedecor_oil_lamp_glass.png",
+		"homedecor_tile_brass2.png",
+		"homedecor_oil_lamp_base.png",
+		"homedecor_oil_lamp_top.png",
 	},
+	inventory_image = "homedecor_oil_lamp_inv.png",
+	sunlight_propagates = true,
+	selection_box = ol_cbox,
+	collision_box = ol_cbox,
 	groups = { snappy = 3 },
-	light_source = LIGHT_MAX-4,
-	sounds = default.node_sound_wood_defaults(),
+	light_source = LIGHT_MAX-3,
+	sounds = default.node_sound_glass_defaults(),
 })
 
 local gl_cbox = {
