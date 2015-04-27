@@ -62,7 +62,7 @@ end
 homedecor.register("pole_brass", {
     description = S("Brass Pole"),
 	mesh = "homedecor_round_pole.obj",
-    tiles = {"homedecor_tile_brass2.png"},
+    tiles = {"homedecor_tile_brass.png^homedecor_tile_horizlines_overlay.png",},
     inventory_image = "homedecor_pole_brass_inv.png",
     wield_image = "homedecor_pole_brass_inv.png",
     selection_box = {
@@ -79,7 +79,7 @@ homedecor.register("pole_brass", {
 
 homedecor.register("pole_wrought_iron", {
     description = S("Wrought Iron Pole"),
-    tiles = {"homedecor_tile_wrought_iron2.png"},
+    tiles = { "homedecor_tile_wrought_iron.png^homedecor_tile_horizlines_overlay.png" },
     inventory_image = "homedecor_pole_wrought_iron_inv.png",
     wield_image = "homedecor_pole_wrought_iron_inv.png",
     selection_box = {
@@ -117,19 +117,10 @@ end
 
 homedecor.register("chimney", {
 	description = "Chimney",
+	mesh = "homedecor_chimney.obj",
 	tiles = {
-		"homedecor_chimney_top.png",
-		"homedecor_chimney_bottom.png",
-		"homedecor_chimney_sides.png",
-	},
-	node_box = {
-		type = "fixed",
-		fixed = {
-			{-0.25, -0.5, -0.25, 0.25, 0.5, -0.1875},
-			{-0.25, -0.5, 0.1875, 0.25, 0.5, 0.25},
-			{-0.25, -0.5, -0.25, -0.1875, 0.5, 0.25},
-			{0.1875, -0.5, -0.25, 0.25, 0.5, 0.25},
-		}
+		"homedecor_chimney_tb.png",
+		"default_brick.png"
 	},
 	selection_box = homedecor.nodebox.bar_y(0.25),
 	groups = {cracky=3},
@@ -245,26 +236,11 @@ homedecor.register("cardboard_box", {
 
 homedecor.register("dvd_cd_cabinet", {
 	description = "DVD/CD cabinet",
+	mesh = "homedecor_dvd_cabinet.obj",
 	tiles = {
-		"homedecor_dvdcd_cabinet_top.png",
-		"homedecor_dvdcd_cabinet_top.png",
-		"homedecor_dvdcd_cabinet_sides.png",
-		"homedecor_dvdcd_cabinet_sides.png^[transformFX",
-		"homedecor_dvdcd_cabinet_back.png",
+		"default_wood.png",
 		"homedecor_dvdcd_cabinet_front.png",
-	},
-	node_box = {
-		type = "fixed",
-		fixed = {
-			{-0.5, -0.5, 0, -0.4375, 0.5, 0.5},
-			{0.4375, -0.5, 0, 0.5, 0.5, 0.5},
-			{-0.0625, -0.5, 0, 0.0625, 0.5, 0.5},
-			{-0.5, 0.4375, 0, 0.5, 0.5, 0.5},
-			{-0.5, -0.5, 0, 0.5, -0.4375, 0.5},
-			{-0.5, -0.5, 0.0625, 0.5, 0.5, 0.4375},
-			{-0.375, -0.5, 0.02756, -0.125, 0.5, 0.5},
-			{0.125, -0.5, 0.01217, 0.375, 0.5, 0.5},
-		}
+		"homedecor_dvdcd_cabinet_back.png"
 	},
 	selection_box = homedecor.nodebox.slab_z(0.5),
 	groups = {choppy=2,oddly_breakable_by_hand=2,flammable=3},
@@ -273,22 +249,12 @@ homedecor.register("dvd_cd_cabinet", {
 
 homedecor.register("filing_cabinet", {
 	description = S("Filing Cabinet"),
+	mesh = "homedecor_filing_cabinet.obj",
 	tiles = {
-		'forniture_wood.png',
-		'homedecor_filing_cabinet_bottom.png',
-		'forniture_wood.png',
-		'forniture_wood.png',
-		'forniture_wood.png',
-		'homedecor_filing_cabinet_front.png'
+		"forniture_wood.png",
+		"homedecor_filing_cabinet_front.png",
+		"homedecor_filing_cabinet_bottom.png"
 	},
-        selection_box = { type = "regular" },
-        node_box = {
-                type = "fixed",
-		fixed = {
-			{ -8/16, -8/16, -30/64,  8/16,  8/16,   8/16 },	-- main body
-			{ -7/16, -7/16, -8/16,  7/16,  7/16,   8/16 },	-- drawer
-		}
-        },
 	groups = { snappy = 3 },
 	sounds = default.node_sound_wood_defaults(),
 	infotext=S("Filing cabinet"),
@@ -471,7 +437,7 @@ homedecor.register("piano", {
 	mesh = "homedecor_piano.obj",
 	tiles = {
 		"homedecor_piano_keys.png",
-		"homedecor_tile_brass2.png",
+		"homedecor_tile_brass.png",
 		"homedecor_piano_wood.png"
 	},
 	inventory_image = "homedecor_piano_inv.png",
@@ -495,7 +461,7 @@ homedecor.register("trophy", {
 	mesh = "homedecor_trophy.obj",
 	tiles = {
 		"default_wood.png",
-		"default_gold_block.png"
+		"homedecor_tile_gold.png"
 	},
 	inventory_image = "homedecor_trophy_inv.png",
 	groups = { snappy=3 },
@@ -512,7 +478,7 @@ homedecor.register("sportbench", {
 	description = "Sport bench",
 	mesh = "homedecor_sport_bench.obj",
 	tiles = {
-		"homedecor_tile_wrought_iron2.png",
+		"homedecor_tile_wrought_iron.png",
 		"homedecor_bright_metal.png",
 		"forniture_black_metal.png",
 		"wool_black.png"
@@ -669,7 +635,13 @@ local wine_cbox = homedecor.nodebox.slab_z(0.25)
 homedecor.register("wine_rack", {
 	description = "Wine Rack",
 	mesh = "homedecor_wine_rack.obj",
-	tiles = {"homedecor_wine_rack.png"},
+	tiles = {
+		"homedecor_generic_wood_red.png",
+		"homedecor_bottle_brown.png",
+		"homedecor_bottle_brown2.png",
+		"homedecor_bottle_brown3.png",
+		"homedecor_bottle_brown4.png"
+	},
 	inventory_image = "homedecor_wine_rack_inv.png",
 	groups = {choppy=2},
 	selection_box = wine_cbox,
@@ -698,5 +670,79 @@ for _, i in ipairs(n) do
 		selection_box = pframe_cbox,
 		collision_box = pframe_cbox,
 	})
+end
+
+homedecor.banister_materials = {
+	{	"wood",
+		"wood",
+		"default_wood.png",
+		"default_wood.png",
+		"group:wood",
+		"group:stick",
+		"",
+		""
+	},
+	{	"white_dark",
+		"dark topped",
+		"homedecor_white_wood.png",
+		"homedecor_dark_wood.png",
+		"group:wood",
+		"group:stick",
+		"dye:brown",
+		"dye:white"
+	},
+	{	"brass",
+		"brass",
+		"homedecor_white_wood.png",
+		"homedecor_tile_brass.png",
+		"technic:brass_ingot",
+		"group:stick",
+		"",
+		"dye:white"
+	},
+	{	"wrought_iron",
+		"wrought iron",
+		"homedecor_tile_wrought_iron.png",
+		"homedecor_tile_wrought_iron.png",
+		"homedecor:pole_wrought_iron",
+		"homedecor:pole_wrought_iron",
+		"",
+		""
+	}
+}
+
+for _, side in ipairs({"left", "right"}) do
+
+	for i in ipairs(homedecor.banister_materials) do
+
+		local name = homedecor.banister_materials[i][1]
+		local cbox = {
+			type = "fixed",
+			fixed = { -9/16, -3/16, 5/16, 9/16, 24/16, 8/16}
+		}
+
+		local onplace = nil
+		groups = { snappy = 3, not_in_creative_inventory = 1}
+
+		if side == "left" then
+			onplace = homedecor.place_banister
+			groups = { snappy = 3 }
+		end
+
+		homedecor.register("banister_"..name.."_"..side, {
+			description = S("Banister for Stairs ("..homedecor.banister_materials[i][2]..", "..side.." side)"),
+			mesh = "homedecor_banister_"..side..".obj",
+			tiles = {
+				homedecor.banister_materials[i][3],
+				homedecor.banister_materials[i][4]
+			},
+			inventory_image = "homedecor_banister_"..name.."_inv.png",
+			groups = groups,
+			selection_box = cbox,
+			collision_box = cbox,
+			on_place = onplace,
+			drop = "homedecor:banister_"..name.."_left",
+		})
+	end
 end
 

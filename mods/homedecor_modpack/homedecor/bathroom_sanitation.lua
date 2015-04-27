@@ -50,6 +50,27 @@ homedecor.register("toilet_open", {
 	end,
 })
 
+-- toilet paper :-)
+
+local tp_cbox = {
+	type = "fixed",
+	fixed = { -0.25, 0.125, 0.0625, 0.1875, 0.4375, 0.5 }
+}
+
+homedecor.register("toilet_paper", {
+	description = S("Toilet paper"),
+	mesh = "homedecor_toilet_paper.obj",
+	tiles = {
+		"homedecor_generic_quilted_paper.png",
+		"default_wood.png"
+	},
+	inventory_image = "homedecor_toilet_paper_inv.png",
+	selection_box = tp_cbox,
+	collision_box = tp_cbox,
+	groups = {snappy=2,oddly_breakable_by_hand=3,flammable=3},
+	sounds = default.node_sound_defaults(),
+})
+
 --Sink
 
 local sink_cbox = {
@@ -73,34 +94,51 @@ homedecor.register("sink", {
 })
 
 --Taps
+
 homedecor.register("taps", {
-	description = S("Taps"),
-	tiles = { "forniture_metal.png" },
-	inventory_image="3dforniture_inv_taps.png",
-	sunlight_propagates = true,
-	node_box = {
-		type = "fixed",
-		fixed = {
-			{ -0.25, -0.450,  0.49,  0.25, -0.30,  0.50, },
-			{ -0.05, -0.400,  0.25,  0.05, -0.35,  0.50, },
-			{ -0.05, -0.425,  0.25,  0.05, -0.40,  0.30, },
-			{ -0.20, -0.400,  0.45, -0.15, -0.35,  0.50, },
-			{ -0.20, -0.450,  0.40, -0.15, -0.30,  0.45, },
-			{ -0.25, -0.400,  0.40, -0.10, -0.35,  0.45, },
-			{  0.15, -0.400,  0.45,  0.20, -0.35,  0.50, },
-			{  0.15, -0.450,  0.40,  0.20, -0.30,  0.45, },
-			{  0.10, -0.400,  0.40,  0.25, -0.35,  0.45, },
-		},
+	description = S("Bathroom taps/faucet"),
+	mesh = "homedecor_bathroom_faucet.obj",
+	tiles = {
+		"forniture_metal.png",
+		"homedecor_bright_metal.png",
+		"homedecor_white_metal.png",
+		"homedecor_bright_metal.png"
 	},
+	inventory_image = "3dforniture_taps_inv.png",
+	wield_image = "3dforniture_taps_inv.png",
+	sunlight_propagates = true,
 	selection_box = {
 		type = "fixed",
-		fixed = { -0.25, -0.45, 0.25, 0.25, -0.3, 0.5 },
+		fixed = { -4/16, -7/16, 4/16, 4/16, -4/16, 8/16 },
 	},
+	walkable = false,
+	groups = {cracky=2,},
+	sounds = default.node_sound_stone_defaults(),
+})
+
+homedecor.register("taps_brass", {
+	description = S("Bathroom taps/faucet (brass)"),
+	mesh = "homedecor_bathroom_faucet.obj",
+	tiles = {
+		"homedecor_tile_brass.png",
+		"homedecor_tile_brass.png",
+		"homedecor_white_metal.png",
+		"homedecor_tile_brass.png"
+	},
+	inventory_image = "3dforniture_taps_brass_inv.png",
+	wield_image = "3dforniture_taps_brass_inv.png",
+	sunlight_propagates = true,
+	selection_box = {
+		type = "fixed",
+		fixed = { -4/16, -7/16, 4/16, 4/16, -4/16, 8/16 },
+	},
+	walkable = false,
 	groups = {cracky=2,},
 	sounds = default.node_sound_stone_defaults(),
 })
 
 --Shower Tray
+
 homedecor.register("shower_tray", {
 	description = S("Shower Tray"),
 	tiles = {

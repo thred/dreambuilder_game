@@ -23,6 +23,7 @@ homedecor.register("speaker_open", {
 		"homedecor_speaker_sides.png",
 		"homedecor_speaker_driver.png",
 		"homedecor_speaker_open_front.png",
+		"forniture_black_metal.png"
 	},
 	groups = { snappy = 3 },
 	sounds = default.node_sound_leaves_defaults(),
@@ -140,3 +141,15 @@ homedecor.register("telephone", {
 	collision_box = tel_cbox,
 })
 
+minetest.register_abm({
+	nodenames = "homedecor:telephone",
+	interval = 30,
+	chance = 10,
+	action = function(pos, node)
+		minetest.sound_play("homedecor_telephone_ringing", {
+		pos = pos,
+		gain = 1.0,
+		max_hear_distance = 10
+	})
+	end
+})
