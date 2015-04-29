@@ -32,6 +32,15 @@ default.gui_suvival_form = "size[8,8.5]"..
 			"image[4.75,1.5;1,1;gui_furnace_arrow_bg.png^[transformR270]"..
 			default.get_hotbar_bg(0,4.25)
 
+hotbar_size = minetest.setting_get("hotbar_size") or 16
+
+minetest.register_on_joinplayer(function(player)
+	player:hud_set_hotbar_itemcount(hotbar_size)
+	minetest.after(0.5,function()
+		player:hud_set_hotbar_selected_image("gui_hotbar_selected.png")
+	end)
+end)
+
 -- Load files
 dofile(minetest.get_modpath("default").."/functions.lua")
 dofile(minetest.get_modpath("default").."/nodes.lua")
@@ -44,19 +53,5 @@ dofile(minetest.get_modpath("default").."/player.lua")
 dofile(minetest.get_modpath("default").."/trees.lua")
 dofile(minetest.get_modpath("default").."/commands.lua")
 dofile(minetest.get_modpath("default").."/aliases.lua")
-
--- Legacy:
-WATER_ALPHA = minetest.registered_nodes["default:water_source"].alpha
-WATER_VISC = minetest.registered_nodes["default:water_source"].liquid_viscosity
-LAVA_VISC = minetest.registered_nodes["default:lava_source"].liquid_viscosity
-LIGHT_MAX = default.LIGHT_MAX
-
-hotbar_size = minetest.setting_get("hotbar_size") or 16
-
-minetest.register_on_joinplayer(function(player)
-	player:hud_set_hotbar_itemcount(hotbar_size)
-	minetest.after(0.5,function()
-		player:hud_set_hotbar_selected_image("gui_hotbar_selected.png")
-	end)
-end)
+dofile(minetest.get_modpath("default").."/legacy.lua")
 

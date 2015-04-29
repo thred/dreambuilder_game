@@ -30,7 +30,7 @@ minetest.register_abm({
 
 		minetest.log("action", "A sapling grows into a tree at "..
 				minetest.pos_to_string(pos))
-		default.grow_tree(pos, random(1, 4) == 1)
+		default.grow_tree(pos)
 	end
 })
 
@@ -64,7 +64,7 @@ minetest.register_abm({
 	end
 })
 
--- Appletree, jungletree function
+-- default tree, jungletree function
 
 local function add_trunk_and_leaves(data, a, pos, tree_cid, leaves_cid,
 		height, size, iters)
@@ -116,7 +116,7 @@ end
 
 -- default tree
 
-function default.grow_tree(pos, is_apple_tree, bad) -- is_apple_tree is ignored now.
+function default.grow_tree(pos, bad)
 	--[[
 		NOTE: Tree-placing code is currently duplicated in the engine
 		and in games that have saplings; both are deprecated but not
