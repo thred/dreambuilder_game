@@ -13,6 +13,10 @@ default.gui_bg = "bgcolor[#08080899;false]"
 default.gui_bg_img = "background[5,5;1,1;gui_formbg.png;true]"
 default.gui_slots = "listcolors[#00000069;#5A5A5A;#141318;#30434C;#FFF]"
 
+default.chest_bg_img = "background[5,5;1,1;bg_chest.jpg;true]"
+default.furnace_bg_img = "background[5,5;1,1;bg_furnace.jpg;true]"
+default.bookshelf_bg_img = "background[5,5;1,1;bg_bookshelf.jpg;true]"
+
 function default.get_hotbar_bg(x,y)
 	local out = ""
 	for i=0,7,1 do
