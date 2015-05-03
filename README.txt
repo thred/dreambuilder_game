@@ -57,13 +57,8 @@ What's changed?
 * A whole boatload of other mods have been added, which is where most of 
   the content actually comes from.
 
-Compatibility
---------------
-The dreambuilder_game github master HEAD is generally compatible with the github
-master HEAD of minetest.
-
 License of source code
-----------------------
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ 
 Copyright (C) 2010-2012 celeron55, Perttu Ahola <celeron55@gmail.com>
 See README.txt in each mod directory for information about other authors.
 
@@ -82,7 +77,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 License of media (textures and sounds)
---------------------------------------
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ 
 Copyright (C) 2010-2012 celeron55, Perttu Ahola <celeron55@gmail.com>
 See README.txt in each mod directory for information about other authors.
 
