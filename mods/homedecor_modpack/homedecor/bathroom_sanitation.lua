@@ -17,10 +17,10 @@ homedecor.register("toilet", {
 	description = S("Toilet"),
 	mesh = "homedecor_toilet_closed.obj",
 	tiles = {
-		"homedecor_marble_light.png",
-		"homedecor_marble_light.png",
-		"homedecor_marble_light.png",
-		"homedecor_generic_metal_neutral.png"
+		"homedecor_marble.png^[colorize:#ffffff:175",
+		"homedecor_marble.png^[colorize:#ffffff:175",
+		"homedecor_marble.png^[colorize:#ffffff:175",
+		"homedecor_generic_metal_black.png^[brighten"
 	},
 	selection_box = toilet_sbox,
 	node_box = toilet_cbox,
@@ -35,11 +35,11 @@ homedecor.register("toilet", {
 homedecor.register("toilet_open", {
 	mesh = "homedecor_toilet_open.obj",
 	tiles = {
-		"homedecor_marble_light.png",
-		"homedecor_marble_light.png",
-		"homedecor_marble_light.png",
+		"homedecor_marble.png^[colorize:#ffffff:175",
+		"homedecor_marble.png^[colorize:#ffffff:175",
+		"homedecor_marble.png^[colorize:#ffffff:175",
 		"default_water.png",
-		"homedecor_generic_metal_neutral.png"
+		"homedecor_generic_metal_black.png^[brighten"
 	},
 	selection_box = toilet_sbox,
 	collision_box = toilet_cbox,
@@ -89,8 +89,8 @@ homedecor.register("sink", {
 	description = S("Bathroom Sink"),
 	mesh = "homedecor_bathroom_sink.obj",
 	tiles = {
-		"homedecor_marble_light.png",
-		"forniture_marble.png",
+		"homedecor_marble.png^[colorize:#ffffff:175",
+		"homedecor_marble.png",
 		"default_water.png"
 	},
 	inventory_image="homedecor_bathroom_sink_inv.png",
@@ -106,9 +106,9 @@ homedecor.register("taps", {
 	description = S("Bathroom taps/faucet"),
 	mesh = "homedecor_bathroom_faucet.obj",
 	tiles = {
-		"homedecor_generic_metal_neutral.png",
+		"homedecor_generic_metal_black.png^[brighten",
 		"homedecor_generic_metal_bright.png",
-		"homedecor_generic_metal_white.png",
+		"homedecor_generic_metal_black.png^[colorize:#ffffff:200",
 		"homedecor_generic_metal_bright.png"
 	},
 	inventory_image = "3dforniture_taps_inv.png",
@@ -128,7 +128,7 @@ homedecor.register("taps_brass", {
 	tiles = {
 		"homedecor_generic_metal_brass.png",
 		"homedecor_generic_metal_brass.png",
-		"homedecor_generic_metal_white.png",
+		"homedecor_generic_metal_black.png^[colorize:#ffffff:200",
 		"homedecor_generic_metal_brass.png"
 	},
 	inventory_image = "3dforniture_taps_brass_inv.png",
@@ -148,7 +148,7 @@ homedecor.register("shower_tray", {
 	description = S("Shower Tray"),
 	tiles = {
 		"forniture_marble_base_ducha_top.png",
-		"forniture_marble.png"
+		"homedecor_marble.png"
 	},
 	node_box = {
 		type = "fixed",
@@ -205,7 +205,7 @@ homedecor.register("shower_head", {
 	drawtype = "mesh",
 	mesh = "homedecor_shower_head.obj",
 	tiles = {
-		"homedecor_generic_metal_neutral.png",
+		"homedecor_generic_metal_black.png^[brighten",
 		"homedecor_shower_head.png"
 	},
 	inventory_image = "homedecor_shower_head_inv.png",

@@ -49,7 +49,7 @@ homedecor.register("flower_pot_"..p, {
 	mesh = "homedecor_flowerpot.obj",
 	tiles = {
 		"homedecor_flower_pot_"..p..".png",
-		"homedecor_potting_soil.png"
+		"default_dirt.png^[colorize:#000000:175"
 	},
 	groups = { snappy = 3, potting_soil=1 },
 	sounds = default.node_sound_stone_defaults(),
@@ -244,7 +244,7 @@ homedecor.register("filing_cabinet", {
 	description = S("Filing Cabinet"),
 	mesh = "homedecor_filing_cabinet.obj",
 	tiles = {
-		"homedecor_generic_wood_beech.png",
+		homedecor.plain_wood,
 		"homedecor_filing_cabinet_front.png",
 		"homedecor_filing_cabinet_bottom.png"
 	},
@@ -268,7 +268,7 @@ homedecor.register("pool_table", {
 		"homedecor_pool_table_baize.png",
 		"homedecor_pool_table_pockets.png",
 		"homedecor_pool_table_balls.png",
-		"homedecor_generic_wood_luxury_brown3.png"
+		"homedecor_generic_wood_luxury.png^[colorize:#000000:90"
 	},
 	description = "Pool Table",
 	inventory_image = "homedecor_pool_table_inv.png",
@@ -282,7 +282,7 @@ homedecor.register("pool_table", {
 minetest.register_alias("homedecor:pool_table_2", "air")
 
 homedecor.register("coatrack_wallmount", {
-	tiles = { "homedecor_generic_wood_beech.png" },
+	tiles = { homedecor.plain_wood },
 	inventory_image = "homedecor_coatrack_wallmount_inv.png",
 	description = "Coatrack (wallmounted)",
 	groups = {snappy=3},
@@ -306,8 +306,8 @@ homedecor.register("coatrack_wallmount", {
 homedecor.register("coat_tree", {
 	mesh = "homedecor_coatrack.obj",
 	tiles = {
-		"homedecor_generic_wood_beech.png",
-		"homedecor_generic_wood_neutral.png"
+		homedecor.plain_wood,
+		"homedecor_generic_wood_old.png"
 	},
 	inventory_image = "homedecor_coatrack_inv.png",
 	description = "Coat tree",
@@ -425,9 +425,9 @@ local piano_cbox = {
 homedecor.register("piano", {
 	mesh = "homedecor_piano.obj",
 	tiles = {
+		"homedecor_generic_wood_luxury.png^[colorize:#000000:175",
 		"homedecor_piano_keys.png",
 		"homedecor_generic_metal_brass.png",
-		"homedecor_generic_wood_luxury_black.png"
 	},
 	inventory_image = "homedecor_piano_inv.png",
 	description = "Piano",
@@ -568,10 +568,10 @@ homedecor.register("tool_cabinet", {
 	description = "Metal tool cabinet and work table",
 	mesh = "homedecor_tool_cabinet.obj",
 	tiles = {
-		"homedecor_generic_metal_red.png",
+		"homedecor_generic_metal_black.png^[colorize:#ff0000:150",
 		"homedecor_tool_cabinet_drawers.png",
-		"homedecor_generic_metal_green.png",
-		"homedecor_generic_metal_neutral.png",
+		"homedecor_generic_metal_black.png^[colorize:#006000:150",
+		"homedecor_generic_metal_black.png^[brighten",
 		"homedecor_generic_metal_bright.png",
 		"homedecor_tool_cabinet_misc.png",
 	},
@@ -626,7 +626,7 @@ homedecor.register("desk_globe", {
 	mesh = "homedecor_desk_globe.obj",
 	tiles = {
 		"homedecor_generic_wood_red.png",
-		"homedecor_generic_metal_neutral.png",
+		"homedecor_generic_metal_black.png^[brighten",
 		"homedecor_earth.png"
 	},
 	inventory_image = "homedecor_desk_globe_inv.png",
@@ -667,7 +667,7 @@ for _, i in ipairs(n) do
 		mesh = "homedecor_picture_frame.obj",
 		tiles = {
 			"homedecor_picture_frame_image"..i..".png",
-			"homedecor_picture_frame_edges.png",
+			"homedecor_generic_wood_luxury.png^[colorize:#000000:50",
 			"homedecor_picture_frame_back.png",
 		},
 		inventory_image = "homedecor_picture_frame"..i.."_inv.png",
@@ -717,8 +717,8 @@ homedecor.banister_materials = {
 	},
 	{	"white_dark",
 		"dark topped",
-		"homedecor_generic_wood_white.png",
-		"homedecor_generic_wood_dark.png",
+		homedecor.white_wood,
+		homedecor.dark_wood,
 		"group:wood",
 		"group:stick",
 		"dye:brown",
@@ -726,7 +726,7 @@ homedecor.banister_materials = {
 	},
 	{	"brass",
 		"brass",
-		"homedecor_generic_wood_white.png",
+		homedecor.white_wood,
 		"homedecor_generic_metal_brass.png",
 		"technic:brass_ingot",
 		"group:stick",
