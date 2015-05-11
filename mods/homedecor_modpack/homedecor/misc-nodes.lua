@@ -124,73 +124,53 @@ homedecor.register("chimney", {
 	sounds = default.node_sound_stone_defaults()
 })
 
+local ft_cbox = {
+	type = "fixed",
+	fixed = { -0.5, -0.5, -0.375, 0.5, 0.3125, 0.375 }
+}
+
 homedecor.register("fishtank", {
 	description = "Fishtank",
+	mesh = "homedecor_fishtank.obj",
 	tiles = {
-		"homedecor_fishtank_top.png",
-		"homedecor_fishtank_bottom.png",
-		"homedecor_fishtank_right.png",
-		"homedecor_fishtank_left.png",
-		"homedecor_fishtank_back.png",
-		"homedecor_fishtank_front.png"
-	},
-	node_box = {
-		type = "fixed",
-		fixed = {
-			{-0.5,    -0.5,    -0.375,  0.5,    -0.4375, 0.375},
-			{-0.4375, -0.4375, -0.3125, 0.4375,  0.1875, 0.3125},
-			{-0.4375,  0.1875, -0.1875, 0.4375,  0.25,   0.1875},
-			{-0.1875,  0.0625,  0.0625, 0.1875,  0.25,   0.375},
-			{ 0.125,  -0.5,     0.25,   0.1875,  0.1875, 0.375},
-			{-0.375,   0.25,   -0.125,  0.375,   0.3125, 0.125},
-		}
+		"homedecor_generic_plastic_black.png",
+		"homedecor_fishtank_filter.png",
+		"homedecor_fishtank_fishes.png",
+		"homedecor_fishtank_gravel.png",
+		"homedecor_fishtank_water_top.png",
+		"homedecor_fishtank_sides.png",
 	},
 	use_texture_alpha = true,
-	selection_box = {
-		type = "fixed",
-		fixed = { -0.5, -0.5, -0.375, 0.5, 0.3125, 0.375 }
-	},
+	selection_box = ft_cbox,
+	collision_box = ft_cbox,
 	groups = {cracky=3,oddly_breakable_by_hand=3},
 	sounds = default.node_sound_glass_defaults(),
 	on_rightclick = function(pos, node, clicker)
-		fdir = minetest.get_node(pos).param2
-		minetest.set_node(pos, {name = "homedecor:fishtank_lighted", param2 = fdir})
+		minetest.set_node(pos, {name = "homedecor:fishtank_lighted", param2 = node.param2})
 	end
 })
 
 homedecor.register("fishtank_lighted", {
-	description = "Fishtank",
+	description = "Fishtank (lighted)",
+	mesh = "homedecor_fishtank.obj",
 	tiles = {
-		"homedecor_fishtank_top.png",
-		"homedecor_fishtank_bottom.png",
-		"homedecor_fishtank_right_lighted.png",
-		"homedecor_fishtank_left_lighted.png",
-		"homedecor_fishtank_back_lighted.png",
-		"homedecor_fishtank_front_lighted.png"
+		"homedecor_generic_plastic_black.png",
+		"homedecor_fishtank_filter.png",
+		"homedecor_fishtank_fishes_lighted.png",
+		"homedecor_fishtank_gravel_lighted.png",
+		"homedecor_fishtank_water_top_lighted.png",
+		"homedecor_fishtank_sides_lighted.png",
 	},
 	light_source = LIGHT_MAX-4,
-	node_box = {
-		type = "fixed",
-		fixed = {
-			{-0.5,    -0.5,    -0.375,  0.5,    -0.4375, 0.375},
-			{-0.4375, -0.4375, -0.3125, 0.4375,  0.1875, 0.3125},
-			{-0.4375,  0.1875, -0.1875, 0.4375,  0.25,   0.1875},
-			{-0.1875,  0.0625,  0.0625, 0.1875,  0.25,   0.375},
-			{ 0.125,  -0.5,     0.25,   0.1875,  0.1875, 0.375},
-			{-0.375,   0.25,   -0.125,  0.375,   0.3125, 0.125},
-		}
-	},
 	use_texture_alpha = true,
-	selection_box = {
-		type = "fixed",
-		fixed = { -0.5, -0.5, -0.375, 0.5, 0.3125, 0.375 }
-	},
+	selection_box = ft_cbox,
+	collision_box = ft_cbox,
 	groups = {cracky=3,oddly_breakable_by_hand=3,not_in_creative_inventory=1},
 	sounds = default.node_sound_glass_defaults(),
 	on_rightclick = function(pos, node, clicker)
-		fdir = minetest.get_node(pos).param2
-		minetest.set_node(pos, {name = "homedecor:fishtank", param2 = fdir})
-	end
+		minetest.set_node(pos, {name = "homedecor:fishtank", param2 = node.param2})
+	end,
+	drop = "homedecor:fishtank",
 })
 
 homedecor.register("cardboard_box_big", {
@@ -500,31 +480,14 @@ homedecor.register("skateboard", {
 
 homedecor.register("beer_tap", {
 	description = "Beer tap",
+	mesh = "homedecor_beer_taps.obj",
 	tiles = {
-		"homedecor_beertap_front.png",
-		"homedecor_beertap_front.png",
-		"homedecor_beertap_right.png",
-		"homedecor_beertap_right.png^[transformFX",
-		"homedecor_beertap_front.png",
-		"homedecor_beertap_front.png"
+		"homedecor_generic_metal_bright.png",
+		"homedecor_generic_metal_black.png",
 	},
 	inventory_image = "homedecor_beertap_inv.png",
 	groups = { snappy=3 },
 	walkable = false,
-	node_box = {
-		type = "fixed",
-		fixed = {
-			{-0.25, -0.5, -0.4375, 0.25, -0.48, 0}, -- NodeBox1
-			{-0.0625, -0.48, -0.1875, 0.0625, 0.125, -0.0625}, -- NodeBox2
-			{-0.1875, 0, -0.375, -0.125, 0.0315, -0.125}, -- NodeBox3
-			{-0.1875, 0, -0.1875, 0.1875, 0.0315, -0.125}, -- NodeBox4
-			{0.125, 0, -0.375, 0.1875, 0.0315, -0.125}, -- NodeBox5
-			{0.135, 0.0315, -0.3225, 0.1775, 0.235, -0.29}, -- NodeBox6
-			{-0.1775, 0.0315, -0.3225, -0.135, 0.235, -0.29}, -- NodeBox7
-			{-0.1675, -0.0825, -0.355, -0.145, 0, -0.3325}, -- NodeBox8
-			{0.145, -0.0825, -0.355, 0.1675, 0, -0.3325}, -- NodeBox9
-		}
-	},
 	selection_box = {
 		type = "fixed",
 		fixed = { -0.25, -0.5, -0.4375, 0.25, 0.235, 0 }
@@ -775,3 +738,41 @@ for _, side in ipairs({"left", "right"}) do
 		})
 	end
 end
+
+homedecor.register("spiral_staircase", {
+	description = "Spiral Staircase",
+	mesh = "homedecor_spiral_staircase.obj",
+	tiles = {
+		"homedecor_generic_metal_wrought_iron.png",
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = { -1.5, -0.5, -1.5, 0.5, 3.0, 0.5 }
+	},
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5625, -0.5, -0.5625, -0.4375, 2.5, -0.4375}, -- NodeBox9
+			{-0.5, -0.5, -0.5, 0.5, -0.4375, 0}, -- NodeBox14
+			{-0.5, -0.125, -0.5, -0.25, -0.0625, 0.5}, -- NodeBox15
+			{-0.25, -0.125, -0.0625, 0, -0.0625, 0.5}, -- NodeBox16
+			{-1, 0.25, -0.5, -0.5, 0.3125, 0.5}, -- NodeBox17
+			{-1.5, 0.625, -0.5, -0.5, 0.6875, -0.25}, -- NodeBox18
+			{-1.5, 0.625, -0.25, -0.9375, 0.6875, 0}, -- NodeBox19
+			{-1.5, 1, -1, -0.5, 1.0625, -0.5}, -- NodeBox20
+			{-0.75, 1.375, -1.5, -0.5, 1.4375, -0.5}, -- NodeBox21
+			{-1, 1.375, -1.5, -0.75, 1.4375, -1}, -- NodeBox22
+			{-0.5, 1.75, -1.5, 0.0625, 1.8125, -0.5}, -- NodeBox23
+			{-0.5, 2.125, -0.8125, 0.5, 2.1875, -0.5}, -- NodeBox24
+			{-0.0625, 2.125, -1.0625, 0.5, 2.1875, -0.75}, -- NodeBox25
+			{-1.5, -0.125, 0.4375, 0.5, 1.625, 0.5}, -- NodeBox26
+			{-1.5, 1.5625, -1.5, -1.4375, 2.875, 0.5}, -- NodeBox27
+			{-1.5, 1.75, -1.5, 0.5, 3.3125, -1.4375}, -- NodeBox28
+			{0.4375, -0.5, -0.5, 0.5, 0.875, 0.5}, -- NodeBox29
+			{0.4375, 2.125, -1.5, 0.5, 3.3125, 0.5}, -- NodeBox30
+		}
+	},
+	groups = {choppy=2},
+	sounds = default.node_sound_wood_defaults(),
+})
+

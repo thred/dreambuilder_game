@@ -69,6 +69,19 @@ homedecor.register("kitchen_cabinet_with_sink", {
 	inventory = {
 		size=16,
 	},
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{ -8/16, -8/16, -8/16,  8/16, 6/16,  8/16 },
+			{ -8/16,  6/16, -8/16, -6/16, 8/16,  8/16 },
+			{  6/16,  6/16, -8/16,  8/16, 8/16,  8/16 },
+			{ -8/16,  6/16, -8/16,  8/16, 8/16, -6/16 },
+			{ -8/16,  6/16,  6/16,  8/16, 8/16,  8/16 },
+		}
+	},
+	on_destruct = function(pos)
+		homedecor.stop_particle_spawner({x=pos.x, y=pos.y+1, z=pos.z})
+	end
 })
 
 local cp_cbox = {
@@ -99,7 +112,22 @@ homedecor.register("kitchen_faucet", {
 	description = "Kitchen Faucet",
 	groups = {snappy=3},
 	selection_box = kf_cbox,
-	walkable = false
+	walkable = false,
+	on_rightclick = function(pos, node, clicker)
+		local below = minetest.get_node_or_nil({x=pos.x, y=pos.y-1, z=pos.z})
+		if below and
+		  below.name == "homedecor:sink" or
+		  below.name == "homedecor:kitchen_cabinet_with_sink" then
+			local particledef = {
+				outlet      = { x = 0, y = -0.19, z = 0.13 },
+				velocity_x  = { min = -0.05, max = 0.05 },
+				velocity_y  = -0.3,
+				velocity_z  = { min = -0.1,  max = 0 },
+				spread      = 0
+			}
+			homedecor.start_particle_spawner(pos, node, particledef, "homedecor_shower")
+		end
+	end
 })
 
 homedecor.register("paper_towel", {

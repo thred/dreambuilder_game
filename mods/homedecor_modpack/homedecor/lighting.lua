@@ -150,12 +150,12 @@ homedecor.register("plasma_ball", {
 	description = "Plasma Ball",
 	mesh = "homedecor_plasma_ball.obj",
 	tiles = {
+		"homedecor_generic_plastic_black.png",
 		{
 			name = "homedecor_plasma_ball_streamers.png",
 			animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=2.0},
 		},
-		"homedecor_plasma_ball_glass.png", 
-		"homedecor_generic_plastic_black.png"
+		"homedecor_plasma_ball_glass.png"
 	},
 	inventory_image = "homedecor_plasma_ball_inv.png",
 	selection_box = {	
@@ -279,12 +279,14 @@ homedecor.register("oil_lamp", {
 	description = S("Oil lamp (hurricane)"),
 	mesh = "homedecor_oil_lamp.obj",
 	tiles = {
-		"homedecor_generic_metal_black.png^[colorize:#ff0000:150",
-		"homedecor_oil_lamp_glass.png",
 		"homedecor_generic_metal_brass.png",
 		"homedecor_generic_metal_black.png",
 		"homedecor_generic_metal_black.png^[colorize:#ff0000:160",
+		"homedecor_oil_lamp_wick.png",
+		"homedecor_generic_metal_black.png^[colorize:#ff0000:150",
+		"homedecor_oil_lamp_glass.png",
 	},
+	use_texture_alpha = true,
 	inventory_image = "homedecor_oil_lamp_inv.png",
 	selection_box = ol_cbox,
 	walkable = false,
