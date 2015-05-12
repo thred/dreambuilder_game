@@ -24,21 +24,44 @@ homedecor.register("ceiling_tile", {
 	selection_box = { type = "wallmounted" },
 })
 
-local rug_sizes = {"small", "large"}
+local rug_types = {
+	{ "small",   "homedecor_small_rug.obj" },
+	{ "large",   { -0.5, -0.5, -0.5, 0.5, -0.4375, 0.5 } },
+	{ "persian", { -0.5, -0.5, -0.5, 0.5, -0.4375, 0.5 } }
+}
 
-for _, s in ipairs(rug_sizes) do
-homedecor.register("rug_"..s, {
-	description = S("Throw Rug ("..s..")"),
-	drawtype = 'signlike',
-	tiles = {"homedecor_rug_"..s..".png"},
-	wield_image = "homedecor_rug_"..s..".png",
-	inventory_image = "homedecor_rug_"..s..".png",
-	paramtype2 = "wallmounted",
-	walkable = false,
-	groups = {snappy = 3},
-	sounds = default.node_sound_leaves_defaults(),
-        selection_box = { type = "wallmounted" },
-})
+for i in ipairs(rug_types) do
+	s = rug_types[i][1]
+	m = rug_types[i][2]
+
+	local mesh = m
+	local nodebox = nil
+	local tiles = { "homedecor_rug_"..s..".png", "wool_grey.png" }
+
+	if type(m) == "table" then
+		mesh = nil
+		nodebox = {
+			type = "fixed",	
+			fixed = m
+		}
+		tiles = {
+			"homedecor_rug_"..s..".png",
+			"wool_grey.png",
+			"homedecor_rug_"..s..".png"
+		}
+	end
+
+	homedecor.register("rug_"..s, {
+		description = S("Rug ("..s..")"),
+		mesh = mesh,
+		tiles = tiles,
+		node_box = nodebox,
+		paramtype2 = "wallmounted",
+		walkable = false,
+		groups = {snappy = 3},
+		sounds = default.node_sound_leaves_defaults(),
+		selection_box = { type = "wallmounted" },
+	})
 end
 
 local pot_colors = {"black", "green", "terracotta"}
@@ -704,26 +727,31 @@ homedecor.banister_materials = {
 	}
 }
 
-for _, side in ipairs({"left", "right"}) do
+for _, side in ipairs({"diagonal_left", "diagonal_right", "horizontal"}) do
 
 	for i in ipairs(homedecor.banister_materials) do
 
 		local name = homedecor.banister_materials[i][1]
+		local nodename = "banister_"..name.."_"..side
+
+		local groups = { snappy = 3, not_in_creative_inventory = 1 }
 		local cbox = {
 			type = "fixed",
-			fixed = { -9/16, -3/16, 5/16, 9/16, 24/16, 8/16}
+			fixed = { -9/16, -3/16, 5/16, 9/16, 24/16, 8/16 }
 		}
 
-		local onplace = nil
-		groups = { snappy = 3, not_in_creative_inventory = 1}
-
-		if side == "left" then
-			onplace = homedecor.place_banister
+		if side == "horizontal" then
 			groups = { snappy = 3 }
+			cbox = {
+				type = "fixed",
+				fixed = { -8/16, -8/16, 5/16, 8/16, 8/16, 8/16 }
+			}
+		else
+			minetest.register_alias(string.gsub("homedecor:"..nodename, "diagonal_", ""), "homedecor:"..nodename)
 		end
 
-		homedecor.register("banister_"..name.."_"..side, {
-			description = S("Banister for Stairs ("..homedecor.banister_materials[i][2]..", "..side.." side)"),
+		homedecor.register(nodename, {
+			description = S("Banister for Stairs ("..homedecor.banister_materials[i][2]..", "..side..")"),
 			mesh = "homedecor_banister_"..side..".obj",
 			tiles = {
 				homedecor.banister_materials[i][3],
@@ -733,8 +761,8 @@ for _, side in ipairs({"left", "right"}) do
 			groups = groups,
 			selection_box = cbox,
 			collision_box = cbox,
-			on_place = onplace,
-			drop = "homedecor:banister_"..name.."_left",
+			on_place = homedecor.place_banister,
+			drop = "homedecor:banister_"..name.."_horizontal",
 		})
 	end
 end
@@ -828,3 +856,35 @@ minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack
 	end
 end)
 
+local svm_cbox = {
+	type = "fixed",
+	fixed = {-0.5, -0.5, -0.5, 0.5, 1.5, 0.5}
+}
+
+homedecor.register("soda_machine", {
+	description = "Soda Vending Machine",
+	mesh = "homedecor_soda_machine.obj",
+	tiles = {"homedecor_soda_machine.png"},
+	groups = {snappy=3},
+	selection_box = svm_cbox,
+	collision_box = svm_cbox,
+	expand = { top="air" },
+	sounds = default.node_sound_wood_defaults(),
+	on_punch = function(pos, node, puncher, pointed_thing)
+		local wielditem = puncher:get_wielded_item()
+		local wieldname = wielditem:get_name()
+		local fdir_to_fwd = { {0, -1}, {-1, 0}, {0, 1}, {1, 0} }
+		local fdir = node.param2
+		local pos_drop = { x=pos.x+fdir_to_fwd[fdir+1][1], y=pos.y, z=pos.z+fdir_to_fwd[fdir+1][2] }
+		if wieldname == "homedecor:coin" then
+			wielditem:take_item()
+			puncher:set_wielded_item(wielditem)
+			minetest.spawn_item(pos_drop, "homedecor:soda_can")
+			minetest.sound_play("insert_coin", {
+				pos=pos, max_hear_distance = 5
+			})
+		else
+			minetest.chat_send_player(puncher:get_player_name(), "Please insert a coin in the machine.")
+		end
+	end
+})

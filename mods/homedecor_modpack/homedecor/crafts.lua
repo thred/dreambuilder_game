@@ -118,6 +118,17 @@ minetest.register_craftitem("homedecor:chainlink_brass", {
 	inventory_image = "homedecor_chainlink_brass.png"
 })
 
+minetest.register_craftitem("homedecor:soda_can", {
+	description = "Soda Can",
+	inventory_image = "homedecor_soda_can.png",
+	on_use = minetest.item_eat(2),
+})
+
+minetest.register_craftitem("homedecor:coin", {
+	description = "Gold Coin",
+	inventory_image = "homedecor_coin.png",
+})
+
 -- alternate crafting if mesecons is/isn't installed
 
 if not minetest.get_modpath("mesecons") then
@@ -911,25 +922,45 @@ minetest.register_craft( {
 	type = "shapeless",
         output = "homedecor:rug_small 8",
        	recipe = {
-       		"wool:red",
-		"wool:yellow",
-		"wool:blue",
-		"wool:black"
+			"wool:red",
+			"wool:yellow",
+			"wool:blue",
+			"wool:black"
 	},
 })
 
--- cotton version:
+minetest.register_craft( {
+	output = "homedecor:rug_persian 8",
+	recipe = {
+		{ "", "wool:yellow", "" },
+		{ "wool:red", "wool:blue", "wool:red" },
+		{ "", "wool:yellow", "" }
+	},
+})
+
+-- cotton versions:
 
 minetest.register_craft( {
 	type = "shapeless",
         output = "homedecor:rug_small 8",
        	recipe = {
-       		"cotton:red",
-		"cotton:yellow",
-		"cotton:blue",
-		"cotton:black"
+			"cotton:red",
+			"cotton:yellow",
+			"cotton:blue",
+			"cotton:black"
 	},
 })
+
+minetest.register_craft( {
+	output = "homedecor:rug_persian 8",
+	recipe = {
+		{ "", "cotton:yellow", "" },
+		{ "cotton:red", "cotton:blue", "cotton:red" },
+		{ "", "cotton:yellow", "" }
+	},
+})
+
+-- fuel recipes for same
 
 minetest.register_craft({
        	type = "fuel",
@@ -949,6 +980,12 @@ minetest.register_craft( {
 minetest.register_craft({
        	type = "fuel",
        	recipe = "homedecor:rug_large",
+       	burntime = 30,
+})
+
+minetest.register_craft({
+       	type = "fuel",
+       	recipe = "homedecor:rug_persian",
        	burntime = 30,
 })
 
@@ -3189,6 +3226,42 @@ minetest.register_craft({
 	},
 })
 
+minetest.register_craft({
+	output = "homedecor:spiral_staircase",
+	recipe = {
+		{ "default:steelblock", "homedecor:pole_wrought_iron", "" },
+		{ "", "homedecor:pole_wrought_iron", "default:steelblock" },
+		{ "default:steelblock", "homedecor:pole_wrought_iron", "" }
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:soda_machine",
+	recipe = {
+		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
+		{"default:steel_ingot", "dye:red", "default:steel_ingot"},
+		{"default:steel_ingot", "default:copperblock", "default:steel_ingot"},
+	},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "homedecor:coin 5",
+	recipe = {"moreblocks:micro_goldblock_1", "default:sword_stone"}
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "homedecor:coin 15",
+	recipe = {"default:gold_ingot", "default:sword_steel"}
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "homedecor:coin 50",
+	recipe = {"default:goldblock", "default:sword_mese"}
+})
+
 for i in ipairs(homedecor.banister_materials) do
 
 	local name    = homedecor.banister_materials[i][1]
@@ -3198,7 +3271,7 @@ for i in ipairs(homedecor.banister_materials) do
 	local dye2    = homedecor.banister_materials[i][8]
 
 	minetest.register_craft({
-		output = "homedecor:banister_"..name.."_left 2",
+		output = "homedecor:banister_"..name.."_horizontal 2",
 		recipe = {
 			{ topmat,  "",      dye1   },
 			{ vertmat, topmat,  ""     },
