@@ -22,6 +22,14 @@ local function get_look_yaw(pos)
 	end
 end
 
+local function is_night_skip_enabled()
+	local enable_night_skip = minetest.setting_getbool("enable_bed_night_skip")
+	if enable_night_skip == nil then
+		enable_night_skip = true
+	end
+	return enable_night_skip
+end
+
 local function check_in_beds(players)
 	local in_bed = beds.player
 	if not players then
@@ -57,7 +65,7 @@ local function lay_down(player, pos, bed_pos, state, skip)
 		if skip then
 			return
 		end
-		if p then 
+		if p then
 			player:setpos(p)
 		end
 
@@ -101,8 +109,8 @@ local function update_formspecs(finished)
 			"label[2.7,11; Good morning.]"
 	else
 		form_n = beds.formspec ..
-			"label[2.2,11;"..tostring(player_in_bed).." of "..tostring(ges).." players are in bed]"	
-		if is_majority then
+			"label[2.2,11;"..tostring(player_in_bed).." of "..tostring(ges).." players are in bed]"
+		if is_majority and is_night_skip_enabled() then
 			form_n = form_n ..
 				"button_exit[2,8;4,0.75;force;Force night skip]"
 		end
@@ -155,11 +163,13 @@ function beds.on_rightclick(pos, player)
 	-- skip the night and let all players stand up
 	if check_in_beds() then
 		minetest.after(2, function()
-			beds.skip_night()
 			if not is_sp then
-				update_formspecs(true)
+				update_formspecs(is_night_skip_enabled())
 			end
-			beds.kick_players()
+			if is_night_skip_enabled() then
+				beds.skip_night()
+				beds.kick_players()
+			end
 		end)
 	end
 end
@@ -190,9 +200,11 @@ minetest.register_on_leaveplayer(function(player)
 	beds.player[name] = nil
 	if check_in_beds() then
 		minetest.after(2, function()
-			beds.skip_night()
-			update_formspecs(true)
-			beds.kick_players()
+			update_formspecs(is_night_skip_enabled())
+			if is_night_skip_enabled() then
+				beds.skip_night()
+				beds.kick_players()
+			end
 		end)
 	end
 end)
@@ -207,8 +219,10 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	end
 
 	if fields.force then
-		beds.skip_night()
-		update_formspecs(true)
-		beds.kick_players()
+		update_formspecs(is_night_skip_enabled())
+		if is_night_skip_enabled() then
+			beds.skip_night()
+			beds.kick_players()
+		end
 	end
 end)
