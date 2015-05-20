@@ -22,21 +22,21 @@ ilights.modpath = minetest.get_modpath("ilights")
 -- The important stuff!
 
 ilights.types = {
-	{"white",      "White"},
-	{"grey",       "Grey"},
-	{"black",      "Black"},
-	{"red",        "Red"},
-	{"yellow",     "Yellow"},
-	{"green",      "Green"},
-	{"cyan",       "Cyan"},
-	{"blue",       "Blue"},
-	{"magenta",    "Magenta"},
-	{"orange",     "Orange"},
-	{"violet",     "Violet"},
-	{"dark_grey",  "Dark Grey"},
-	{"dark_green", "Dark Green"},
-	{"pink", "Pink", "pink"},
-	{"brown", "Brown", "brown"},
+	{"white",		"White",		"#ffffff" },
+	{"grey",		"Grey",			"#a0a0a0" },
+	{"black",		"Black",		"#000000" },
+	{"red",			"Red",			"#ff0000" },
+	{"yellow",		"Yellow",		"#ffff00" },
+	{"green",		"Green",		"#00ff00" },
+	{"cyan",		"Cyan",			"#00ffff" },
+	{"blue",		"Blue",			"#0000ff" },
+	{"magenta",		"Magenta",		"#ff00ff" },
+	{"orange",		"Orange",		"#ff8000" },
+	{"violet",		"Violet",		"#8000ff" },
+	{"dark_grey",	"Dark Grey",	"#404040" },
+	{"dark_green",	"Dark Green",	"#008000" },
+	{"pink",		"Pink",			"#ffb0ff" },
+	{"brown",		"Brown",		"#604000" },
 }
 
 local lamp_cbox = {
@@ -45,8 +45,9 @@ local lamp_cbox = {
 }
 
 for _, row in ipairs(ilights.types) do
-	local name = row[1]
-	local desc = row[2]
+	local name =     row[1]
+	local desc =     row[2]
+	local colordef = row[3]
 
 	-- Node Definition
 
@@ -54,7 +55,14 @@ for _, row in ipairs(ilights.types) do
 		description = desc.." Industrial Light",
 	    drawtype = "mesh",
 		mesh = "ilights_lamp.obj",
-		tiles = {"ilights_lamp_"..name..".png"},
+		tiles = {
+			"ilights_lamp_base.png",
+			"ilights_lamp_cage.png",
+			"ilights_lamp_bulb.png^[colorize:"..colordef..":200",
+			"ilights_lamp_bulb_base.png",
+			"ilights_lamp_lens.png^[colorize:"..colordef.."20:75"
+		},
+		use_texture_alpha = true,
 		groups = {cracky=3},
 	    paramtype = "light",
 	    paramtype2 = "facedir",
@@ -78,3 +86,4 @@ for _, row in ipairs(ilights.types) do
 
 	end
 end
+
