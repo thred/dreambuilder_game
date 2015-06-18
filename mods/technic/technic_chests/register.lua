@@ -1,5 +1,22 @@
 local S = rawget(_G, "intllib") and intllib.Getter() or function(s) return s end
 
+local pipeworks = rawget(_G, "pipeworks")
+if not minetest.get_modpath("pipeworks") then
+	-- Pipeworks is not installed. Simulate using a dummy table...
+	pipeworks = {}
+	local pipeworks_meta = {}
+	setmetatable(pipeworks, pipeworks_meta)
+	local dummy = function()
+		end
+	pipeworks_meta.__index = function(table, key)
+			print("[technic_chests] WARNING: variable or method '"..key.."' not present in dummy pipeworks table - assuming it is a method...")
+			pipeworks[key] = dummy
+			return dummy
+		end
+	pipeworks.after_place = dummy
+	pipeworks.after_dig = dummy
+end
+
 local chest_mark_colors = {
 	{"black", S("Black")},
 	{"blue", S("Blue")},
@@ -192,7 +209,8 @@ function technic.chests:definition(name, data)
 			"list[current_player;main;"..data.loleft..","..data.lotop..";8,4;]"..
 			"background[-0.19,-0.25;"..(data.ovwidth+0.4)..","..(data.ovheight+0.75)..";technic_chest_form_bg.png]"..
 			"background["..data.hileft..",1;"..data.width..","..data.height..";technic_"..lname.."_chest_inventory.png]"..
-			"background["..data.loleft..","..data.lotop..";8,4;technic_main_inventory.png]"
+			"background["..data.loleft..","..data.lotop..";8,4;technic_main_inventory.png]"..
+			"listring[]"
 	if data.sort then
 		data.base_formspec = data.base_formspec.."button["..data.hileft..","..(data.height+1.1)..";1,0.8;sort;"..S("Sort").."]"
 	end
