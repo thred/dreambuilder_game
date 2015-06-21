@@ -18,7 +18,11 @@ abstract_ferns.grow_tree_fern = function(pos)
 		return
 	end
 		
-	local size = math.random(1, 5)
+	local size = math.random(1, 4) + math.random(1, 4)
+	if (size > 5) then
+		size = 10 - size
+	end
+	size = size + 1
 	local crown = ({ "ferns:tree_fern_leaves", "ferns:tree_fern_leaves_02" })[math.random(1, 2)]
 	
 	local i = 1
@@ -51,11 +55,17 @@ minetest.register_node("ferns:tree_fern_leaves", {
 	walkable = false,
 	groups = {snappy=3,flammable=2,attached_node=1},
 	drop = {
-		max_items = 1,
+		max_items = 2,
 		items = {
 			{
+				-- occasionally, drop a second sapling instead of leaves
+				-- (extra saplings can also be obtained by replanting and
+				--  reharvesting leaves)
 				items = {"ferns:sapling_tree_fern"},
-				rarity = 20,
+				rarity = 10,
+			},
+			{
+				items = {"ferns:sapling_tree_fern"},
 			},
 			{
 				items = {"ferns:tree_fern_leaves"},
@@ -76,11 +86,17 @@ minetest.register_node("ferns:tree_fern_leaves_02", {
 	walkable = false,
 	groups = {snappy=3,flammable=2,attached_node=1,not_in_creative_inventory=1},
 	drop = {
-		max_items = 1,
+		max_items = 2,
 		items = {
 			{
+				-- occasionally, drop a second sapling instead of leaves
+				-- (extra saplings can also be obtained by replanting and
+				--  reharvesting leaves)
 				items = {"ferns:sapling_tree_fern"},
-				rarity = 20,
+				rarity = 10,
+			},
+			{
+				items = {"ferns:sapling_tree_fern"},
 			},
 			{
 				items = {"ferns:tree_fern_leaves"},
