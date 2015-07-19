@@ -64,14 +64,13 @@ minetest.register_abm({
 	end
 })
 
--- Appletree, jungletree function
+-- Default, jungletree function
 
 local function add_trunk_and_leaves(data, a, pos, tree_cid, leaves_cid,
-		height, size, iters, is_apple_tree)
+		height, size, iters)
 	local x, y, z = pos.x, pos.y, pos.z
 	local c_air = minetest.get_content_id("air")
 	local c_ignore = minetest.get_content_id("ignore")
-	local c_apple = minetest.get_content_id("default:apple")
 
 	-- Trunk
 	data[a:index(x, y, z)] = tree_cid -- Force-place lowest trunk node to replace sapling
@@ -89,11 +88,7 @@ local function add_trunk_and_leaves(data, a, pos, tree_cid, leaves_cid,
 		local vi = a:index(x - 1, y + height + y_dist, z + z_dist)
 		for x_dist = -1, 1 do
 			if data[vi] == c_air or data[vi] == c_ignore then
-				if is_apple_tree and random(1, 8) == 1 then
-					data[vi] = c_apple
-				else
-					data[vi] = leaves_cid
-				end
+				data[vi] = leaves_cid
 			end
 			vi = vi + 1
 		end
@@ -111,11 +106,7 @@ local function add_trunk_and_leaves(data, a, pos, tree_cid, leaves_cid,
 		for zi = 0, 1 do
 			local vi = a:index(clust_x + xi, clust_y + yi, clust_z + zi)
 			if data[vi] == c_air or data[vi] == c_ignore then
-				if is_apple_tree and random(1, 8) == 1 then
-					data[vi] = c_apple
-				else
-					data[vi] = leaves_cid
-				end
+				data[vi] = leaves_cid
 			end
 		end
 		end
@@ -123,9 +114,9 @@ local function add_trunk_and_leaves(data, a, pos, tree_cid, leaves_cid,
 	end
 end
 
--- Appletree
+-- Default tree
 
-function default.grow_tree(pos, is_apple_tree, bad)
+function default.grow_tree(pos, is_apple_tree, bad) -- is_apple_tree is ignored now.
 	--[[
 		NOTE: Tree-placing code is currently duplicated in the engine
 		and in games that have saplings; both are deprecated but not
@@ -148,7 +139,7 @@ function default.grow_tree(pos, is_apple_tree, bad)
 	local a = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
 	local data = vm:get_data()
 
-	add_trunk_and_leaves(data, a, pos, c_tree, c_leaves, height, 2, 8, is_apple_tree)
+	add_trunk_and_leaves(data, a, pos, c_tree, c_leaves, height, 2, 8)
 
 	vm:set_data(data)
 	vm:write_to_map()
