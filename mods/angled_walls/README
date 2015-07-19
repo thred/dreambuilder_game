@@ -1,0 +1,6 @@
+angled walls for minetest
+
+exploits the torchlike drawtype
+
+deep table copy borrowed from:
+http://wiki.roblox.com/index.php/Cloning_tables
