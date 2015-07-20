@@ -1,96 +1,96 @@
 [submodule "mods/areas"]
 	path = mods/areas
-	url = git@github.com:ShadowNinja/areas.git
+	url = https://github.com/ShadowNinja/areas.git
 [submodule "mods/bees"]
 	path = mods/bees
-	url = git@github.com:bas080/bees.git
+	url = https://github.com/bas080/bees.git
 [submodule "mods/blox"]
 	path = mods/blox
-	url = git@github.com:VanessaE/blox.git
+	url = https://github.com/VanessaE/blox.git
 [submodule "mods/carbone_mobs"]
 	path = mods/carbone_mobs
-	url = git@github.com:Calinou/carbone_mobs.git
+	url = https://github.com/Calinou/carbone_mobs.git
 [submodule "mods/carts"]
 	path = mods/carts
 	url = git://github.com/PilzAdam/carts.git
 [submodule "mods/caverealms"]
 	path = mods/caverealms
-	url = git@github.com:Zeno-/minetest-caverealms.git
+	url = https://github.com/Zeno-/minetest-caverealms.git
 [submodule "mods/coloredwood"]
 	path = mods/coloredwood
-	url = git@github.com:VanessaE/coloredwood.git
+	url = https://github.com/VanessaE/coloredwood.git
 [submodule "mods/colormachine"]
 	path = mods/colormachine
-	url = git@github.com:Sokomine/colormachine.git
+	url = https://github.com/Sokomine/colormachine.git
 [submodule "mods/currency"]
 	path = mods/currency
-	url = git@github.com:VanessaE/currency.git
+	url = https://github.com/VanessaE/currency.git
 [submodule "mods/datastorage"]
 	path = mods/datastorage
-	url = git@github.com:minetest-technic/datastorage.git
+	url = https://github.com/minetest-technic/datastorage.git
 [submodule "mods/digilines"]
 	path = mods/digilines
 	url = https://github.com/Jeija/minetest-mod-digilines.git
 [submodule "mods/display_blocks"]
 	path = mods/display_blocks
-	url = git@github.com:VanessaE/display_blocks.git
+	url = https://github.com/VanessaE/display_blocks.git
 [submodule "mods/farming_plus"]
 	path = mods/farming_plus
-	url = git@github.com:Zeg9/farming_plus.git
+	url = https://github.com/Zeg9/farming_plus.git
 [submodule "mods/framedglass"]
 	path = mods/framedglass
-	url = git@github.com:minetest-technic/framedglass.git
+	url = https://github.com/minetest-technic/framedglass.git
 [submodule "mods/gloopblocks"]
 	path = mods/gloopblocks
-	url = git@github.com:VanessaE/gloopblocks.git
+	url = https://github.com/VanessaE/gloopblocks.git
 [submodule "mods/homedecor_modpack"]
 	path = mods/homedecor_modpack
-	url = git@github.com:VanessaE/homedecor_modpack.git
+	url = https://github.com/VanessaE/homedecor_modpack.git
 [submodule "mods/ilights"]
 	path = mods/ilights
-	url = git@github.com:VanessaE/ilights.git
+	url = https://github.com/VanessaE/ilights.git
 [submodule "mods/infrastructure"]
 	path = mods/infrastructure
-	url = git@github.com:cheapie/infrastructure.git
+	url = https://github.com/cheapie/infrastructure.git
 [submodule "mods/inventory_sorter"]
 	path = mods/inventory_sorter
-	url = git@github.com:cyisfor/inventory_sorter.git
+	url = https://github.com/cyisfor/inventory_sorter.git
 [submodule "mods/item_tweaks"]
 	path = mods/item_tweaks
-	url = git@github.com:minetest-technic/item_tweaks.git
+	url = https://github.com/minetest-technic/item_tweaks.git
 [submodule "mods/jumping"]
 	path = mods/jumping
-	url = git@github.com:Jeija/minetest-mod-jumping.git
+	url = https://github.com/Jeija/minetest-mod-jumping.git
 [submodule "mods/locks"]
 	path = mods/locks
-	url = git@github.com:Sokomine/locks.git
+	url = https://github.com/Sokomine/locks.git
 [submodule "mods/maptools"]
 	path = mods/maptools
-	url = git@github.com:Calinou/maptools.git
+	url = https://github.com/Calinou/maptools.git
 [submodule "mods/markers"]
 	path = mods/markers
-	url = git@github.com:Sokomine/markers.git
+	url = https://github.com/Sokomine/markers.git
 [submodule "mods/moreblocks"]
 	path = mods/moreblocks
-	url = git@github.com:Calinou/moreblocks.git
+	url = https://github.com/Calinou/moreblocks.git
 [submodule "mods/moreores"]
 	path = mods/moreores
-	url = git@github.com:Calinou/moreores.git
+	url = https://github.com/Calinou/moreores.git
 [submodule "mods/moretrees"]
 	path = mods/moretrees
-	url = git@github.com:VanessaE/moretrees.git
+	url = https://github.com/VanessaE/moretrees.git
 [submodule "mods/nixie_tubes"]
 	path = mods/nixie_tubes
-	url = git@github.com:VanessaE/nixie_tubes.git
+	url = https://github.com/VanessaE/nixie_tubes.git
 [submodule "mods/pipeworks"]
 	path = mods/pipeworks
-	url = git@github.com:VanessaE/pipeworks.git
+	url = https://github.com/VanessaE/pipeworks.git
 [submodule "mods/plantlife_modpack"]
 	path = mods/plantlife_modpack
-	url = git@github.com:VanessaE/plantlife_modpack.git
+	url = https://github.com/VanessaE/plantlife_modpack.git
 [submodule "mods/plasticbox"]
 	path = mods/plasticbox
-	url = git@github.com:cheapie/plasticbox.git
+	url = https://github.com/cheapie/plasticbox.git
 [submodule "mods/quartz"]
 	path = mods/quartz
 	url = https://github.com/4Evergreen4/quartz.git
@@ -99,19 +99,19 @@
 	url = https://github.com/Sokomine/replacer.git
 [submodule "mods/stained_glass"]
 	path = mods/stained_glass
-	url = git@github.com:andersje/stained_glass.git
+	url = https://github.com/andersje/stained_glass.git
 [submodule "mods/steel"]
 	path = mods/steel
 	url = https://github.com/Zeg9/minetest-steel.git
 [submodule "mods/streets"]
 	path = mods/streets
-	url = git@github.com:webdesigner97/streets.git
+	url = https://github.com/webdesigner97/streets.git
 [submodule "mods/technic"]
 	path = mods/technic
-	url = git@github.com:minetest-technic/technic.git
+	url = https://github.com/minetest-technic/technic.git
 [submodule "mods/tpr"]
 	path = mods/tpr
-	url = git@github.com:ChaosWormz/teleport-request.git
+	url = https://github.com/ChaosWormz/teleport-request.git
 [submodule "mods/travelnet"]
 	path = mods/travelnet
 	url = git://github.com/Sokomine/travelnet.git
@@ -120,22 +120,22 @@
 	url = https://github.com/Zeg9/minetest-ufos.git
 [submodule "mods/unifieddyes"]
 	path = mods/unifieddyes
-	url = git@github.com:VanessaE/unifieddyes.git
+	url = https://github.com/VanessaE/unifieddyes.git
 [submodule "mods/unified_inventory"]
 	path = mods/unified_inventory
-	url = git@github.com:minetest-technic/unified_inventory.git
+	url = https://github.com/minetest-technic/unified_inventory.git
 [submodule "mods/usesdirt"]
 	path = mods/usesdirt
-	url = git@github.com:VanessaE/usesdirt.git
+	url = https://github.com/VanessaE/usesdirt.git
 [submodule "mods/windmill"]
 	path = mods/windmill
-	url = git@github.com:Sokomine/windmill.git
+	url = https://github.com/Sokomine/windmill.git
 [submodule "mods/windmill_large"]
 	path = mods/windmill_large
 	url = https://github.com/Sokomine/windmill_large.git
 [submodule "mods/worldedit"]
 	path = mods/worldedit
-	url = git@github.com:Uberi/Minetest-WorldEdit.git
+	url = https://github.com/Uberi/Minetest-WorldEdit.git
 [submodule "mods/xban2"]
 	path = mods/xban2
-	url = git@github.com:kaeza/minetest-xban2.git
+	url = https://github.com/kaeza/minetest-xban2.git
