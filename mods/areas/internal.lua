@@ -19,7 +19,7 @@ function areas:save()
 end
 
 local function populateStore(self)
-	if not minetest.get_areastore_typenames then
+	if not AreaStore then
 		return
 	end
 	local store = AreaStore()
