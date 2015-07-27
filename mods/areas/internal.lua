@@ -26,8 +26,9 @@ local function populateStore(self)
 	local store_ids = {}
 	store:reserve(#self.areas)
 	for id, area in pairs(areas.areas) do
-		local sid = store:insert_area({min = area.pos1,
-			max = area.pos2, data = dump(id)})
+		local sid = store:insert_area(area.pos1,
+			area.pos2, dump(id))
+		assert(sid ~= nil) -- if its nil, no id could be found
 		store_ids[id] = sid
 	end
 	self.store = store
@@ -65,8 +66,8 @@ function areas:add(owner, name, pos1, pos2, parent)
 			parent=parent}
 	-- add to AreaStore
 	if self.store then
-		local sid = self.store:insert_area({min = pos1, max = pos2,
-			data = dump(id)})
+		local sid = self.store:insert_area(pos1, pos2, dump(id))
+		assert(sid ~= nil) -- if its nil, no id could be found
 		self.store_ids[id] = sid
 	end
 	return id

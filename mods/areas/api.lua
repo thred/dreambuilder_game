@@ -25,8 +25,8 @@ end
 function areas:getAreasForArea(pos1, pos2)
 	local res = {}
 	if self.store then
-		local areas = self.store:get_areas_in_area({min = pos1,
-			max = pos2}, true, false, true)
+		local areas = self.store:get_areas_in_area(pos1,
+			pos2, true, false, true)
 		for store_id, store_area in pairs(areas) do
 			local id = tonumber(store_area.data)
 			res[id] = self.areas[id]
