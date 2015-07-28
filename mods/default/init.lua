@@ -47,3 +47,12 @@ dofile(minetest.get_modpath("default").."/trees.lua")
 dofile(minetest.get_modpath("default").."/commands.lua")
 dofile(minetest.get_modpath("default").."/aliases.lua")
 dofile(minetest.get_modpath("default").."/legacy.lua")
+
+hotbar_size = minetest.setting_get("hotbar_size") or 16
+
+minetest.register_on_joinplayer(function(player)
+	player:hud_set_hotbar_itemcount(hotbar_size)
+	minetest.after(0.5,function()
+		player:hud_set_hotbar_selected_image("gui_hotbar_selected.png")
+	end)
+end)
