@@ -3,12 +3,7 @@
 -- TODO: add bags (not for carrying around but for decoration)
 
 -- Boilerplate to support localized strings if intllib mod is installed.
-local S
-if intllib then
-        S = intllib.Getter()
-else
-        S = function(s) return s end
-end
+local S = cottages.S
 
 cottages_chests = {}
 -- uses default.chest_formspec for now
@@ -31,8 +26,7 @@ cottages_chests.can_dig = function(pos,player)
 minetest.register_node("cottages:chest_private", {
         description = S("private NPC chest"),
         infotext = "chest containing the possesions of one of the inhabitants",
-        tiles = {"default_chest_top.png", "default_chest_top.png", "default_chest_side.png",
-                "default_chest_side.png", "default_chest_side.png", "default_chest_front.png"},
+	tiles = cottages.texture_chest,
         paramtype2 = "facedir",
         groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
         legacy_facedir_simple = true,
@@ -44,8 +38,7 @@ minetest.register_node("cottages:chest_private", {
 minetest.register_node("cottages:chest_work", {
         description = S("chest for work utils and kitchens"),
         infotext = "everything the inhabitant needs for his work",
-        tiles = {"default_chest_top.png", "default_chest_top.png", "default_chest_side.png",
-                "default_chest_side.png", "default_chest_side.png", "default_chest_front.png"},
+	tiles = cottages.texture_chest,
         paramtype2 = "facedir",
         groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
         legacy_facedir_simple = true,
@@ -57,8 +50,7 @@ minetest.register_node("cottages:chest_work", {
 minetest.register_node("cottages:chest_storage", {
         description = S("storage chest"),
         infotext = "stored food reserves",
-        tiles = {"default_chest_top.png", "default_chest_top.png", "default_chest_side.png",
-                "default_chest_side.png", "default_chest_side.png", "default_chest_front.png"},
+	tiles = cottages.texture_chest,
         paramtype2 = "facedir",
         groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
         legacy_facedir_simple = true,

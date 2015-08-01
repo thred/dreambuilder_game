@@ -1,12 +1,6 @@
 -- 22.01.13 Changed texture to that of the wood from the minimal development game
 
--- Boilerplate to support localized strings if intllib mod is installed.
-local S
-if intllib then
-	S = intllib.Getter()
-else
-	S = function(s) return s end
-end
+local S = cottages.S
 
 minetest.register_node("cottages:fence_small", {
 		description = S("small fence"),
@@ -118,7 +112,7 @@ minetest.register_node("cottages:fence_end", {
 minetest.register_craft({
 	output = "cottages:fence_small 3",
 	recipe = {
-		{"default:fence_wood","default:fence_wood" },
+		{cottages.craftitem_fence, cottages.craftitem_fence},
 	}
 })
 
