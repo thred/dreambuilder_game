@@ -1,11 +1,10 @@
 #Full API
 ##Smartfs
-* smartfs( name ) - returns the form regisered with the name 'name'
 * smartfs.create( name,function ) - creates a new form and adds elements to it by running the function. Use before Minetest loads. (like minetest.register_node)
 * smartfs.element( name, data ) - creates a new element type.
 * smartfs.dynamic( formname, playername ) - creates a dynamic form. Returns state. See example.lua for example. Remember to call state:show()
-* smartfs.add\_to\_inventory(form, icon, title) - Adds a form to an installed advanced inventory. Returns true on success.
-* smartfs.inventory_mod() - Returns the name of an installed and supported inventory mod that will be used above, or null.
+* smartfs.add\_to\_inventory( name,icon,title ) - Adds a form to an installed advanced inventory.
+* smartfs.inventory_mod() - Returns the name of an installed advanced inventory, or null.
 * smartfs.override\_load\_checks() - Allows you to use smartfs.create after the game loads. Not recommended!
 
 ##Form
@@ -29,7 +28,6 @@
   * state:pwdfield( x,y,w,h,name,label ) - create a password field
   * state:textarea( x,y,w,h,name,label ) - create a new textarea
 * state:image( x,y,w,h,name,imagepath ) - create an image box.
-* state:inventory( x,y,w,h,name ) - create an inventory listing (use 'main' as name for the main player inventory)
 * state:checkbox( x,y,name,label,selected ) - create a check box.
 * state:element( element_type, data ) - Semi-private, create an element with type and data.
 
@@ -86,19 +84,6 @@
 * element:addItem( item ) - appends and item
 * element:removeItem( idx ) - remove item
 * element:popItem() - removes last item and returns
-
-##Inventory listing
-* element:setPosition( x,y ) - set the position
-* element:getPosition() - returns {x=x, y=y}
-* element:setSize( w,h ) - set the size
-* element:getSize() - gets the size {w=w, h=h}
-* element:setLocation( location ) - set a custom inventory location or nil for the default (current_player)
-  * element:usePosition( position ) - use a node metadata attached inventory of the node at the given positon
-  * element:useDetached( name ) - use a detached inventory with the given name
-  * element:usePlayer( name ) - use a player inventory other than the current player
-* element:getLocation() - returns the inventory location (default: current_player)
-* element:setIndex( index ) - set the inventory starting index
-* element:getIndex() - returns the inventory starting index
 
 ##Custom Code
 * element:onSubmit( func(self) ) - on form submit

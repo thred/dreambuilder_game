@@ -10,26 +10,25 @@ smartfs = {
 	inv = {}
 }
 
--- the smartfs() function
-function smartfs.__call(self, name)
-	return smartfs._fdef[name]
-end
+-----------------------------------------------------------------
+--------------------------  THE API  ----------------------------
+-----------------------------------------------------------------
 
 -- Register forms and elements
 function smartfs.create(name,onload)
 	if smartfs._fdef[name] then
-		error("SmartFS - (Error) Form "..name.." already exists!")
+		error("Form "..name.." already exists!")
 	end
 	if smartfs.loaded and not smartfs._loaded_override then
-		error("SmartFS - (Error) Forms should be declared while the game loads.")
+		error("[SMARTFS, ERROR] Forms should be declared while the game loads.")
 	end
-
+	
 	smartfs._fdef[name] = {
 		_reg = onload,
 		name = name,
 		show = smartfs._show_
 	}
-
+	
 	return smartfs._fdef[name]
 end
 function smartfs.override_load_checks()
@@ -40,10 +39,7 @@ minetest.after(0, function()
 	smartfs.loaded = true
 end)
 function smartfs.dynamic(name,player)
-	if not smartfs._dynamic_warned then
-		smartfs._dynamic_warned = true
-		print("SmartFS - (Warning) On the fly forms are being used. May cause bad things to happen")
-	end
+	print ("[SMARTFS, WARNING!] On the fly forms are being used. May cause bad things to happen")
 	local state = smartfs._makeState_({name=name},player,nil,false)
 	state.show = state._show_
 	smartfs.opened[player] = state
@@ -51,7 +47,7 @@ function smartfs.dynamic(name,player)
 end
 function smartfs.element(name,data)
 	if smartfs._edef[name] then
-		error("SmartFS - (Error) Element type "..name.." already exists!")
+		error("Element type "..name.." already exists!")
 	end
 	smartfs._edef[name] = data
 	return smartfs._edef[name]
@@ -76,25 +72,23 @@ function smartfs.add_to_inventory(form,icon,title)
 		unified_inventory.register_page(form.name, {
 			get_formspec = function(player, formspec)
 				local name = player:get_player_name()
-				local opened = smartfs._show_(form, name, nil, true)
-				return {formspec = opened:_getFS_(false)}
+				opened = smartfs._show_(form,name,nil,true)				
+				return {formspec=opened:_getFS_(false)}
 			end
 		})
-		return true
 	elseif inventory_plus then
 		minetest.register_on_joinplayer(function(player)
-			inventory_plus.register_button(player, form.name, title)
+			inventory_plus.register_button(player,form.name,title)
 		end)
 		minetest.register_on_player_receive_fields(function(player, formname, fields)
 			if formname == "" and fields[form.name] then
 				local name = player:get_player_name()
-				local opened = smartfs._show_(form, name, nil, true)
+				opened = smartfs._show_(form,name,nil,true)
 				inventory_plus.set_inventory_formspec(player, opened:_getFS_(true))
 			end
 		end)
-		return true
 	else
-		return false
+		print("[SMARTFS, WARNING!] No advanced inventories are installed")
 	end
 end
 
@@ -123,7 +117,7 @@ function smartfs._makeState_(form,player,params,is_inv)
 				res = res .. val:build()
 			end
 			return res
-		end,
+		end,		
 		_show_ = function(self)
 			if self.is_inv then
 				if unified_inventory then
@@ -133,6 +127,7 @@ function smartfs._makeState_(form,player,params,is_inv)
 				end
 			else
 				local res = self:_getFS_(true)
+				print ("FS: "..res)
 				minetest.show_formspec(player,form.name,res)
 			end
 		end,
@@ -154,11 +149,11 @@ function smartfs._makeState_(form,player,params,is_inv)
 		end,
 		save = function(self,file)
 			local res = {ele={}}
-
+			
 			if self._size then
 				res.size = self._size
 			end
-
+			
 			for key,val in pairs(self._ele) do
 				res.ele[key] = val.data
 			end
@@ -203,12 +198,9 @@ function smartfs._makeState_(form,player,params,is_inv)
 		listbox = function(self,x,y,w,h,name)
 			return self:element("list", { pos={x=x,y=y}, size={w=w,h=h}, name=name })
 		end,
-		inventory = function(self,x,y,w,h,name)
-			return self:element("inventory", { pos={x=x,y=y}, size={w=w,h=h}, name=name })
-		end,
 		element = function(self,typen,data)
 			local type = smartfs._edef[typen]
-
+			
 			if not type then
 				error("Element type "..typen.." does not exist!")
 			end
@@ -230,7 +222,7 @@ function smartfs._makeState_(form,player,params,is_inv)
 			for key,val in pairs(type) do
 				ele[key] = val
 			end
-
+			
 			self._ele[data.name] = ele
 
 			return self._ele[data.name]
@@ -239,12 +231,12 @@ function smartfs._makeState_(form,player,params,is_inv)
 end
 
 -- Show a formspec to a user
-function smartfs._show_(form, player, params, is_inv)
-	local state = smartfs._makeState_(form, player, params, is_inv)
+function smartfs._show_(form,player,params,is_inv)
+	local state = smartfs._makeState_(form,player,params,is_inv)
 	state.show = state._show_
 	if form._reg(state)~=false then
-		if not is_inv then
-			smartfs.opened[player] = state
+		if is_inv~=true then
+			smartfs.opened[player] = state		
 			state:_show_()
 		else
 			smartfs.inv[player] = state
@@ -261,7 +253,9 @@ local function _sfs_recieve_(state,name,fields)
 		end
 		return true
 	end
-
+	
+	print(dump(fields))
+		
 	for key,val in pairs(fields) do
 		if state._ele[key] then
 			state._ele[key].data.value = val
@@ -289,14 +283,14 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	local name = player:get_player_name()
 	if smartfs.opened[name] and not smartfs.opened[name].is_inv then
 		if smartfs.opened[name].def.name == formname then
-			local state = smartfs.opened[name]
+			local state = smartfs.opened[name]			
 			return _sfs_recieve_(state,name,fields)
 		else
 			smartfs.opened[name] = nil
 		end
 	elseif smartfs.inv[name] and smartfs.inv[name].is_inv then
-		local state = smartfs.inv[name]
-		_sfs_recieve_(state,name,fields)
+		local state = smartfs.inv[name]			
+		return _sfs_recieve_(state,name,fields)
 	end
 	return false
 end)
@@ -348,7 +342,7 @@ smartfs.element("button",{
 		if fields[self.name] and self._click then
 			self:_click(self.root)
 		end
-
+		
 		if self.data.closes then
 			return true
 		end
@@ -384,7 +378,7 @@ smartfs.element("button",{
 		return self.data.img
 	end,
 	setClose = function(self,bool)
-		self.data.closes = bool
+		self.data.closes = bool	
 	end
 })
 
@@ -613,8 +607,8 @@ smartfs.element("list",{
                 listformspec = string.sub(listformspec, 0, -2) --removes extra ,
                 --close out the list items section
                 listformspec = listformspec..";"
-
-                --TODO support selected idx and transparency
+                
+                --TODO support selected idx and transparency 
 
                 --close formspec definition and return formspec
                 listformspec = listformspec.."]"
@@ -670,65 +664,10 @@ smartfs.element("list",{
 	popItem = function(self)
 		if not self.data.items then
 			self.data.items = {" "}
-		end
+		end		
 		local item = self.data.items[#self.data.items]
 		table.remove(self.data.items)
 		return item
-	end
-})
-
-smartfs.element("inventory",{
-	build = function(self)
-		return "list["..
-			(self.data.location or "current_player") ..
-			";"..
-			self.name..
-			";"..
-			self.data.pos.x..","..self.data.pos.y..
-			";"..
-			self.data.size.w..","..self.data.size.h..
-			";"..
-			(self.data.index or "") ..
-			"]"
-	end,
-	setPosition = function(self,x,y)
-		self.data.pos = {x=x,y=y}
-	end,
-	getPosition = function(self,x,y)
-		return self.data.pos
-	end,
-	setSize = function(self,w,h)
-		self.data.size = {w=w,h=h}
-	end,
-	getSize = function(self,x,y)
-		return self.data.size
-	end,
-	-- available inventory locations
-	-- "current_player": Player to whom the menu is shown
-	-- "player:<name>": Any player
-	-- "nodemeta:<X>,<Y>,<Z>": Any node metadata
-	-- "detached:<name>": A detached inventory
-	-- "context" does not apply to smartfs, since there is no node-metadata as context available
-	setLocation = function(self,location)
-		self.data.location = location
-	end,
-	getLocation = function(self)
-		return self.data.location or "current_player"
-	end,
-	usePosition = function(self, pos)
-		self.data.location = string.format("nodemeta:%d,%d,%d", pos.x, pos.y, pos.z)
-	end,
-	usePlayer = function(self, name)
-		self.data.location = "player:" .. name
-	end,
-	useDetached = function(self, name)
-		self.data.location = "detached:" .. name
-	end,
-	setIndex = function(self,index)
-		self.data.index = index
-	end,
-	getIndex = function(self)
-		return self.data.index
 	end
 })
 
