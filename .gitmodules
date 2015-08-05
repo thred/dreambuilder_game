@@ -43,9 +43,6 @@
 [submodule "mods/gloopblocks"]
 	path = mods/gloopblocks
 	url = https://github.com/VanessaE/gloopblocks.git
-[submodule "mods/homedecor_modpack"]
-	path = mods/homedecor_modpack
-	url = https://github.com/VanessaE/homedecor_modpack.git
 [submodule "mods/ilights"]
 	path = mods/ilights
 	url = https://github.com/VanessaE/ilights.git
@@ -142,3 +139,6 @@
 [submodule "mods/cottages"]
 	path = mods/cottages
 	url = git@github.com:Sokomine/cottages.git
+[submodule "mods/homedecor_modpack"]
+	path = mods/homedecor_modpack
+	url = git@github.com:VanessaE/homedecor_modpack.git
