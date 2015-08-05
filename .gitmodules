@@ -67,9 +67,6 @@
 [submodule "mods/markers"]
 	path = mods/markers
 	url = https://github.com/Sokomine/markers.git
-[submodule "mods/moreblocks"]
-	path = mods/moreblocks
-	url = https://github.com/Calinou/moreblocks.git
 [submodule "mods/moreores"]
 	path = mods/moreores
 	url = https://github.com/Calinou/moreores.git
@@ -142,3 +139,6 @@
 [submodule "mods/homedecor_modpack"]
 	path = mods/homedecor_modpack
 	url = git@github.com:VanessaE/homedecor_modpack.git
+[submodule "mods/moreblocks"]
+	path = mods/moreblocks
+	url = git@github.com:Calinou/moreblocks.git
