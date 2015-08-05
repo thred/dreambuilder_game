@@ -145,3 +145,6 @@
 [submodule "mods/mesecons"]
 	path = mods/mesecons
 	url = git@github.com:Jeija/minetest-mod-mesecons.git
+[submodule "mods/teleport_request"]
+	path = mods/teleport_request
+	url = git@github.com:ChaosWormz/teleport-request.git
