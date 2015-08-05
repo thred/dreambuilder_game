@@ -1,6 +1,6 @@
 [submodule "mods/areas"]
 	path = mods/areas
-	url = https://github.com/ShadowNinja/areas.git
+	url = git@github.com:ShadowNinja/areas.git
 [submodule "mods/bees"]
 	path = mods/bees
 	url = https://github.com/bas080/bees.git
