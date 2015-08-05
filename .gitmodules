@@ -36,7 +36,7 @@
 	url = https://github.com/VanessaE/display_blocks.git
 [submodule "mods/farming_plus"]
 	path = mods/farming_plus
-	url = https://github.com/Zeg9/farming_plus.git
+	url = git@github.com:PilzAdam/farming_plus.git
 [submodule "mods/framedglass"]
 	path = mods/framedglass
 	url = https://github.com/minetest-technic/framedglass.git
