@@ -1,6 +1,6 @@
 [submodule "mods/areas"]
 	path = mods/areas
-	url = git@github.com:ShadowNinja/areas.git
+	url = https://github.com/ShadowNinja/areas.git
 [submodule "mods/bees"]
 	path = mods/bees
 	url = https://github.com/bas080/bees.git
@@ -36,7 +36,7 @@
 	url = https://github.com/VanessaE/display_blocks.git
 [submodule "mods/farming_plus"]
 	path = mods/farming_plus
-	url = git@github.com:PilzAdam/farming_plus.git
+	url = https://github.com/PilzAdam/farming_plus.git
 [submodule "mods/framedglass"]
 	path = mods/framedglass
 	url = https://github.com/minetest-technic/framedglass.git
@@ -60,7 +60,7 @@
 	url = https://github.com/Jeija/minetest-mod-jumping.git
 [submodule "mods/locks"]
 	path = mods/locks
-	url = git@github.com:Sokomine/locks.git
+	url = https://github.com/Sokomine/locks.git
 [submodule "mods/maptools"]
 	path = mods/maptools
 	url = https://github.com/Calinou/maptools.git
@@ -135,16 +135,16 @@
 	url = https://github.com/kaeza/minetest-xban2.git
 [submodule "mods/cottages"]
 	path = mods/cottages
-	url = git@github.com:Sokomine/cottages.git
+	url = https://github.com/Sokomine/cottages.git
 [submodule "mods/homedecor_modpack"]
 	path = mods/homedecor_modpack
-	url = git@github.com:VanessaE/homedecor_modpack.git
+	url = https://github.com/VanessaE/homedecor_modpack.git
 [submodule "mods/moreblocks"]
 	path = mods/moreblocks
-	url = git@github.com:Calinou/moreblocks.git
+	url = https://github.com/Calinou/moreblocks.git
 [submodule "mods/mesecons"]
 	path = mods/mesecons
-	url = git@github.com:Jeija/minetest-mod-mesecons.git
+	url = https://github.com/Jeija/minetest-mod-mesecons.git
 [submodule "mods/teleport_request"]
 	path = mods/teleport_request
-	url = git@github.com:ChaosWormz/teleport-request.git
+	url = https://github.com/ChaosWormz/teleport-request.git
