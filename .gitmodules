@@ -148,3 +148,6 @@
 [submodule "mods/teleport_request"]
 	path = mods/teleport_request
 	url = https://github.com/ChaosWormz/teleport-request.git
+[submodule "mods/biome_lib"]
+	path = mods/biome_lib
+	url = https://github.com/VanessaE/biome_lib.git
