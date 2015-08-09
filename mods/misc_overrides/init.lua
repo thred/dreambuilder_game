@@ -1,5 +1,5 @@
 -- This file just makes some tweaks to the various default plants and some
--- non-default ones that depend on plants_lib, to make them wave if the
+-- non-default ones that depend on biome_lib, to make them wave if the
 -- appropriate shader is enabled.  This code is temporary and will be trimmed 
 -- down as the mods supplying those objects are updated.
 
