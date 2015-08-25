@@ -478,9 +478,10 @@ minetest.register_node("default:leaves", {
 
 minetest.register_node("default:apple", {
 	description = "Apple",
-	drawtype = "plantlike",
+	drawtype = "mesh",
+	mesh = "default_apple.obj",
 	visual_scale = 1.0,
-	tiles = {"default_apple.png"},
+	tiles = {"default_apple_3d.png"},
 	inventory_image = "default_apple.png",
 	paramtype = "light",
 	sunlight_propagates = true,
