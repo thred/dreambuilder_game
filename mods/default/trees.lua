@@ -70,14 +70,14 @@ minetest.register_abm({
 -- Tree generation
 --
 
--- Apple tree and jungle tree trunk and leaves function
+-- Default tree and jungle tree trunk and leaves function
 
 local function add_trunk_and_leaves(data, a, pos, tree_cid, leaves_cid,
 		height, size, iters, is_apple_tree)
 	local x, y, z = pos.x, pos.y, pos.z
 	local c_air = minetest.get_content_id("air")
 	local c_ignore = minetest.get_content_id("ignore")
-	local c_apple = minetest.get_content_id("default:apple")
+	local c_apple = minetest.get_content_id("default:leaves")
 
 	-- Trunk
 	data[a:index(x, y, z)] = tree_cid -- Force-place lowest trunk node to replace sapling
@@ -130,7 +130,7 @@ local function add_trunk_and_leaves(data, a, pos, tree_cid, leaves_cid,
 end
 
 
--- Apple tree
+-- Default tree
 
 function default.grow_tree(pos, is_apple_tree, bad)
 	--[[
