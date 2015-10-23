@@ -1,14 +1,19 @@
 ---
----Titanium Mod Version 3.1 By Aqua. Added new Titanium textures. Be nice this is my first mod!!! 
+---Titanium Mod Version 4 By Aqua. Added new Google Glass Titanium. Be nice this is my first mod!!! Subscribe to my YouTube: youtube.com/theshaunzero!
 ---
 
 ---
 ---blocks
 ---
 
+local enable_walking_light = minetest.setting_getbool("titanium_walking_light")
+if enable_walking_light ~= false then
+	enable_walking_light = true
+end
+
 minetest.register_node( "titanium:titanium_in_ground", {
 	description = "Titanium Ore",
-	tiles = { "default_stone.png^titanium_titanium_in_ground.png" },
+	tile_images = { "default_stone.png^titanium_titanium_in_ground.png" },
 	is_ground_content = true,
 	groups = {cracky=1},
 	sounds = default.node_sound_stone_defaults(),
@@ -17,7 +22,7 @@ minetest.register_node( "titanium:titanium_in_ground", {
 
 minetest.register_node( "titanium:block", {
 	description = "Titanium Block",
-	tiles = { "titanium_block.png" },
+	tile_images = { "titanium_block.png" },
 	is_ground_content = true,
 	groups = {cracky=1},
 	sounds = default.node_sound_stone_defaults(),
@@ -26,7 +31,7 @@ minetest.register_node( "titanium:block", {
 minetest.register_node("titanium:glass", {
 	description = "Titanium Glass",
 	drawtype = "glasslike",
-	tiles = {"titanium_glass.png"},
+	tile_images = {"titanium_glass.png"},
 	light_propagates = true,
 	paramtype = "light",
 	sunlight_propagates = true,
@@ -49,7 +54,8 @@ minetest.register_craftitem( "titanium:tougher_titanium", {
 
 minetest.register_node( "titanium:titanium_plate", {
 	description = "Titanium Plate",
-	tiles = { "titanium_plate.png" },
+	tile_images = {"titanium_plate.png"},
+	inventory_image = "titanium_plate.png",
 	is_ground_content = true,
 	groups = {cracky=1},
 	sounds = default.node_sound_stone_defaults(),
@@ -57,7 +63,7 @@ minetest.register_node( "titanium:titanium_plate", {
 
 minetest.register_node( "titanium:titanium_tv_1", {
 	description = "Titanium TV",
-	tiles = { "titanium_tv_1.png" },
+	tile_images = { "titanium_tv_1.png" },
 	is_ground_content = true,
 	groups = {snappy=1,bendy=2,cracky=1,melty=2,level=2},
 	drop = 'titanium:screen_1',
@@ -66,7 +72,7 @@ minetest.register_node( "titanium:titanium_tv_1", {
 
 minetest.register_node( "titanium:titanium_tv_2", {
 	description = "Titanium TV",
-	tiles = { "titanium_tv_2.png" },
+	tile_images = { "titanium_tv_2.png" },
 	is_ground_content = true,
 	groups = {snappy=1,bendy=2,cracky=1,melty=2,level=2},
 	drop = 'titanium:screen_1',
@@ -237,48 +243,178 @@ minetest.register_craft({
 	}
 })
 
-print("[Titanium Mod] Loaded! By Aqua!")
+minetest.register_ore({
+	ore_type = "scatter",
+	ore =      "titanium:titanium_in_ground",
+	wherein =  "default:stone",
+	noise_params = {
+		offset = 0,
+		scale = 1,
+		spread = {x=100, y=100, z=100},
+		seed = 21,
+		octaves = 2,
+		persist = 0.70,
+	},
+	clust_scarcity = 16384,
+	clust_num_ores = 2,
+	clust_size = 2,
+	y_min = -31000,
+	y_max = -1500,
+})
 
-local function generate_ore(name, wherein, minp, maxp, seed, chunks_per_volume, ore_per_chunk, height_min, height_max)
-	if maxp.y < height_min or minp.y > height_max then
-		return
+if enable_walking_light then
+
+	local players = {}
+	local player_positions = {}
+	local last_wielded = {}
+
+	function round(num) 
+		return math.floor(num + 0.5) 
 	end
-	local y_min = math.max(minp.y, height_min)
-	local y_max = math.min(maxp.y, height_max)
-	local volume = (maxp.x-minp.x+1)*(y_max-y_min+1)*(maxp.z-minp.z+1)
-	local pr = PseudoRandom(seed)
-	local num_chunks = math.floor(chunks_per_volume * volume)
-	local chunk_size = 3
-	if ore_per_chunk <= 4 then
-		chunk_size = 2
-	end
-	local inverse_chance = math.floor(chunk_size*chunk_size*chunk_size / ore_per_chunk)
-	--print("generate_ore num_chunks: "..dump(num_chunks))
-	for i=1,num_chunks do
-		local y0 = pr:next(y_min, y_max-chunk_size+1)
-		if y0 >= height_min and y0 <= height_max then
-			local x0 = pr:next(minp.x, maxp.x-chunk_size+1)
-			local z0 = pr:next(minp.z, maxp.z-chunk_size+1)
-			local p0 = {x=x0, y=y0, z=z0}
-			for x1=0,chunk_size-1 do
-			for y1=0,chunk_size-1 do
-			for z1=0,chunk_size-1 do
-				if pr:next(1,inverse_chance) == 1 then
-					local x2 = x0+x1
-					local y2 = y0+y1
-					local z2 = z0+z1
-					local p2 = {x=x2, y=y2, z=z2}
-					if minetest.get_node(p2).name == wherein then
-						minetest.set_node(p2, {name=name})
-					end
-				end
-			end
-			end
-			end
+
+	function check_for_googles (player)
+	if player==nil then return false end
+	local inv = player:get_inventory()
+	local hotbar=inv:get_list("main")
+	for index=1,8,1 do
+		if hotbar[index]:get_name() == "titanium:sam_titanium" then
+			return "titanium:sam_titanium"
 		end
 	end
+	return false
+	end   
+
+	minetest.register_on_joinplayer(function(player)
+		local player_name = player:get_player_name()
+		table.insert(players, player_name)
+		last_wielded[player_name] = player:get_wielded_item():get_name()
+		local pos = player:getpos()
+		local rounded_pos = {x=round(pos.x),y=round(pos.y)+1,z=round(pos.z)}
+		local wielded_item = check_for_googles(player)
+		if wielded_item ~= "titanium:sam_titanium" then
+			minetest.add_node(rounded_pos,{type="node",name="titanium:who_knows"})
+			minetest.add_node(rounded_pos,{type="node",name="air"})
+		end
+		player_positions[player_name] = {}
+		player_positions[player_name]["x"] = rounded_pos.x;
+		player_positions[player_name]["y"] = rounded_pos.y;
+		player_positions[player_name]["z"] = rounded_pos.z;
+	end)
+
+	minetest.register_on_leaveplayer(function(player)
+		local player_name = player:get_player_name()
+		for i,v in ipairs(players) do
+			if v == player_name then 
+				table.remove(players, i)
+				last_wielded[player_name] = nil
+				local pos = player:getpos()
+				local rounded_pos = {x=round(pos.x),y=round(pos.y)+1,z=round(pos.z)}
+				minetest.add_node(rounded_pos,{type="node",name="titanium:who_knows"})
+				minetest.add_node(rounded_pos,{type="node",name="air"})
+				player_positions[player_name]["x"] = nil
+				player_positions[player_name]["y"] = nil
+				player_positions[player_name]["z"] = nil
+				player_positions[player_name]["m"] = nil
+				player_positions[player_name] = nil
+			end
+		end
+	end)
+
+	minetest.register_globalstep(function(dtime)
+		for i,player_name in ipairs(players) do
+			local player = minetest.get_player_by_name(player_name)
+			local wielded_item = check_for_googles(player)
+			if wielded_item == "titanium:sam_titanium" then
+				local pos = player:getpos()
+				local rounded_pos = {x=round(pos.x),y=round(pos.y)+1,z=round(pos.z)}
+				if (last_wielded[player_name] ~= "titanium:sam_titanium") or (player_positions[player_name]["x"] ~= rounded_pos.x or player_positions[player_name]["y"] ~= rounded_pos.y or player_positions[player_name]["z"] ~= rounded_pos.z) then
+					local is_air  = minetest.get_node_or_nil(rounded_pos)
+					if is_air == nil or (is_air ~= nil and (is_air.name == "air" or is_air.name == "titanium:light")) then
+						minetest.add_node(rounded_pos,{type="node",name="titanium:light"})
+					end
+					if (player_positions[player_name]["x"] ~= rounded_pos.x or player_positions[player_name]["y"] ~= rounded_pos.y or player_positions[player_name]["z"] ~= rounded_pos.z) then
+						local old_pos = {x=player_positions[player_name]["x"], y=player_positions[player_name]["y"], z=player_positions[player_name]["z"]}
+						local is_light = minetest.get_node_or_nil(old_pos)
+						if is_light ~= nil and is_light.name == "titanium:light" then
+							minetest.add_node(old_pos,{type="node",name="titanium:who_knows"})
+							minetest.add_node(old_pos,{type="node",name="air"})
+						end
+					end
+					player_positions[player_name]["x"] = rounded_pos.x
+					player_positions[player_name]["y"] = rounded_pos.y
+					player_positions[player_name]["z"] = rounded_pos.z
+				end
+
+				last_wielded[player_name] = wielded_item;
+			elseif last_wielded[player_name] == "titanium:sam_titanium" then
+				local pos = player:getpos()
+				local rounded_pos = {x=round(pos.x),y=round(pos.y)+1,z=round(pos.z)}
+				repeat
+					local is_light  = minetest.get_node_or_nil(rounded_pos)
+					if is_light ~= nil and is_light.name == "titanium:light" then
+						minetest.add_node(rounded_pos,{type="node",name="titanium:who_knows"})
+						minetest.add_node(rounded_pos,{type="node",name="air"})
+					end
+				until minetest.get_node_or_nil(rounded_pos) ~= "titanium:light"
+				local old_pos = {x=player_positions[player_name]["x"], y=player_positions[player_name]["y"], z=player_positions[player_name]["z"]}
+				repeat
+					is_light  = minetest.get_node_or_nil(old_pos)
+					if is_light ~= nil and is_light.name == "titanium:light" then
+						minetest.add_node(old_pos,{type="node",name="titanium:who_knows"})
+						minetest.add_node(old_pos,{type="node",name="air"})
+					end
+				until minetest.get_node_or_nil(old_pos) ~= "titanium:light"
+				last_wielded[player_name] = wielded_item
+			end
+		end
+	end)
+
+	------------------------------------------------------
+	-- Version 4------------------------------------------
+
+	minetest.register_node("titanium:light", {
+		drawtype = "glasslike",
+		tile_images = {"titanium.png"},
+		inventory_image = minetest.inventorycube("titanium.png"),
+		paramtype = "light",
+		walkable = false,
+		is_ground_content = true,
+		light_propagates = true,
+		sunlight_propagates = true,
+		light_source = 11,
+		selection_box = {
+			type = "fixed",
+			fixed = {0, 0, 0, 0, 0, 0},
+		},
+	})
+
+	minetest.register_tool("titanium:sam_titanium", {
+		description = "Google Glass Titanium",
+		inventory_image = "sam_titanium.png",
+		wield_image = "sam_titanium.png",
+		tool_capabilities = {
+			max_drop_level=1,
+			groupcaps={
+					cracky={times={[2]=1.20, [3]=0.80}, uses=5, maxlevel=1}
+			}
+		},
+	})
+
+	minetest.register_craft({
+		output = 'titanium:sam_titanium',
+		recipe = {
+			{'titanium:titanium_plate', 'default:torch', 'titanium:titanium_plate'},
+			{'titanium:glass', 'default:mese_crystal', 'titanium:glass'},
+			{'', '', ''},
+		}
+	})
+	--------------------------------------------------------
+	minetest.register_node("titanium:who_knows", {
+		description = "?Who Knows?",
+		tiles = {"titanium.png"},
+		is_ground_content = true,
+		groups = {not_in_creative_inventory=1},
+	})
 end
 
-minetest.register_on_generated(function(minp, maxp, seed)
-generate_ore("titanium:titanium_in_ground", "default:stone", minp, maxp, seed+21,   1/9/9/9,    5, -31000,  -400)
-end)
+print("[Titanium Mod] Loaded! By Aqua! Subscribe to my YouTube: youtube.com/theshaunzero!")
