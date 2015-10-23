@@ -69,7 +69,7 @@
 	url = https://github.com/Sokomine/markers.git
 [submodule "mods/moreores"]
 	path = mods/moreores
-	url = https://github.com/Calinou/moreores.git
+	url = https://github.com/VanessaE/moreores.git
 [submodule "mods/moretrees"]
 	path = mods/moretrees
 	url = https://github.com/VanessaE/moretrees.git
@@ -87,7 +87,7 @@
 	url = https://github.com/cheapie/plasticbox.git
 [submodule "mods/quartz"]
 	path = mods/quartz
-	url = https://github.com/4Evergreen4/quartz.git
+	url = https://github.com/VanessaE/quartz.git
 [submodule "mods/replacer"]
 	path = mods/replacer
 	url = https://github.com/Sokomine/replacer.git
