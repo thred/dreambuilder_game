@@ -3,7 +3,7 @@
 	url = https://github.com/ShadowNinja/areas.git
 [submodule "mods/bees"]
 	path = mods/bees
-	url = https://github.com/bas080/bees.git
+	url = https://github.com/VanessaE/bees.git
 [submodule "mods/blox"]
 	path = mods/blox
 	url = https://github.com/VanessaE/blox.git
@@ -48,7 +48,7 @@
 	url = https://github.com/VanessaE/ilights.git
 [submodule "mods/infrastructure"]
 	path = mods/infrastructure
-	url = https://github.com/cheapie/infrastructure.git
+	url = https://github.com/VanessaE/infrastructure.git
 [submodule "mods/inventory_sorter"]
 	path = mods/inventory_sorter
 	url = https://github.com/cyisfor/inventory_sorter.git
@@ -60,7 +60,7 @@
 	url = https://github.com/Jeija/minetest-mod-jumping.git
 [submodule "mods/locks"]
 	path = mods/locks
-	url = https://github.com/Sokomine/locks.git
+	url = https://github.com/VanessaE/locks.git
 [submodule "mods/maptools"]
 	path = mods/maptools
 	url = https://github.com/Calinou/maptools.git
@@ -96,7 +96,7 @@
 	url = https://github.com/andersje/stained_glass.git
 [submodule "mods/steel"]
 	path = mods/steel
-	url = https://github.com/Zeg9/minetest-steel.git
+	url = https://github.com/VanessaE/minetest-steel.git
 [submodule "mods/streets"]
 	path = mods/streets
 	url = https://github.com/webdesigner97/streets.git
