@@ -5,8 +5,8 @@ minetest.register_ore({
 	clust_scarcity = 1 * 1 * 1,
 	clust_num_ores = 5,
 	clust_size     = 2,
-	height_min     = -30912, -- Engine changes can modify this value.
-	height_max     = -30656, -- This ensures the bottom of the world is not even loaded.
+	y_min     = -30912, -- Engine changes can modify this value.
+	y_max     = -30656, -- This ensures the bottom of the world is not even loaded.
 })
 
 minetest.register_ore({
@@ -16,8 +16,8 @@ minetest.register_ore({
 	clust_scarcity = 1 * 1 * 1,
 	clust_num_ores = 5,
 	clust_size     = 2,
-	height_min     = -30656,
-	height_max     = -30000,
+	y_min     = -30656,
+	y_max     = -30000,
 })
 
 minetest.register_node("bedrock:bedrock", {
