@@ -48,7 +48,7 @@
 	url = https://github.com/VanessaE/ilights.git
 [submodule "mods/infrastructure"]
 	path = mods/infrastructure
-	url = https://github.com/VanessaE/infrastructure.git
+	url = https://github.com/cheapie/infrastructure.git
 [submodule "mods/inventory_sorter"]
 	path = mods/inventory_sorter
 	url = https://github.com/cyisfor/inventory_sorter.git
