@@ -151,3 +151,6 @@
 [submodule "mods/biome_lib"]
 	path = mods/biome_lib
 	url = https://github.com/VanessaE/biome_lib.git
+[submodule "mods/titanium"]
+	path = mods/titanium
+	url = https://github.com/VanessaE/titanium.git
