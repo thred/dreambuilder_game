@@ -154,3 +154,6 @@
 [submodule "mods/titanium"]
 	path = mods/titanium
 	url = https://github.com/VanessaE/titanium.git
+[submodule "mods/signs_lib"]
+	path = mods/signs_lib
+	url = https://github.com/VanessaE/signs_lib.git
