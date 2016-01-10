@@ -97,9 +97,6 @@
 [submodule "mods/steel"]
 	path = mods/steel
 	url = https://github.com/VanessaE/minetest-steel.git
-[submodule "mods/streets"]
-	path = mods/streets
-	url = https://github.com/webdesigner97/streets.git
 [submodule "mods/technic"]
 	path = mods/technic
 	url = https://github.com/minetest-technic/technic.git
@@ -157,3 +154,6 @@
 [submodule "mods/signs_lib"]
 	path = mods/signs_lib
 	url = https://github.com/VanessaE/signs_lib.git
+[submodule "mods/streets"]
+	path = mods/streets
+	url = https://github.com/cheapie/streets
