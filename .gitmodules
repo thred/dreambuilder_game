@@ -12,7 +12,7 @@
 	url = https://github.com/Calinou/carbone_mobs.git
 [submodule "mods/carts"]
 	path = mods/carts
-	url = git://github.com/PilzAdam/carts.git
+	url = https://github.com/PilzAdam/carts.git
 [submodule "mods/caverealms"]
 	path = mods/caverealms
 	url = https://github.com/Zeno-/minetest-caverealms.git
@@ -105,7 +105,7 @@
 	url = https://github.com/ChaosWormz/teleport-request.git
 [submodule "mods/travelnet"]
 	path = mods/travelnet
-	url = git://github.com/Sokomine/travelnet.git
+	url = https://github.com/Sokomine/travelnet.git
 [submodule "mods/ufos"]
 	path = mods/ufos
 	url = https://github.com/Zeg9/minetest-ufos.git
