@@ -157,3 +157,6 @@
 [submodule "mods/streets"]
 	path = mods/streets
 	url = https://github.com/cheapie/streets
+[submodule "mods/mobs"]
+	path = mods/mobs
+	url = https://github.com/tenplus1/mobs.git
