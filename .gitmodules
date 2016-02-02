@@ -160,3 +160,6 @@
 [submodule "mods/mobs"]
 	path = mods/mobs
 	url = https://github.com/tenplus1/mobs.git
+[submodule "mods/snowdrift"]
+	path = mods/snowdrift
+	url = https://github.com/paramat/snowdrift.git
