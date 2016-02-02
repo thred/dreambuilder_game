@@ -163,3 +163,6 @@
 [submodule "mods/snowdrift"]
 	path = mods/snowdrift
 	url = https://github.com/paramat/snowdrift.git
+[submodule "mods/minetest-u_skinsdb"]
+	path = mods/minetest-u_skinsdb
+	url = https://github.com/dmonty2/minetest-u_skinsdb.git
